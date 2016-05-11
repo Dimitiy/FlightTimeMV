@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instant-run
+    abi="x86"
+    api-level="23"
+    density="xhdpi"
+    format="7"
+    timestamp="2450203006250" >
+
+    <task
+        name="javac"
+        duration="1154" />
+    <task
+        name="instant-run-dex"
+        duration="0" />
+    <task
+        name="instant-run-transform"
+        duration="7" />
+    <task
+        name="verifier"
+        duration="1" />
+
+    <artifact
+        location="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_7/classes.dex"
+        type="DEX" />
+
+    <build timestamp="909803553942" >
+        <artifact
+            location="/home/oldman/Рабочий стол/FlightTime/app/build/outputs/apk/app-debug.apk"
+            type="MAIN" />
+    </build>
+    <build
+        timestamp="1641731378654"
+        verifier="STATIC_INITIALIZER_CHANGE" >
+        <artifact
+            location="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_4/classes.dex"
+            type="DEX" />
+    </build>
+    <build timestamp="2450203006250" >
+        <artifact
+            location="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_7/classes.dex"
+            type="DEX" />
+    </build>
+
+</instant-run>

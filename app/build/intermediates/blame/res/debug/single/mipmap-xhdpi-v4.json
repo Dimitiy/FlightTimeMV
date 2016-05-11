@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/mipmap-xhdpi-v4/ic_cross.png",
+        "source": "/home/oldman/Рабочий стол/FlightTime/app/src/main/res/mipmap-xhdpi/ic_cross.png"
+    },
+    {
+        "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/mipmap-xhdpi-v4/ic_launcher.png",
+        "source": "/home/oldman/Рабочий стол/FlightTime/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/mipmap-xhdpi-v4/ic_search.png",
+        "source": "/home/oldman/Рабочий стол/FlightTime/app/src/main/res/mipmap-xhdpi/ic_search.png"
+    }
+]
