@@ -471,9 +471,9 @@
                     "position": {
                         "startLine": 34,
                         "startColumn": 4,
-                        "startOffset": 1673,
+                        "startOffset": 1672,
                         "endColumn": 41,
-                        "endOffset": 1710
+                        "endOffset": 1709
                     }
                 }
             },
@@ -490,9 +490,9 @@
                     "position": {
                         "startLine": 31,
                         "startColumn": 4,
-                        "startOffset": 1494,
+                        "startOffset": 1493,
                         "endColumn": 60,
-                        "endOffset": 1550
+                        "endOffset": 1549
                     }
                 }
             },
@@ -509,9 +509,9 @@
                     "position": {
                         "startLine": 32,
                         "startColumn": 4,
-                        "startOffset": 1556,
+                        "startOffset": 1555,
                         "endColumn": 75,
-                        "endOffset": 1627
+                        "endOffset": 1626
                     }
                 }
             },
@@ -528,9 +528,9 @@
                     "position": {
                         "startLine": 35,
                         "startColumn": 4,
-                        "startOffset": 1716,
+                        "startOffset": 1715,
                         "endColumn": 75,
-                        "endOffset": 1787
+                        "endOffset": 1786
                     }
                 }
             },
@@ -566,9 +566,9 @@
                     "position": {
                         "startLine": 29,
                         "startColumn": 4,
-                        "startOffset": 1426,
+                        "startOffset": 1425,
                         "endColumn": 64,
-                        "endOffset": 1486
+                        "endOffset": 1485
                     }
                 }
             },
@@ -585,9 +585,9 @@
                     "position": {
                         "startLine": 28,
                         "startColumn": 4,
-                        "startOffset": 1351,
+                        "startOffset": 1350,
                         "endColumn": 73,
-                        "endOffset": 1420
+                        "endOffset": 1419
                     }
                 }
             },
@@ -699,9 +699,9 @@
                     "position": {
                         "startLine": 33,
                         "startColumn": 4,
-                        "startOffset": 1633,
+                        "startOffset": 1632,
                         "endColumn": 38,
-                        "endOffset": 1667
+                        "endOffset": 1666
                     }
                 }
             },
@@ -775,9 +775,9 @@
                     "position": {
                         "startLine": 25,
                         "startColumn": 4,
-                        "startOffset": 1192,
+                        "startOffset": 1191,
                         "endColumn": 56,
-                        "endOffset": 1244
+                        "endOffset": 1243
                     }
                 }
             },
@@ -794,9 +794,9 @@
                     "position": {
                         "startLine": 26,
                         "startColumn": 4,
-                        "startOffset": 1250,
+                        "startOffset": 1249,
                         "endColumn": 97,
-                        "endOffset": 1343
+                        "endOffset": 1342
                     }
                 }
             },
@@ -813,9 +813,9 @@
                     "position": {
                         "startLine": 24,
                         "startColumn": 4,
-                        "startOffset": 1116,
+                        "startOffset": 1115,
                         "endColumn": 74,
-                        "endOffset": 1186
+                        "endOffset": 1185
                     }
                 }
             },
@@ -824,8 +824,8 @@
                     "startLine": 45,
                     "startColumn": 4,
                     "startOffset": 3467,
-                    "endColumn": 84,
-                    "endOffset": 3547
+                    "endColumn": 83,
+                    "endOffset": 3546
                 },
                 "from": {
                     "file": "/home/oldman/Рабочий стол/FlightTime/app/src/main/res/values-ru/strings.xml",
@@ -833,8 +833,8 @@
                         "startLine": 23,
                         "startColumn": 4,
                         "startOffset": 1030,
-                        "endColumn": 84,
-                        "endOffset": 1110
+                        "endColumn": 83,
+                        "endOffset": 1109
                     }
                 }
             },
@@ -842,9 +842,9 @@
                 "to": {
                     "startLine": 46,
                     "startColumn": 4,
-                    "startOffset": 3552,
+                    "startOffset": 3551,
                     "endColumn": 69,
-                    "endOffset": 3617
+                    "endOffset": 3616
                 },
                 "from": {
                     "file": "/home/oldman/Рабочий стол/FlightTime/app/src/main/res/values-ru/strings.xml",
@@ -861,9 +861,9 @@
                 "to": {
                     "startLine": 47,
                     "startColumn": 4,
-                    "startOffset": 3622,
+                    "startOffset": 3621,
                     "endColumn": 100,
-                    "endOffset": 3718
+                    "endOffset": 3717
                 },
                 "from": {
                     "file": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/values-ru/values-ru.xml",
@@ -880,9 +880,9 @@
                 "to": {
                     "startLine": 48,
                     "startColumn": 4,
-                    "startOffset": 3723,
+                    "startOffset": 3722,
                     "endColumn": 70,
-                    "endOffset": 3789
+                    "endOffset": 3788
                 },
                 "from": {
                     "file": "/home/oldman/Рабочий стол/FlightTime/app/src/main/res/values-ru/strings.xml",
@@ -899,9 +899,9 @@
                 "to": {
                     "startLine": 49,
                     "startColumn": 4,
-                    "startOffset": 3794,
+                    "startOffset": 3793,
                     "endColumn": 36,
-                    "endOffset": 3826
+                    "endOffset": 3825
                 },
                 "from": {
                     "file": "/home/oldman/Рабочий стол/FlightTime/app/src/main/res/values-ru/strings.xml",

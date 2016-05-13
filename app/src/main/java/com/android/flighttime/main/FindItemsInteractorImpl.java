@@ -19,6 +19,7 @@
 package com.android.flighttime.main;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.flighttime.R;
 import com.android.flighttime.database.DBHelper;
@@ -35,6 +36,7 @@ import java.util.Map;
 
 public class FindItemsInteractorImpl implements FindItemsInteractor {
     private Context context;
+    private String TAG = FindItemsInteractorImpl.class.getSimpleName();
 
     public FindItemsInteractorImpl(Context context) {
         this.context = context;
@@ -56,12 +58,20 @@ public class FindItemsInteractorImpl implements FindItemsInteractor {
         } else
             swipe.add(new SwipeItem(index, context.getResources().getString(R.string.empty_mission),
                     ""));
+        Log.d(TAG, swipe.listIterator().toString());
         listener.onYearsFinished(swipe.toArray(new SwipeItem[swipe.size()]));
     }
 
     @Override
-    public void findMissionItems(DBHelper realm, final int year, OnMissionFinishedListener listener) {
-        List<MissionDB> list = realm.getMissionsYear(year);
+    public void findMissionItems(DBHelper realm, final String  year, OnMissionFinishedListener listener) {
+        List<MissionDB> list = realm.getMissionsYear(getYear(year));
         listener.onMissionFinished(list);
+    }
+
+    private int getYear(String year) {
+        if (year.length() <= 8) {
+            return  DateFormatter.getDate(year.replaceAll("[^0-9]", ""));
+        }
+        return 0;
     }
 }

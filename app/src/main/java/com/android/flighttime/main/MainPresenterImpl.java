@@ -23,10 +23,13 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 
+import com.android.flighttime.data.AbstractExpandableDataProvider;
+import com.android.flighttime.data.FlightCreator;
 import com.android.flighttime.database.DBHelper;
+import com.android.flighttime.database.FlightDB;
 import com.android.flighttime.database.MissionDB;
-import com.android.flighttime.dialog.MissionCreator;
-import com.android.flighttime.listener.OnMissionCreateListener;
+import com.android.flighttime.data.MissionCreator;
+import com.android.flighttime.listener.OnTaskCreateListener;
 import com.roughike.swipeselector.SwipeItem;
 
 import java.util.Calendar;
@@ -35,7 +38,7 @@ import java.util.List;
 import io.realm.RealmChangeListener;
 
 
-public class MainPresenterImpl implements MainPresenter, OnMissionCreateListener, FindItemsInteractor.OnMissionFinishedListener, FindItemsInteractor.OnYearsFinishedListener, RealmChangeListener {
+public class MainPresenterImpl implements MainPresenter, OnTaskCreateListener, FindItemsInteractor.OnMissionFinishedListener, FindItemsInteractor.OnYearsFinishedListener, RealmChangeListener {
 
     private MainView mainView;
     private FindItemsInteractor findItemsInteractor;
@@ -50,7 +53,8 @@ public class MainPresenterImpl implements MainPresenter, OnMissionCreateListener
         findItemsInteractor = new FindItemsInteractorImpl(context);
     }
 
-    @Override public void onResume() {
+    @Override
+    public void onResume() {
         if (mainView != null) {
             mainView.showProgress();
         }
@@ -58,40 +62,22 @@ public class MainPresenterImpl implements MainPresenter, OnMissionCreateListener
     }
 
     @Override
-    public void onSwipeItemClicked(SwipeItem item) {
+    public void onMissionItems(String year) {
         if (mainView != null) {
-            mainView.showMessage(String.format("Position %d clicked", item.description));
+            mainView.showProgress();
         }
+        findItemsInteractor.findMissionItems(dbHelper, year, this);
     }
 
-    @Override
-    public void onGroupItemRemoved(int groupPosition) {
-
-    }
-
-    @Override
-    public void onChildItemRemoved(int groupPosition, int childPosition) {
-
-    }
-
-    @Override
-    public void onGroupItemPinned(int groupPosition) {
-
-    }
-
-    @Override
-    public void onChildItemPinned(int groupPosition, int childPosition) {
-
-    }
-
-    @Override
-    public void onItemViewClicked(View v, boolean pinned) {
-
-    }
 
     @Override
     public void navigateToCreateMission(View v) {
-        new MissionCreator((Activity)mainView, this);
+        new MissionCreator((Activity) mainView, this);
+    }
+
+    @Override
+    public void navigateToCreateFlight(AbstractExpandableDataProvider.MissionData mission, View v) {
+        new FlightCreator(mission, (Activity) mainView, this);
     }
 
     @Override
@@ -100,25 +86,22 @@ public class MainPresenterImpl implements MainPresenter, OnMissionCreateListener
     }
 
     @Override
-    public void onUnderSwipeAddFlightButtonClicked(int groupPosition, View v) {
-
+    public void onDeleteMission(int groupPosition) {
+        if (dbHelper != null)
+            dbHelper.deleteMission(groupPosition);
     }
 
     @Override
-    public void onUnderSwipeEditMissionButtonClicked(View v) {
-
+    public void onDeleteFlight(int groupPosition, int childPosition) {
+        if (dbHelper != null)
+            dbHelper.deleteFlightInMission(groupPosition, childPosition);
     }
 
-    @Override public void onDestroy() {
+    @Override
+    public void onDestroy() {
         mainView = null;
-    }
+        dbHelper.closeRealm(this);
 
-    @Override
-    public void onMissionFinished(List<MissionDB> missionsList) {
-        if (mainView != null) {
-            mainView.setItems(missionsList);
-            mainView.hideProgress();
-        }
     }
 
     @Override
@@ -128,13 +111,34 @@ public class MainPresenterImpl implements MainPresenter, OnMissionCreateListener
             mainView.hideProgress();
         }
     }
+    @Override
+    public void onMissionFinished(List<MissionDB> missionsList) {
+        if (mainView != null) {
+            Log.d(TAG, "on missionFinished");
+            mainView.setMissionItems(missionsList);
+            mainView.hideProgress();
+        }
+    }
+
+
 
     @Override
     public void onMissionCreated(String address, Calendar calendar) {
         Log.d("MissionCreated", address);
-
-        dbHelper.addListener(this);
         dbHelper.insertMission(address, calendar);
+    }
+
+    @Override
+    public void onFlightCreated(AbstractExpandableDataProvider.MissionData mission, Calendar calendar) {
+        long second = (calendar.get(Calendar.HOUR) * 3600) + (calendar.get(Calendar.MINUTE) * 60);
+
+        FlightDB flight = new FlightDB();
+        flight.setId(dbHelper.getPrimaryKey(flight));
+        flight.setDate(calendar.getTime());
+        flight.setDuration(second);
+
+        dbHelper.insertFlightInMission(mission.getMission().getId(), flight);
+        mainView.onFlightItemCreated(mission.getMissionId(), flight);
     }
 
     @Override

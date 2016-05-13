@@ -52,6 +52,10 @@
         "source": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-hdpi-v4/abc_ab_share_pack_mtrl_alpha.9.png"
     },
     {
+        "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/material_shadow_z3.xml",
+        "source": "/home/oldman/Рабочий стол/FlightTime/app/src/main/res/drawable-hdpi/material_shadow_z3.xml"
+    },
+    {
         "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_textfield_activated_mtrl_alpha.9.png",
         "source": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-hdpi-v4/abc_textfield_activated_mtrl_alpha.9.png"
     },
@@ -74,6 +78,10 @@
     {
         "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_btn_radio_to_on_mtrl_015.png",
         "source": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-hdpi-v4/abc_btn_radio_to_on_mtrl_015.png"
+    },
+    {
+        "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/material_shadow_z1.xml",
+        "source": "/home/oldman/Рабочий стол/FlightTime/app/src/main/res/drawable-hdpi/material_shadow_z1.xml"
     },
     {
         "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_scrubber_primary_mtrl_alpha.9.png",
@@ -126,10 +134,6 @@
     {
         "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_spinner_mtrl_am_alpha.9.png",
         "source": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-hdpi-v4/abc_spinner_mtrl_am_alpha.9.png"
-    },
-    {
-        "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/ic_arrow_right_white.png",
-        "source": "/home/oldman/Рабочий стол/FlightTime/app/build/generated/res/pngs/debug/drawable-hdpi/ic_arrow_right_white.png"
     },
     {
         "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_list_selector_disabled_holo_dark.9.png",
@@ -186,14 +190,6 @@
     {
         "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_list_selector_disabled_holo_light.9.png",
         "source": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-hdpi-v4/abc_list_selector_disabled_holo_light.9.png"
-    },
-    {
-        "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/ic_arrow_left_white.png",
-        "source": "/home/oldman/Рабочий стол/FlightTime/app/build/generated/res/pngs/debug/drawable-hdpi/ic_arrow_left_white.png"
-    },
-    {
-        "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/ic_add_mission.png",
-        "source": "/home/oldman/Рабочий стол/FlightTime/app/build/generated/res/pngs/debug/drawable-hdpi/ic_add_mission.png"
     },
     {
         "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_btn_check_to_on_mtrl_000.png",

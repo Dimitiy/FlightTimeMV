@@ -12,6 +12,10 @@
         "source": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/layout/notification_template_lines.xml"
     },
     {
+        "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/layout/item_flight_layout.xml",
+        "source": "/home/oldman/Рабочий стол/FlightTime/app/src/main/res/layout/item_flight_layout.xml"
+    },
+    {
         "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/layout/abc_action_menu_layout.xml",
         "source": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/layout/abc_action_menu_layout.xml"
     },
@@ -26,6 +30,10 @@
     {
         "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/layout/abc_alert_dialog_material.xml",
         "source": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/layout/abc_alert_dialog_material.xml"
+    },
+    {
+        "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/layout/item_mission_layout.xml",
+        "source": "/home/oldman/Рабочий стол/FlightTime/app/src/main/res/layout/item_mission_layout.xml"
     },
     {
         "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/layout/abc_select_dialog_material.xml",
@@ -214,6 +222,10 @@
     {
         "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/layout/design_layout_tab_text.xml",
         "source": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.android.support/design/23.3.0/res/layout/design_layout_tab_text.xml"
+    },
+    {
+        "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/layout/widget_expandable_item_indicator.xml",
+        "source": "/home/oldman/Рабочий стол/FlightTime/app/src/main/res/layout/widget_expandable_item_indicator.xml"
     },
     {
         "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/layout/abc_action_menu_item_layout.xml",

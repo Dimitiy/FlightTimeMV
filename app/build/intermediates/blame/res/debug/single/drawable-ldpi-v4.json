@@ -1,14 +1,10 @@
 [
     {
-        "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/ic_arrow_right_white.png",
-        "source": "/home/oldman/Рабочий стол/FlightTime/app/build/generated/res/pngs/debug/drawable-ldpi/ic_arrow_right_white.png"
+        "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/material_shadow_z3.xml",
+        "source": "/home/oldman/Рабочий стол/FlightTime/app/src/main/res/drawable-ldpi/material_shadow_z3.xml"
     },
     {
-        "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/ic_arrow_left_white.png",
-        "source": "/home/oldman/Рабочий стол/FlightTime/app/build/generated/res/pngs/debug/drawable-ldpi/ic_arrow_left_white.png"
-    },
-    {
-        "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/ic_add_mission.png",
-        "source": "/home/oldman/Рабочий стол/FlightTime/app/build/generated/res/pngs/debug/drawable-ldpi/ic_add_mission.png"
+        "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/material_shadow_z1.xml",
+        "source": "/home/oldman/Рабочий стол/FlightTime/app/src/main/res/drawable-ldpi/material_shadow_z1.xml"
     }
 ]

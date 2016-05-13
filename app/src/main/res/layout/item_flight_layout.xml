@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/list_item_height"
+
+    android:background="@drawable/bg_swipe_item_neutral">
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground">
+        <View
+            android:id="@+id/drag_handle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="top|left"
+            android:background="#20000000"/>
+        <TextView
+            android:id="@+id/item_flight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/draggable_padding"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@drawable/item_selector_base_text"
+            tools:text="Flight Name"/>
+
+
+        <TextView
+            android:id="@+id/text_count_hour_flight"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/arrow_size"
+            android:layout_weight="1"
+            android:gravity="right|center_vertical"
+            android:text="count h"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@drawable/item_selector_small_text"/>
+    </FrameLayout>
+</FrameLayout>

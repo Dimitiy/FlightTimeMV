@@ -1,2 +1,0 @@
-CHANGED,/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/android/tools/fd/runtime/AppPatchesLoaderImpl.class
-CHANGED,/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/android/flighttime/dialog/MissionCreator$override.class

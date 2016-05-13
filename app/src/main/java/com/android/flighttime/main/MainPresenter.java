@@ -2,6 +2,7 @@ package com.android.flighttime.main;
 
 import android.view.View;
 
+import com.android.flighttime.data.AbstractExpandableDataProvider;
 import com.roughike.swipeselector.SwipeItem;
 
 /**
@@ -10,25 +11,18 @@ import com.roughike.swipeselector.SwipeItem;
 public interface MainPresenter {
     void onResume();
 
-    void onSwipeItemClicked(SwipeItem item);
-
-    void onGroupItemRemoved(int groupPosition);
-
-    void onChildItemRemoved(int groupPosition, int childPosition);
-
-    void onGroupItemPinned(int groupPosition);
-
-    void onChildItemPinned(int groupPosition, int childPosition);
-
-    void onItemViewClicked(View v, boolean pinned);
+    void onMissionItems(String year);
 
     void navigateToCreateMission(View v);
 
+    void navigateToCreateFlight(AbstractExpandableDataProvider.MissionData mission, View v);
+
     void navigateToChangeMission();
 
-    void onUnderSwipeAddFlightButtonClicked(int groupPosition, View v);
+    void onDeleteMission(int groupPosition);
 
-    void onUnderSwipeEditMissionButtonClicked(View v);
+    void onDeleteFlight(int groupPosition, int childPosition);
+
 
     void onDestroy();
 }

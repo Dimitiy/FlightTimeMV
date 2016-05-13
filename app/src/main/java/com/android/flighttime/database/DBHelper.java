@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.realm.Realm;
+import io.realm.RealmAsyncTask;
 import io.realm.RealmChangeListener;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
@@ -24,20 +25,29 @@ public class DBHelper implements DBInterface {
     private Context mContext;
     private Realm realm;
     private String TAG = "DBHelper";
-
+    private RealmAsyncTask transaction;
     public DBHelper(Context ctx) {
         this.mContext = ctx;
         realm = getDefaultInstance();
     }
+
+    public void onStop () {
+        if (transaction != null && !transaction.isCancelled()) {
+            transaction.cancel();
+        }
+    }
+
 
     public void addListener(RealmChangeListener listener){
         realm.addChangeListener(listener);
     }
     @Override
     public void insertMission(final String city, final Calendar date) {
-        realm.executeTransactionAsync(new Transaction() {
+        realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
+                Log.d(DBHelper.class.getCanonicalName().toString(), "start insertFlightInMission" + city+ " " + date.toString() + " ");
+
                 long duration = 0;
                 MissionDB mission = realm.createObject(MissionDB.class);
                 mission.setId(getPrimaryKey(mission));
@@ -45,16 +55,6 @@ public class DBHelper implements DBInterface {
                 mission.setDate(date.getTime());
                 mission.setDuration(duration);
                 Log.d(TAG, "insertMission");
-            }
-        }, new Realm.Transaction.OnSuccess() {
-            @Override
-            public void onSuccess() {
-                // Transaction was a success.
-            }
-        }, new Realm.Transaction.OnError() {
-            @Override
-            public void onError(Throwable error) {
-                // Transaction failed and was automatically canceled.
             }
         });
      }

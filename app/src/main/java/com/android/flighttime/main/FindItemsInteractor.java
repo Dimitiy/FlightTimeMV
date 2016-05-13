@@ -36,5 +36,6 @@ public interface FindItemsInteractor {
 
     void findYearsItems(DBHelper realm, OnYearsFinishedListener listener);
 
-    void findMissionItems(DBHelper realm, final int year, OnMissionFinishedListener listener);
+    void findMissionItems(DBHelper realm, final String  year, OnMissionFinishedListener listener);
+
 }

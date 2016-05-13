@@ -20,6 +20,14 @@ public class MissionDB extends RealmObject {
     private long duration;
     private RealmList<FlightDB> flightDBRealmList;
 
+//    public MissionDB(int id, String city,  Date date, long duration, RealmList<FlightDB> flightDBRealmList) {
+//        this.city = city;
+//        this.id = id;
+//        this.date = date;
+//        this.duration = duration;
+//        this.flightDBRealmList = flightDBRealmList;
+//    }
+
     public int getId() {
         return id;
     }
