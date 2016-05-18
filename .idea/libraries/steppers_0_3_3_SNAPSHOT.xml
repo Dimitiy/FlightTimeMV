@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="steppers-0.3.3-SNAPSHOT">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/me.drozdzynski.library.steppers/steppers/0.3.3-SNAPSHOT/res" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/me.drozdzynski.library.steppers/steppers/0.3.3-SNAPSHOT/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/me.drozdzynski.library.steppers/steppers/0.3.3-SNAPSHOT/8967e2249b915104b64d28eff3c15441beb56b58/steppers-0.3.3-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

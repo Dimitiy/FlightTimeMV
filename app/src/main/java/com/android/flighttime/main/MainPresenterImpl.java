@@ -72,6 +72,7 @@ public class MainPresenterImpl implements MainPresenter, OnTaskCreateListener, F
 
     @Override
     public void navigateToCreateMission(View v) {
+
         new MissionCreator((Activity) mainView, this);
     }
 
@@ -126,6 +127,11 @@ public class MainPresenterImpl implements MainPresenter, OnTaskCreateListener, F
     public void onMissionCreated(String address, Calendar calendar) {
         Log.d("MissionCreated", address);
         dbHelper.insertMission(address, calendar);
+        
+//        findItemsInteractor.findYearsItems(dbHelper, this);
+
+//        mainView.onit;
+//        mainView.setMissionItems();
     }
 
     @Override
