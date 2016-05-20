@@ -3,7 +3,6 @@ package com.android.flighttime.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,7 +30,7 @@ import com.android.flighttime.database.FlightDB;
 import com.android.flighttime.database.MissionDB;
 import com.android.flighttime.dialog.DelItemDialog;
 import com.android.flighttime.listener.DialogClickListener;
-import com.android.flighttime.mission.CreateMissionActivity;
+import com.android.flighttime.mission.MissionCreatorActivity;
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
@@ -401,7 +400,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
         switch (v.getId()) {
             case R.id.fab:
 //                presenter.navigateToCreateMission(v);
-                startActivity(new Intent(this, CreateMissionActivity.class));
+                startActivity(new Intent(this, MissionCreatorActivity.class));
             default:
                 break;
         }

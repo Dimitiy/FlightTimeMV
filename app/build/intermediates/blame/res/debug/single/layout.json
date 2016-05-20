@@ -68,6 +68,10 @@
         "source": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.android.support/design/23.4.0/res/layout/design_layout_tab_icon.xml"
     },
     {
+        "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/layout/searchview_adapter.xml",
+        "source": "/home/oldman/Рабочий стол/FlightTime/app/src/main/res/layout/searchview_adapter.xml"
+    },
+    {
         "merged": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/res/merged/debug/layout/design_menu_item_action_area.xml",
         "source": "/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.android.support/design/23.4.0/res/layout/design_menu_item_action_area.xml"
     },

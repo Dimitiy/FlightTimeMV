@@ -4,38 +4,25 @@
     api-level="23"
     density="xhdpi"
     format="7"
-    timestamp="1194896744002"
-    verifier="FIELD_REMOVED" >
+    timestamp="5257872954996" >
 
     <task
         name="javac"
-        duration="1157" />
+        duration="8662" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="16" />
+        duration="722" />
     <task
         name="verifier"
-        duration="2" />
+        duration="102" />
 
     <artifact
-        location="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_3/classes.dex"
-        type="DEX" />
+        location="/home/oldman/Рабочий стол/FlightTime/app/build/outputs/apk/app-debug.apk"
+        type="MAIN" />
 
-    <build timestamp="1020985325907" >
-        <artifact
-            location="/home/oldman/Рабочий стол/FlightTime/app/build/outputs/apk/app-debug.apk"
-            type="MAIN" />
-    </build>
-    <build
-        timestamp="1194896744002"
-        verifier="FIELD_REMOVED" >
-        <artifact
-            location="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_3/classes.dex"
-            type="DEX" />
-    </build>
     <build
         timestamp="25582598594701"
         verifier="STATIC_INITIALIZER_CHANGE" >

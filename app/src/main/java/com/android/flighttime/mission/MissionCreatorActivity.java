@@ -1,6 +1,8 @@
 package com.android.flighttime.mission;
 
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +12,7 @@ import android.view.View;
 import com.android.flighttime.R;
 import com.android.flighttime.fragment.CityNameFragment;
 import com.android.flighttime.fragment.DateFragment;
+import com.android.flighttime.listener.OnBackPressedListener;
 import com.android.flighttime.main.MainActivity;
 
 import java.util.ArrayList;
@@ -19,7 +22,7 @@ import me.drozdzynski.library.steppers.OnFinishAction;
 import me.drozdzynski.library.steppers.SteppersItem;
 import me.drozdzynski.library.steppers.SteppersView;
 
-public class CreateMissionActivity extends AppCompatActivity {
+public class MissionCreatorActivity extends AppCompatActivity implements MissionCreatorView{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +32,16 @@ public class CreateMissionActivity extends AppCompatActivity {
         steppersViewConfig.setOnFinishAction(new OnFinishAction() {
             @Override
             public void onFinish() {
-                CreateMissionActivity.this.startActivity(new Intent(CreateMissionActivity.this, MainActivity.class));
-                CreateMissionActivity.this.finish();
+                MissionCreatorActivity.this.startActivity(new Intent(MissionCreatorActivity.this, MainActivity.class));
+                MissionCreatorActivity.this.finish();
             }
         });
 
         steppersViewConfig.setOnCancelAction(new OnCancelAction() {
             @Override
             public void onCancel() {
-                CreateMissionActivity.this.startActivity(new Intent(CreateMissionActivity.this, MainActivity.class));
-                CreateMissionActivity.this.finish();
+                MissionCreatorActivity.this.startActivity(new Intent(MissionCreatorActivity.this, MainActivity.class));
+                MissionCreatorActivity.this.finish();
             }
         });
 
@@ -103,5 +106,32 @@ public class CreateMissionActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager fm = getSupportFragmentManager();
+        OnBackPressedListener backPressedListener = null;
+        for (Fragment fragment: fm.getFragments()) {
+            if (fragment instanceof  OnBackPressedListener) {
+                backPressedListener = (OnBackPressedListener) fragment;
+                break;
+            }
+        }
+
+        if (backPressedListener != null) {
+            backPressedListener.onBackPressed();
+        } else {
+            super.onBackPressed();
+        }
+    }
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
     }
 }

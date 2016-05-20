@@ -1,2 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="613298b7aa012f121ce542881c0a599ebd8078f2">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-measurement-8.4.0_b862c48267179cdb33d8ab92412c7756fb50e6c6/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-vision/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="dfecc4d835cdabcdecf7e95f0d20a3ef1e9d8ef4">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-vision-8.4.0_c3bfd5f5b81c41a265a3e8f6bc7185af173bd067/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="3a364cc6b698d1b3b2d284f64618daaa7fe77ddf">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-games-8.4.0_3c23ff163da05fdf966b534793db493b44fb29ad/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="3a0be6b9845da1b89d3d6af3d8b8df595e29cd12">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_3e32efdd23e5b93b247d2d4720dd783ec2de65ca/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="65d086ee9daaf87b5af62ad24471edafa433354c">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-appindexing-8.4.0_042908e9c83bce888b7db86d584920310ba9ed78/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="d358b3dd49a7c67844622dcbc9cf4339e13952ce">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-mediarouter-v7-23.0.0_02d0867b4145fb5a0c9236774a5dcbfff93a2116/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="b82b8e847173c28efffcd291b2a0b1ae9ad17fa4">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-identity-8.4.0_670466effccb8e95e003bb60fcf1b2f7a1dc8b3d/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="a8412b654dab86d57bf90683367488211c8a81f1">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-location-8.4.0_c94dcb8e0dca3a7b5c7f7c072c379dc364a5bd5f/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="1a78298e7724d5440d210bcb946b3493250d354d">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-plus-8.4.0_2c60f99cddfda636bb5dd0c58e16a95000e606dc/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="0194a7409c40de94fb539d4ad9928ec5d47afeb7">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-safetynet-8.4.0_444bf94f5b52ddda01e181f9a33a97a706916b6f/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-8.4.0_c2bfa02bf6508eb2f52e77c0d2da451e83122440/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-base-8.4.0_8a93373d300fe25d436070fdea02206f666eb642/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="966e5771a5a2ebfb31bf00d7cd6cd2546d245517">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-auth-8.4.0_ae8ffbd962bbde052de0d7426b7d90955e0cf47c/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="9fe026fb4c7fce21bc5142f6e1bdf844f28061ac">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-appinvite-8.4.0_0d9f2fb089ebc346dee56155eb6b5c31850d63da/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="9cad249cf62751a323d9af568caf12284b7d6062">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-nearby-8.4.0_59498adf889910dd651d08455becc9f81746eb25/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="c54246475c1bb64ac6857d1320364bfbfeda2c46">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-fitness-8.4.0_d8854574ea12d6dcab5b993bb97794cd8f5e3b0e/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="e167a34eaca0b31704212f43f9576ea84e05046f">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-wearable-8.4.0_f0ccd2b695b0ebca622bbed7bb633837f79b5371/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="f2df436a8f02ce7e4d7d209671fc45f97c470f0e">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-wallet-8.4.0_5c63fdeccd4835d7120326233c8e6498411b531c/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="1c9f35e952b212c843f7bd2c7eec8e82ad95602e">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-analytics-8.4.0_bb42295c2372c9dc8f18399ae4b63545ef5930de/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="2d7fe76982677315c4dc4edfb459c8ca718a9d4c">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-gcm-8.4.0_9de5af4eb7fe188a3a3aa88d242ae3e5f366e0e5/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="04de44f90606c77f3b28cf44861f306290505aac">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-maps-8.4.0_5ce19d7f768327013101a78e93e3bf8505cd398b/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="b5e7892fb0708e792e0e933c4c0a0ca0ac7831fb">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-ads-8.4.0_8b44a73d84ec9aed5032013710178c9b81a6c203/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="551e78f21acf69ebfb489c0e79647824c838013e">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-cast-8.4.0_8f4fe967b738505a876eb242764f6d693fe4dcf6/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/jars/libs/internal_impl-23.0.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="03d38bb042efe3e5ce27ba66b729a9523c36d8fe">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.0.0_719182c4806f5a220b73d6ae47a5fcadd50e7af3/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="b36f30ac5ee5d5214f4b1e2ac49f11889d58e71a">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-drive-8.4.0_faa171f20753c79aa016488a1540102233d890df/classes.dex" />
+    </item>
+    <item
+        jar="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="08d34b2d135c1cc96ab506fd8bf6916d1e2f391a">
+        <dex dex="/home/oldman/Рабочий стол/FlightTime/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-panorama-8.4.0_6165aaba50ffa79509c34b9c19fef29bf420500f/classes.dex" />
+    </item>
+
+</items>

@@ -227,10 +227,10 @@ category#android.intent.category.LAUNCHER
 ADDED from /home/oldman/Рабочий стол/FlightTime/app/src/main/AndroidManifest.xml:25:17-77
 	android:name
 		ADDED from /home/oldman/Рабочий стол/FlightTime/app/src/main/AndroidManifest.xml:25:27-74
-activity#com.android.flighttime.mission.CreateMissionActivity
-ADDED from /home/oldman/Рабочий стол/FlightTime/app/src/main/AndroidManifest.xml:28:9-76
+activity#com.android.flighttime.mission.MissionCreatorActivity
+ADDED from /home/oldman/Рабочий стол/FlightTime/app/src/main/AndroidManifest.xml:28:9-77
 	android:name
-		ADDED from /home/oldman/Рабочий стол/FlightTime/app/src/main/AndroidManifest.xml:28:19-64
+		ADDED from /home/oldman/Рабочий стол/FlightTime/app/src/main/AndroidManifest.xml:28:19-65
 uses-sdk
 INJECTED from /home/oldman/Рабочий стол/FlightTime/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [io.realm:realm-android-library:0.90.0] /home/oldman/Рабочий стол/FlightTime/app/build/intermediates/exploded-aar/io.realm/realm-android-library/0.90.0/AndroidManifest.xml:5:5-7:41

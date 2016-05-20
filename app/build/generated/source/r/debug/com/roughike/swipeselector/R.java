@@ -465,7 +465,7 @@ public final class R {
 		public static final int abc_textfield_search_material = 0x7f02004a;
 		public static final int ic_action_navigation_chevron_left = 0x7f02008e;
 		public static final int ic_action_navigation_chevron_right = 0x7f02008f;
-		public static final int notification_template_icon_bg = 0x7f0200d3;
+		public static final int notification_template_icon_bg = 0x7f0200d4;
 	}
 	public static final class id {
 		public static final int action0 = 0x7f0d00bc;
@@ -552,12 +552,12 @@ public final class R {
 		public static final int src_over = 0x7f0d002c;
 		public static final int status_bar_latest_event_content = 0x7f0d00be;
 		public static final int submit_area = 0x7f0d008c;
-		public static final int swipeselector_content_description = 0x7f0d00d9;
-		public static final int swipeselector_content_title = 0x7f0d00d8;
-		public static final int swipeselector_layout_circleContainer = 0x7f0d00da;
-		public static final int swipeselector_layout_leftButton = 0x7f0d00dc;
-		public static final int swipeselector_layout_rightButton = 0x7f0d00dd;
-		public static final int swipeselector_layout_swipePager = 0x7f0d00db;
+		public static final int swipeselector_content_description = 0x7f0d00db;
+		public static final int swipeselector_content_title = 0x7f0d00da;
+		public static final int swipeselector_layout_circleContainer = 0x7f0d00dc;
+		public static final int swipeselector_layout_leftButton = 0x7f0d00de;
+		public static final int swipeselector_layout_rightButton = 0x7f0d00df;
+		public static final int swipeselector_layout_swipePager = 0x7f0d00dd;
 		public static final int tabMode = 0x7f0d000e;
 		public static final int text = 0x7f0d00c6;
 		public static final int text2 = 0x7f0d00c4;
@@ -612,13 +612,13 @@ public final class R {
 		public static final int notification_template_media = 0x7f040038;
 		public static final int notification_template_part_chronometer = 0x7f040039;
 		public static final int notification_template_part_time = 0x7f04003a;
-		public static final int select_dialog_item_material = 0x7f04003f;
-		public static final int select_dialog_multichoice_material = 0x7f040040;
-		public static final int select_dialog_singlechoice_material = 0x7f040041;
-		public static final int support_simple_spinner_dropdown_item = 0x7f040045;
-		public static final int swipeselector_circle_item = 0x7f040046;
-		public static final int swipeselector_content_item = 0x7f040047;
-		public static final int swipeselector_layout = 0x7f040048;
+		public static final int select_dialog_item_material = 0x7f040040;
+		public static final int select_dialog_multichoice_material = 0x7f040041;
+		public static final int select_dialog_singlechoice_material = 0x7f040042;
+		public static final int support_simple_spinner_dropdown_item = 0x7f040046;
+		public static final int swipeselector_circle_item = 0x7f040047;
+		public static final int swipeselector_content_item = 0x7f040048;
+		public static final int swipeselector_layout = 0x7f040049;
 	}
 	public static final class string {
 		public static final int abc_action_bar_home_description = 0x7f070000;
