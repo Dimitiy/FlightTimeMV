@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -178,13 +179,13 @@ public class PlacesAutoCompleteAdapter extends RecyclerView.Adapter<PlacesAutoCo
 
     public class PredictionHolder extends RecyclerView.ViewHolder {
         private TextView mPrediction;
-        private RelativeLayout mRow;
+        private LinearLayout mRow;
 
         public PredictionHolder(View itemView) {
 
             super(itemView);
             mPrediction = (TextView) itemView.findViewById(R.id.address);
-            mRow = (RelativeLayout) itemView.findViewById(R.id.predictedRow);
+            mRow = (LinearLayout) itemView.findViewById(R.id.predictedRow);
         }
 
     }
@@ -194,6 +195,15 @@ public class PlacesAutoCompleteAdapter extends RecyclerView.Adapter<PlacesAutoCo
     public class PlaceAutocomplete {
 
         public CharSequence placeId;
+
+        public CharSequence getDescription() {
+            return description;
+        }
+
+        public void setDescription(CharSequence description) {
+            this.description = description;
+        }
+
         public CharSequence description;
 
         PlaceAutocomplete(CharSequence placeId, CharSequence description) {

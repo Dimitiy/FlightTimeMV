@@ -7,10 +7,13 @@ public interface CityNamePresenter {
 
     void onResume();
 
-    void onPause();
+    void onStop();
 
+    void onStart();
 
-    void onBuildGoogleApiClient(String year);
+    void onBuildGoogleApiClient();
+
+    void onPlaceResult(String placeId);
 
     void onDestroy();
 }

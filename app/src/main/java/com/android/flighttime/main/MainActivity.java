@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     @Override
     protected void onResume() {
         super.onResume();
-         presenter.onResume();
+        presenter.onResume();
     }
 
     @Override

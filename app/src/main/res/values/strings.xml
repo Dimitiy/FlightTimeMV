@@ -7,7 +7,7 @@
 
 
     <string name="add_mission">Add mission</string>
-    <string name="enter_travel_city">Enter your travel city</string>
+    <string name="enter_travel_city">Name of the city</string>
     <string name="title_activity_create_mission">Specify the date</string>
 
     <string name="add_hour"> hr</string>
@@ -33,8 +33,6 @@
     <string name="next">Next</string>
     <string name="cancel">Cancel</string>
     <string name="city_error">City name can not be empty</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="step">Step №</string>
 
 </resources>

@@ -12,8 +12,5 @@ public interface MissionCreatorPresenter {
 
     void onPause();
 
-
-    void onBuildGoogleApiClient(String year);
-
     void onDestroy();
 }

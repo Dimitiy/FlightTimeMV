@@ -8,7 +8,7 @@
     <string name="settings">Настройка</string>
 
     <string name="add_mission">Добавить командировку</string>
-    <string name="enter_travel_city">Введите город командировки</string>
+    <string name="enter_travel_city">Населенный пункт</string>
     <string name="title_activity_create_mission">Укажите дату</string>
     <string name="add_hour"> ч.</string>
     <string name="empty_mission">Cписок командировок пуст</string>
@@ -34,4 +34,6 @@
     <string name="next">Далее</string>
     <string name="cancel">Отмена</string>
     <string name="city_error">Название города не может быть пустым</string>
+    <string name="step">Шаг №</string>
+
 </resources>

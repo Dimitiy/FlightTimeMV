@@ -5,6 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +31,12 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_mission);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         SteppersView.Config steppersViewConfig = new SteppersView.Config();
         steppersViewConfig.setOnFinishAction(new OnFinishAction() {
             @Override
@@ -57,23 +66,18 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
     private ArrayList<SteppersItem> getItems(){
         ArrayList<SteppersItem> steps = new ArrayList<>();
 
-        int i = 0;
-        while (i <= 3) {
+        int i = 1;
+        while (i <= 4) {
 
             final SteppersItem item = new SteppersItem();
-            item.setLabel("Step nr " + i);
+            item.setLabel(getResources().getString(R.string.step) + i);
             item.setPositiveButtonEnable(i % 2 != 0);
 
             if(i % 2 == 0) {
-                CityNameFragment blankFragment = new CityNameFragment();
-                blankFragment.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        item.setPositiveButtonEnable(true);
-                    }
-                });
-                item.setSubLabel("Fragment: " + blankFragment.getClass().getSimpleName());
-                item.setFragment(blankFragment);
+                CityNameFragment cityNameFragment = new CityNameFragment();
+                item.setPositiveButtonEnable(true);
+                item.setSubLabel(getResources().getString(R.string.enter_travel_city));
+                item.setFragment(cityNameFragment);
             } else {
                 DateFragment blankSecondFragment = new DateFragment();
                 item.setSubLabel("Fragment: " + blankSecondFragment.getClass().getSimpleName());
@@ -110,20 +114,20 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
 
     @Override
     public void onBackPressed() {
-        FragmentManager fm = getSupportFragmentManager();
-        OnBackPressedListener backPressedListener = null;
-        for (Fragment fragment: fm.getFragments()) {
-            if (fragment instanceof  OnBackPressedListener) {
-                backPressedListener = (OnBackPressedListener) fragment;
-                break;
-            }
-        }
-
-        if (backPressedListener != null) {
-            backPressedListener.onBackPressed();
-        } else {
+//        FragmentManager fm = getSupportFragmentManager();
+//        OnBackPressedListener backPressedListener = null;
+//        for (Fragment fragment: fm.getFragments()) {
+//            if (fragment instanceof  OnBackPressedListener) {
+//                backPressedListener = (OnBackPressedListener) fragment;
+//                break;
+//            }
+//        }
+//        if (backPressedListener != null) {
+//            backPressedListener.onBackPressed();
+//        } else {
             super.onBackPressed();
-        }
+
+//        }
     }
     @Override
     public void showProgress() {

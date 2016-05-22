@@ -8,4 +8,7 @@ public interface CityNameView {
 
     void hideProgress();
 
+    void showRecycleView();
+
+    void setGoogleApiClient(boolean isGoogleApiClient);
 }

@@ -22,6 +22,7 @@ import com.android.flighttime.R;
 import com.android.flighttime.adapters.PlacesAutoCompleteAdapter;
 import com.android.flighttime.listener.OnBackPressedListener;
 import com.android.flighttime.listener.RecyclerItemFromAutoCompleteClickListener;
+import com.android.flighttime.main.MainPresenter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -30,14 +31,13 @@ import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 
 
-public class CityNameFragment extends Fragment implements  View.OnClickListener, OnBackPressedListener {
+public class CityNameFragment extends Fragment implements CityNameView, View.OnClickListener, OnBackPressedListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private PlacesAutoCompleteAdapter autoCompleteAdapter;
-
-    private View.OnClickListener onClickListener;
+    private volatile boolean isGoogleApiClient = false;
     private EditText autocompleteView;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -48,6 +48,7 @@ public class CityNameFragment extends Fragment implements  View.OnClickListener,
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private CityNamePresenter presenter;
 
     public CityNameFragment() {
         // Required empty public constructor
@@ -64,6 +65,7 @@ public class CityNameFragment extends Fragment implements  View.OnClickListener,
     // TODO: Rename and change types and number of parameters
     public static CityNameFragment newInstance(String param1, String param2) {
         CityNameFragment fragment = new CityNameFragment();
+
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -79,7 +81,7 @@ public class CityNameFragment extends Fragment implements  View.OnClickListener,
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        
+        presenter = new CityNamePresenterImpl(this, getContext());
     }
 
     @Override
@@ -101,12 +103,11 @@ public class CityNameFragment extends Fragment implements  View.OnClickListener,
 
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
-                if (!s.toString().equals("") && googleApiClient.isConnected()) {
-//                    if (mRecyclerView.getVisibility() == View.INVISIBLE) {
+                if (!s.toString().equals("") && getGoogleApiClient()) {
+                    if (getGoogleApiClient()) {
                     recyclerView.setVisibility(View.VISIBLE);
                     autoCompleteAdapter.getFilter().filter(s.toString());
-
-//                    }
+                    }
                 }
             }
 
@@ -127,45 +128,10 @@ public class CityNameFragment extends Fragment implements  View.OnClickListener,
                         final String placeId = String.valueOf(item.placeId);
                         address = String.valueOf(item.description);
                         autocompleteView.setText(address);
-
-                        final PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
-                                .getPlaceById(googleApiClient, placeId);
-                        placeResult.setResultCallback(new ResultCallback<PlaceBuffer>() {
-                            @Override
-                            public void onResult(PlaceBuffer places) {
-                                if (places.getCount() == 1) {
-                                    //Do the things here on Click.....
-//                                    Toast.makeText(getApplicationContext(), String.valueOf(places.get(0).getLatLng()), Toast.LENGTH_SHORT).show();
-                                    recyclerView.setVisibility(View.INVISIBLE);
-                                } else {
-                                    Toast.makeText(getActivity(), "OOPs!!! Something went wrong..", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
                     }
                 })
         );
         return view;
-    }
-
-
-    public void setOnClickListener(View.OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
     }
 
     @Override
@@ -182,5 +148,41 @@ public class CityNameFragment extends Fragment implements  View.OnClickListener,
             recyclerView.setVisibility(View.INVISIBLE);
         else
             super.getActivity().onBackPressed();
+    }
+
+    @Override
+    public void onStart() {
+
+        super.onStart();
+
+    }
+
+    @Override
+    public void onStop() {
+        presenter.onStop();
+        super.onStop();
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void showRecycleView() {
+        recyclerView.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void setGoogleApiClient(boolean isGoogleApiClient) {
+        this.isGoogleApiClient = isGoogleApiClient;
+    }
+    private  boolean getGoogleApiClient(){
+        return  isGoogleApiClient;
     }
 }
