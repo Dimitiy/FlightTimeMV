@@ -10,7 +10,7 @@ import io.realm.RealmResults;
  * Created by OldMan on 14.02.2016.
  */
 public interface DBInterface {
-    public void insertMission(String address, Calendar calendar);
+    public void insertMission(String address, Calendar date, Calendar time);
 
     public void insertFlightInMission(final int id, final FlightDB flight);
 

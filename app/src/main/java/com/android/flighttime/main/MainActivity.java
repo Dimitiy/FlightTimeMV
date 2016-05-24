@@ -17,9 +17,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ProgressBar;
 
 import com.android.flighttime.R;
@@ -28,8 +28,8 @@ import com.android.flighttime.data.AbstractExpandableDataProvider;
 import com.android.flighttime.data.ExpandableDataProvider;
 import com.android.flighttime.database.FlightDB;
 import com.android.flighttime.database.MissionDB;
-import com.android.flighttime.dialog.DelItemDialog;
-import com.android.flighttime.listener.DialogClickListener;
+import com.android.flighttime.dialog.DeleteItemDialog;
+import com.android.flighttime.listener.deleteDialogClickListener;
 import com.android.flighttime.mission.MissionCreatorActivity;
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
@@ -47,7 +47,7 @@ import com.roughike.swipeselector.SwipeSelector;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MainView, View.OnClickListener, OnSwipeItemSelectedListener, RecyclerViewExpandableItemManager.OnGroupCollapseListener,
-        RecyclerViewExpandableItemManager.OnGroupExpandListener, DialogClickListener {
+        RecyclerViewExpandableItemManager.OnGroupExpandListener, deleteDialogClickListener {
     private CoordinatorLayout coordinatorLayout;
     private ProgressBar progressBar;
     private SwipeSelector swipeYearSelector;
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
         swipeYearSelector = (SwipeSelector) findViewById(R.id.swipeYear);
         swipeYearSelector.setOnItemSelectedListener(this);
 
-         presenter = new MainPresenterImpl(this, getApplicationContext());
+        presenter = new MainPresenterImpl(this, getApplicationContext());
 
     }
 
@@ -110,6 +110,8 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
                 (NinePatchDrawable) ContextCompat.getDrawable(context, R.drawable.material_shadow_z3));
         // swipe manager
         recyclerViewSwipeManager = new RecyclerViewSwipeManager();
+        adapter = new ExpandSwipeViewAdapter(recyclerViewExpandableItemManager, dataProvider);
+        adapter.setEventListener(this);
 
         mWrappedAdapter = recyclerViewExpandableItemManager.createWrappedAdapter(adapter);         // wrap for expanding
         mWrappedAdapter = recyclerViewDragDropManager.createWrappedAdapter(mWrappedAdapter);     // wrap for dragging
@@ -246,11 +248,9 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
         if (adapter == null) {
             adapter = new ExpandSwipeViewAdapter(recyclerViewExpandableItemManager, dataProvider);
             initRecycleView(adapter);
-            adapter.setEventListener(MainActivity.this);
-
-        } else
+        } else {
             adapter.refresh(dataProvider);
-
+        }
     }
 //        });
 //    }
@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     @Override
     public void showMessageSnackbar(int message, int action, final int groupPosition, final int childPosition) {
         final int missionId = dataProvider.getMissionItem(groupPosition).getMission().getId();
-        final int flightId = dataProvider.getFlightItem(groupPosition, childPosition).getFlight().getId();
+
 
         Snackbar snackbar = Snackbar.make(
                 coordinatorLayout,
@@ -267,10 +267,14 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
             @Override
             public void onDismissed(Snackbar snackbar, int event) {
                 if (event != Snackbar.Callback.DISMISS_EVENT_ACTION)
-                    if (childPosition != -1)
+                    if (childPosition != -1) {
+                        int flightId = dataProvider.getFlightItem(groupPosition, childPosition).getFlight().getId();
+                        Log.d(TAG, "onDeleteFlight" + missionId + " " + flightId);
                         presenter.onDeleteFlight(missionId, flightId);
-                    else if (groupPosition != -1)
+                    } else if (groupPosition != -1 && childPosition == -1) {
+                        Log.d(TAG, "onDeleteMission" + missionId);
                         presenter.onDeleteMission(missionId);
+                    }
             }
 
             @Override
@@ -325,7 +329,8 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
     @Override
     public void onGroupItemRemoved(int groupPosition) {
-        final DialogFragment dialog = DelItemDialog.newInstance(groupPosition, RecyclerView.NO_POSITION);
+        Log.d(TAG, "groupPosition" + groupPosition);
+        final DialogFragment dialog = DeleteItemDialog.newInstance(groupPosition, RecyclerView.NO_POSITION);
         dialog.show(getSupportFragmentManager(), "delete_dialog");
     }
 
@@ -345,13 +350,18 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     }
 
     @Override
+    public void onClickToDeleteFlight(int groupPosition, int childPosition) {
+
+    }
+
+    @Override
     public void onChildItemRemoved(int groupPosition, int childPosition) {
         showMessageSnackbar(R.string.snack_bar_text_child_item_removed, R.string.snack_bar_action_undo, groupPosition, childPosition);
     }
 
     @Override
     public void onGroupItemPinned(int groupPosition) {
-
+        Log.d(TAG, "onGroupItemPinned " + groupPosition);
     }
 
     @Override
@@ -445,6 +455,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     }
 
     public void notifyGroupItemChanged(int groupPosition) {
+        Log.d(TAG,"notifyGroupItemChanged" + groupPosition);
         final long expandablePosition = RecyclerViewExpandableItemManager.getPackedPositionForGroup(groupPosition);
         final int flatPosition = recyclerViewExpandableItemManager.getFlatPosition(expandablePosition);
         adapter.notifyItemChanged(flatPosition);

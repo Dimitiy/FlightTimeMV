@@ -1,10 +1,6 @@
 package com.android.flighttime.fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,22 +9,14 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.android.flighttime.R;
 import com.android.flighttime.adapters.PlacesAutoCompleteAdapter;
+import com.android.flighttime.listener.CityChangeListener;
 import com.android.flighttime.listener.OnBackPressedListener;
 import com.android.flighttime.listener.RecyclerItemFromAutoCompleteClickListener;
-import com.android.flighttime.main.MainPresenter;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.location.places.PlaceBuffer;
-import com.google.android.gms.location.places.Places;
 
 
 public class CityNameFragment extends Fragment implements CityNameView, View.OnClickListener, OnBackPressedListener {
@@ -46,40 +34,35 @@ public class CityNameFragment extends Fragment implements CityNameView, View.OnC
     private String address;
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String oldNameCity;
     private CityNamePresenter presenter;
-
-    public CityNameFragment() {
-        // Required empty public constructor
-    }
+    private CityChangeListener cityChangeListener;
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment CityNameFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CityNameFragment newInstance(String param1, String param2) {
+    public static CityNameFragment newInstance(String param1) {
         CityNameFragment fragment = new CityNameFragment();
-
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
 
+    public void addCityNameChangedListener(CityChangeListener listener) {
+        this.cityChangeListener = listener;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            oldNameCity = getArguments().getString(ARG_PARAM1);
         }
         presenter = new CityNamePresenterImpl(this, getContext());
     }
@@ -90,6 +73,9 @@ public class CityNameFragment extends Fragment implements CityNameView, View.OnC
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_city_name, container, false);
         autocompleteView = (EditText) view.findViewById(R.id.autocomplete_places);
+        autocompleteView.setFocusable(true);
+        if (oldNameCity != null)
+            autocompleteView.setText(oldNameCity);
         delete = (ImageView) view.findViewById(R.id.cross);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.city_recycler_view);
@@ -103,11 +89,12 @@ public class CityNameFragment extends Fragment implements CityNameView, View.OnC
 
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
-                if (!s.toString().equals("") && getGoogleApiClient()) {
+                if (!s.toString().equals("")) {
                     if (getGoogleApiClient()) {
-                    recyclerView.setVisibility(View.VISIBLE);
-                    autoCompleteAdapter.getFilter().filter(s.toString());
+                        recyclerView.setVisibility(View.VISIBLE);
+                        autoCompleteAdapter.getFilter().filter(s.toString());
                     }
+
                 }
             }
 
@@ -117,7 +104,7 @@ public class CityNameFragment extends Fragment implements CityNameView, View.OnC
             }
 
             public void afterTextChanged(Editable s) {
-
+                    cityChangeListener.onNameCityChange(s.toString());
             }
         });
         recyclerView.addOnItemTouchListener(
@@ -182,7 +169,8 @@ public class CityNameFragment extends Fragment implements CityNameView, View.OnC
     public void setGoogleApiClient(boolean isGoogleApiClient) {
         this.isGoogleApiClient = isGoogleApiClient;
     }
-    private  boolean getGoogleApiClient(){
-        return  isGoogleApiClient;
+
+    private boolean getGoogleApiClient() {
+        return isGoogleApiClient;
     }
 }

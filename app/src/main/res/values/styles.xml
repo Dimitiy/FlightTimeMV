@@ -42,11 +42,16 @@
     <item name="android:fontFamily">sans-serif</item>
     <item name="android:buttonBarButtonStyle">@style/MyApp.DialogButton</item>
     </style>
+
     <style name="MyApp.DialogButton" parent="@android:style/TextAppearance.Holo.Widget.Button">
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="MyButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/colorAccent</item>
+        <item name="colorButtonNormal">@color/colorGreen</item>
+    </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>

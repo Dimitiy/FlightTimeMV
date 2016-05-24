@@ -3,6 +3,8 @@ package com.android.flighttime.database;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.flighttime.utils.DateFormatter;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,7 +18,8 @@ import io.realm.RealmChangeListener;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 
-import static io.realm.Realm.*;
+import static io.realm.Realm.Transaction;
+import static io.realm.Realm.getDefaultInstance;
 
 /**
  * Created by OldMan on 14.02.2016.
@@ -26,44 +29,46 @@ public class DBHelper implements DBInterface {
     private Realm realm;
     private String TAG = "DBHelper";
     private RealmAsyncTask transaction;
+
     public DBHelper(Context ctx) {
         this.mContext = ctx;
         realm = getDefaultInstance();
-    }
 
-    public void onStop () {
+    }
+    public void onStop() {
         if (transaction != null && !transaction.isCancelled()) {
             transaction.cancel();
         }
     }
 
 
-    public void addListener(RealmChangeListener listener){
+    public void addListener(RealmChangeListener listener) {
         realm.addChangeListener(listener);
     }
+
     @Override
-    public void insertMission(final String city, final Calendar date) {
+    public void insertMission(final String city, final Calendar date, final Calendar time) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                Log.d(DBHelper.class.getCanonicalName().toString(), "start insertFlightInMission" + city+ " " + date.toString() + " ");
+                Log.d(DBHelper.class.getCanonicalName().toString(), "start insertFlightInMission, city: " + city + " " + date.toString() + " " + time);
 
-                long duration = 0;
                 MissionDB mission = realm.createObject(MissionDB.class);
                 mission.setId(getPrimaryKey(mission));
                 mission.setCity(city);
                 mission.setDate(date.getTime());
-                mission.setDuration(duration);
+                mission.setDuration(DateFormatter.getCountMinute(time));
                 Log.d(TAG, "insertMission");
+
+
             }
         });
-     }
-
+    }
     public void insertFlightInMission(final int id, final Date date, final long duration) {
         realm.executeTransaction(new Transaction() {
             @Override
             public void execute(Realm realm) {
-                Log.d(DBHelper.class.getCanonicalName().toString(), "start insertFlightInMission" + duration+ " " + date.toString() + " " + id);
+                Log.d(DBHelper.class.getCanonicalName().toString(), "start insertFlightInMission" + duration + " " + date.toString() + " " + id);
 
                 FlightDB flight = realm.createObject(FlightDB.class);
                 flight.setId(getPrimaryKey(flight));
@@ -94,6 +99,7 @@ public class DBHelper implements DBInterface {
             }
         });
     }
+
     public void deleteMission(final int id) {
         realm.executeTransactionAsync(new Transaction() {
             @Override
@@ -112,7 +118,7 @@ public class DBHelper implements DBInterface {
             public void execute(Realm realm) {
                 Log.d("DBHelper", "mission" + id_mission + "flight" + id_flight);
                 MissionDB mission = realm.where(MissionDB.class).equalTo("id", id_mission).findFirst();
-                FlightDB db = mission.getFlightDBRealmList().where().equalTo("id",id_flight).findFirst();
+                FlightDB db = mission.getFlightDBRealmList().where().equalTo("id", id_flight).findFirst();
                 db.deleteFromRealm();
             }
         });
@@ -154,10 +160,11 @@ public class DBHelper implements DBInterface {
         GregorianCalendar calendarTo = new GregorianCalendar(year,
                 Calendar.DECEMBER, 31);
         RealmResults<MissionDB> result = realm.where(MissionDB.class)
-                .between("date",  calendarFrom.getTime(), calendarTo.getTime())
+                .between("date", calendarFrom.getTime(), calendarTo.getTime())
                 .findAll();
         return result;
     }
+
     public Map<String, Long> getDataOfYear() {
         RealmResults<MissionDB> result = realm.where(MissionDB.class).findAll();
         SimpleDateFormat df = new SimpleDateFormat("yyyy");
@@ -168,7 +175,6 @@ public class DBHelper implements DBInterface {
 
                 String year = df.format(c.getDate());
                 duration = c.getDuration();
-
                 if (data.containsKey(year))
                     data.put(year, data.get(year) + duration);
                 else
@@ -181,7 +187,7 @@ public class DBHelper implements DBInterface {
         return realm.where(object.getClass()).max("id").intValue() + 1;
     }
 
-    public void closeRealm(RealmChangeListener listener){
+    public void closeRealm(RealmChangeListener listener) {
         realm.removeChangeListener(listener);
         realm.close();
     }

@@ -8,6 +8,6 @@ import java.util.Calendar;
  * Created by OldMan on 10.05.2016.
  */
 public interface OnTaskCreateListener {
-    void onMissionCreated(String address, Calendar calendar);
+    void onMissionCreated(String address, Calendar date, Calendar time);
     void onFlightCreated(AbstractExpandableDataProvider.MissionData mission, Calendar calendar);
 }

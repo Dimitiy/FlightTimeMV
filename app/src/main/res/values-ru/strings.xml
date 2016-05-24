@@ -8,7 +8,13 @@
     <string name="settings">Настройка</string>
 
     <string name="add_mission">Добавить командировку</string>
-    <string name="enter_travel_city">Населенный пункт</string>
+    <string name="enter_travel_city">Укажите населенный пункт</string>
+    <string name="home_airfield">Аэродром базирования</string>
+    <string name="choose_date">Выберите дату начала командировки</string>
+    <string name="choose_count_time">Укажите количество налета</string>
+    <string name="have_flown">при наличии вылетов</string>
+
+
     <string name="title_activity_create_mission">Укажите дату</string>
     <string name="add_hour"> ч.</string>
     <string name="empty_mission">Cписок командировок пуст</string>
@@ -29,7 +35,7 @@
     <string name="dialog_deleted_mission">Удалить коммандировку?</string>
     <string name="dialog_deleted_flight">Удалить вылет?</string>
 
-    <string name="choose_date">Выберите дату вылета</string>
+    <string name="choose_flight_date">Выберите дату вылета</string>
     <string name="choose_flight_time">Количество полетного времени</string>
     <string name="next">Далее</string>
     <string name="cancel">Отмена</string>

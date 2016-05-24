@@ -6,5 +6,5 @@ import java.util.Calendar;
  * Created by OldMan on 10.05.2016.
  */
 public interface DatePickerListener {
-    void onSelectDate(int year, int monthOfYear, int dayOfMonth);
+    void onSelectDate(Calendar calendar);
 }

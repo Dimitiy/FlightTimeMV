@@ -24,11 +24,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.android.flighttime.data.AbstractExpandableDataProvider;
-import com.android.flighttime.data.FlightCreator;
 import com.android.flighttime.database.DBHelper;
 import com.android.flighttime.database.FlightDB;
 import com.android.flighttime.database.MissionDB;
-import com.android.flighttime.data.MissionCreator;
 import com.android.flighttime.listener.OnTaskCreateListener;
 import com.roughike.swipeselector.SwipeItem;
 
@@ -73,12 +71,11 @@ public class MainPresenterImpl implements MainPresenter, OnTaskCreateListener, F
     @Override
     public void navigateToCreateMission(View v) {
 
-        new MissionCreator((Activity) mainView, this);
     }
 
     @Override
     public void navigateToCreateFlight(AbstractExpandableDataProvider.MissionData mission, View v) {
-        new FlightCreator(mission, (Activity) mainView, this);
+//        new FlightCreator(mission, (Activity) mainView, this);
     }
 
     @Override
@@ -87,9 +84,15 @@ public class MainPresenterImpl implements MainPresenter, OnTaskCreateListener, F
     }
 
     @Override
-    public void onDeleteMission(int groupPosition) {
+    public void onDeleteMission(final int groupPosition) {
         if (dbHelper != null)
             dbHelper.deleteMission(groupPosition);
+            dbHelper.addListener(new RealmChangeListener() {
+                @Override
+                public void onChange(Object element) {
+                    Log.d(TAG, "delete mission" + groupPosition);
+                }
+            });
     }
 
     @Override
@@ -124,9 +127,9 @@ public class MainPresenterImpl implements MainPresenter, OnTaskCreateListener, F
 
 
     @Override
-    public void onMissionCreated(String address, Calendar calendar) {
+    public void onMissionCreated(String address, Calendar date, Calendar time) {
         Log.d("MissionCreated", address);
-        dbHelper.insertMission(address, calendar);
+        dbHelper.insertMission(address, date, time);
         
 //        findItemsInteractor.findYearsItems(dbHelper, this);
 

@@ -7,7 +7,12 @@
 
 
     <string name="add_mission">Add mission</string>
-    <string name="enter_travel_city">Name of the city</string>
+    <string name="enter_travel_city">Enter the name of the village</string>
+    <string name="home_airfield">Home airfield</string>
+    <string name="choose_date">Select the start date of trip</string>
+    <string name="choose_count_time">Specify the current flight time</string>
+    <string name="have_flown">if you have flown</string>
+
     <string name="title_activity_create_mission">Specify the date</string>
 
     <string name="add_hour"> hr</string>
@@ -28,7 +33,7 @@
     <string name="dialog_deleted_mission">Remove trip?</string>
     <string name="dialog_deleted_flight">Remove flight?</string>
 
-    <string name="choose_date">Select departure date</string>
+    <string name="choose_flight_date">Select departure date</string>
     <string name="choose_flight_time">flight time</string>
     <string name="next">Next</string>
     <string name="cancel">Cancel</string>

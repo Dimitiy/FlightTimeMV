@@ -33,4 +33,6 @@
     <color name="bg_swipe_group_pinned">#9ed166</color>
 
     <color name="snackbar_action_color_done">#ffccccff</color>
+    <color name="material_text_color">#FFFFFF</color>
+    <color name="material_list_row_border_color">#BDBDBD</color>
 </resources>

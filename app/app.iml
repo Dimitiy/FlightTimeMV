@@ -116,7 +116,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services/8.4.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.h6ah4i.android.widget.advrecyclerview/advrecyclerview/0.9.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.roughike/swipe-selector/1.0.6/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/io.realm/realm-android-library/0.90.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/io.realm/realm-android-library/0.91.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/me.drozdzynski.library.steppers/steppers/0.3.3-SNAPSHOT/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-safeguard" />
@@ -144,8 +144,8 @@
     <orderEntry type="library" exported="" name="play-services-base-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-measurement-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-identity-8.4.0" level="project" />
-    <orderEntry type="library" exported="" name="realm-android-library-0.90.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-maps-8.4.0" level="project" />
+    <orderEntry type="library" exported="" name="realm-android-library-0.91.0" level="project" />
     <orderEntry type="library" exported="" name="swipe-selector-1.0.6" level="project" />
     <orderEntry type="library" exported="" name="play-services-cast-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-vision-8.4.0" level="project" />
@@ -159,7 +159,7 @@
     <orderEntry type="library" exported="" name="recyclerview-v7-23.4.0" level="project" />
     <orderEntry type="library" exported="" name="jsr250-api-1.0" level="project" />
     <orderEntry type="library" exported="" name="support-vector-drawable-23.4.0" level="project" />
-    <orderEntry type="library" exported="" name="realm-annotations-0.90.0" level="project" />
+    <orderEntry type="library" exported="" name="realm-annotations-0.91.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-ads-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-appinvite-8.4.0" level="project" />

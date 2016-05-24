@@ -12,8 +12,6 @@ import android.widget.EditText;
 import com.android.flighttime.R;
 import com.android.flighttime.listener.CityChangeListener;
 
-import java.util.Calendar;
-
 /**
  * Created by OldMan on 10.05.2016.
  */
@@ -70,7 +68,7 @@ public class CityIndexDialog extends android.support.v4.app.DialogFragment {
                     EditText addressText=(EditText)d.findViewById(R.id.autocomplete_places);
                     String address=addressText.getText().toString();
                     if(!address.isEmpty()) {
-                        callback.onChangeCity(address);
+                        callback.onNameCityChange(address);
                         dismiss();
                     }
                     else {
