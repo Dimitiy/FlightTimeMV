@@ -104,6 +104,7 @@ public class CityNameFragment extends Fragment implements CityNameView, View.OnC
             }
 
             public void afterTextChanged(Editable s) {
+                if(cityChangeListener != null)
                     cityChangeListener.onNameCityChange(s.toString());
             }
         });
@@ -149,7 +150,11 @@ public class CityNameFragment extends Fragment implements CityNameView, View.OnC
         presenter.onStop();
         super.onStop();
     }
-
+    @Override
+    public void onDestroyView() {
+        cityChangeListener = null;
+        super.onStop();
+    }
     @Override
     public void showProgress() {
 

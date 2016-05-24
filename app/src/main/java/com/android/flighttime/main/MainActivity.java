@@ -409,8 +409,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab:
-//                presenter.navigateToCreateMission(v);
-                startActivity(new Intent(this, MissionCreatorActivity.class));
+                presenter.navigateToCreateMission();
             default:
                 break;
         }

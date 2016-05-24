@@ -13,7 +13,7 @@ public interface MainPresenter {
 
     void onMissionItems(String year);
 
-    void navigateToCreateMission(View v);
+    void navigateToCreateMission();
 
     void navigateToCreateFlight(AbstractExpandableDataProvider.MissionData mission, View v);
 

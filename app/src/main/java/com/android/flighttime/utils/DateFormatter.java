@@ -12,11 +12,12 @@ import java.util.Date;
  */
 public class DateFormatter {
     private static int COUNT_MILLISECOND_IN_MINUTE = 60000;
-    public static String getFormatTime(long time){
+
+    public static String getFormatTime(long time) {
         return new SimpleDateFormat("HH:mm").format(new Date(time));
     }
 
-    public static int getDate(String year) {
+    public static int getYearDate(String year) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
         Calendar cal = Calendar.getInstance();
         try {
@@ -27,12 +28,13 @@ public class DateFormatter {
         return cal.get(Calendar.YEAR);
     }
 
-    public static long getCountMinute(Calendar calendar){
-        long minute = calendar.getTimeInMillis()/COUNT_MILLISECOND_IN_MINUTE;
+    public static long getCountMinute(Calendar calendar) {
+        long minute = calendar.getTimeInMillis() / COUNT_MILLISECOND_IN_MINUTE;
         Log.d("Date", "minute " + Long.toString(minute));
-       return minute;
+        return minute;
     }
-    public static Date getDate(int year, int month, int day) {
+
+    public static Date getYearDate(int year, int month, int day) {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, year);
         cal.set(Calendar.MONTH, month);
@@ -43,7 +45,8 @@ public class DateFormatter {
         cal.set(Calendar.MILLISECOND, 0);
         return cal.getTime();
     }
-    public static Date getDate(Date date){
+
+    public static Date getYearDate(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, date.getYear());
         cal.set(Calendar.MONTH, date.getMonth());
@@ -55,4 +58,13 @@ public class DateFormatter {
         return cal.getTime();
     }
 
-}
+    public static String getTimeFormat(Calendar calendar) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        return sdf.format(calendar.getTime());
+    }
+
+    public static String getDateFormat(Calendar calendar) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
+        return sdf.format(calendar.getTime());
+    }
+    }

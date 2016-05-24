@@ -18,4 +18,6 @@ public interface MissionCreatorPresenter {
 
     void createMission(String name, Calendar date, Calendar time);
 
+    void createFlight(int missionId,  Calendar date, Calendar time);
+
 }

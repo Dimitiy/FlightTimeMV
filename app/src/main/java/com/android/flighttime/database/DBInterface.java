@@ -14,7 +14,7 @@ public interface DBInterface {
 
     public void insertFlightInMission(final int id, final FlightDB flight);
 
-    public void insertFlightInMission(final int id, final Date date, final long duration);
+    public void insertFlightInMission(final int id, final Calendar date, final Calendar duration);
 
     public void deleteMission(final int id);
 

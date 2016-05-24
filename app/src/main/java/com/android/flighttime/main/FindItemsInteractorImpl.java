@@ -28,7 +28,6 @@ import com.android.flighttime.utils.DateFormatter;
 import com.roughike.swipeselector.SwipeItem;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -70,7 +69,7 @@ public class FindItemsInteractorImpl implements FindItemsInteractor {
 
     private int getYear(String year) {
         if (year.length() <= 8) {
-            return  DateFormatter.getDate(year.replaceAll("[^0-9]", ""));
+            return  DateFormatter.getYearDate(year.replaceAll("[^0-9]", ""));
         }
         return 0;
     }

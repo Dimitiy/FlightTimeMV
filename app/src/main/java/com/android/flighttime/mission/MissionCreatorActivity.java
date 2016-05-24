@@ -17,6 +17,7 @@ import com.android.flighttime.listener.CityChangeListener;
 import com.android.flighttime.listener.DatePickerListener;
 import com.android.flighttime.listener.TimePickerListener;
 import com.android.flighttime.main.MainActivity;
+import com.android.flighttime.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,12 +32,15 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
     private Calendar calendarDate, calendarTime;
     private ProgressBar progressBar;
     private MissionCreatorPresenterImpl presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_mission);
         Intent intent = getIntent();
         nameCity = intent.getStringExtra("city");
+        final int typeOfActivity = intent.getIntExtra("type_of_activity", 0);
+        final int missionID = intent.getIntExtra("type_of_activity", 0);
         calendarDate = Calendar.getInstance();
         calendarTime = Calendar.getInstance();
         progressBar = (ProgressBar) findViewById(R.id.progress);
@@ -53,7 +57,11 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
         steppersViewConfig.setOnFinishAction(new OnFinishAction() {
             @Override
             public void onFinish() {
-                presenter.createMission(nameCity, calendarDate, calendarTime);
+                if (typeOfActivity == Constants.TYPE_OF_MISSION_ACTIVITY_CREATED)
+                    presenter.createMission(nameCity, calendarDate, calendarTime);
+                else {
+                    presenter.createFlight(missionID, calendarDate, calendarTime);
+                }
             }
         });
 
@@ -70,15 +78,15 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
 
         SteppersView steppersView = (SteppersView) findViewById(R.id.steppersView);
         steppersView.setConfig(steppersViewConfig);
-        steppersView.setItems(getItems());
+        steppersView.setItems(getItems(typeOfActivity));
         steppersView.build();
 
 
     }
 
-    private ArrayList<SteppersItem> getItems() {
+    private ArrayList<SteppersItem> getItems(int i) {
         ArrayList<SteppersItem> steps = new ArrayList<>();
-        for (int i = 0; i <= 2; i++) {
+        while (i <= 2) {
             final SteppersItem item = new SteppersItem();
             switch (i) {
                 case 0:
@@ -92,15 +100,14 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
                             if (city.length() >= 3) {
                                 item.setPositiveButtonEnable(true);
                                 nameCity = city;
-                            }
-                            else
+                            } else
                                 item.setPositiveButtonEnable(false);
                         }
                     });
                     item.setFragment(cityNameFragment);
                     break;
                 case 1:
-                    DateFragment dateFragment = DateFragment.newInstance(DateFragment.DATE_FORMAT);
+                    DateFragment dateFragment = DateFragment.newInstance(Constants.DATE_FORMAT);
                     dateFragment.addDatePickerListener(new DatePickerListener() {
                         @Override
                         public void onSelectDate(Calendar calendarMission) {
@@ -114,13 +121,14 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
                     break;
 
                 case 2:
-                    DateFragment timeFragment = DateFragment.newInstance(DateFragment.TIME_FORMAT);
+                    DateFragment timeFragment = DateFragment.newInstance(Constants.TIME_FORMAT);
                     timeFragment.addTimePickerListener(new TimePickerListener() {
                         @Override
                         public void onSelectTimeCount(Calendar calendarMission) {
-                            calendarTime.set(DateFragment.BEGIN_COUNT_TIME_FLIGHT, DateFragment.BEGIN_COUNT_TIME_FLIGHT,
-                                    DateFragment.BEGIN_COUNT_TIME_FLIGHT, Calendar.HOUR, calendarMission.get(Calendar.HOUR),
+                            calendarTime.set(Constants.BEGIN_COUNT_TIME_FLIGHT, Constants.BEGIN_COUNT_TIME_FLIGHT,
+                                    Constants.BEGIN_COUNT_TIME_FLIGHT, calendarMission.get(Calendar.HOUR),
                                     calendarMission.get(Calendar.MINUTE));
+//                            calendarTime.set(Calendar.HOUR, );
                         }
                     });
                     item.setLabel(getResources().getString(R.string.choose_count_time));
@@ -129,6 +137,7 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
                     break;
             }
             steps.add(item);
+            i++;
         }
         return steps;
     }
@@ -168,6 +177,7 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
 //        if (backPressedListener != null) {
 //            backPressedListener.onBackPressed();
 //        } else {
+        navigateToMainView();
         super.onBackPressed();
 
 //        }

@@ -64,15 +64,15 @@ public class DBHelper implements DBInterface {
             }
         });
     }
-    public void insertFlightInMission(final int id, final Date date, final long duration) {
+    public void insertFlightInMission(final int id, final Calendar date, final Calendar time) {
         realm.executeTransaction(new Transaction() {
             @Override
             public void execute(Realm realm) {
-                Log.d(DBHelper.class.getCanonicalName().toString(), "start insertFlightInMission" + duration + " " + date.toString() + " " + id);
-
+                Log.d(DBHelper.class.getCanonicalName().toString(), "start insertFlightInMission" + time + " " + date.toString() + " " + id);
+                long duration = DateFormatter.getCountMinute(time);
                 FlightDB flight = realm.createObject(FlightDB.class);
                 flight.setId(getPrimaryKey(flight));
-                flight.setDate(date);
+                flight.setDate(date.getTime());
                 flight.setDuration(duration);
                 MissionDB mission = realm.where(MissionDB.class)
                         .equalTo("id", id)

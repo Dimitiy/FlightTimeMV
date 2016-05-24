@@ -20,6 +20,7 @@ package com.android.flighttime.main;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 
@@ -28,6 +29,8 @@ import com.android.flighttime.database.DBHelper;
 import com.android.flighttime.database.FlightDB;
 import com.android.flighttime.database.MissionDB;
 import com.android.flighttime.listener.OnTaskCreateListener;
+import com.android.flighttime.mission.MissionCreatorActivity;
+import com.android.flighttime.utils.Constants;
 import com.roughike.swipeselector.SwipeItem;
 
 import java.util.Calendar;
@@ -69,13 +72,20 @@ public class MainPresenterImpl implements MainPresenter, OnTaskCreateListener, F
 
 
     @Override
-    public void navigateToCreateMission(View v) {
-
+    public void navigateToCreateMission() {
+        Intent intent = new Intent(context, MissionCreatorActivity.class);
+        intent.putExtra("type_of_activity", Constants.TYPE_OF_MISSION_ACTIVITY_CREATED);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     @Override
     public void navigateToCreateFlight(AbstractExpandableDataProvider.MissionData mission, View v) {
-//        new FlightCreator(mission, (Activity) mainView, this);
+        Intent intent = new Intent(context, MissionCreatorActivity.class);
+        intent.putExtra("type_of_activity", Constants.TYPE_OF_FLIGHT_ACTIVITY_CREATED);
+        intent.putExtra("mission_id", mission.getMission().getId());
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     @Override

@@ -49,6 +49,13 @@ public class MissionCreatorPresenterImpl implements MissionCreatorPresenter, Rea
     }
 
     @Override
+    public void createFlight(int missionId, Calendar date, Calendar time) {
+        missionView.showProgress();
+        dbHelper.addListener(this);
+        dbHelper.insertFlightInMission(missionId, date, time);
+    }
+
+    @Override
     public void onChange(Object element) {
        missionView.navigateToMainView();
     }

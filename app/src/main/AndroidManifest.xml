@@ -30,7 +30,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".mission.MissionCreatorActivity"
-                  android:parentActivityName=".main.MainActivity" >
+                  android:parentActivityName=".main.MainActivity"
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="main.MainActivity" />
