@@ -1,36 +1,44 @@
 package com.android.flighttime.main;
 
-
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.NinePatchDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.android.flighttime.R;
 import com.android.flighttime.adapters.ExpandSwipeViewAdapter;
 import com.android.flighttime.data.AbstractExpandableDataProvider;
 import com.android.flighttime.data.ExpandableDataProvider;
+import com.android.flighttime.database.DBHelper;
 import com.android.flighttime.database.FlightDB;
 import com.android.flighttime.database.MissionDB;
+
+import com.android.flighttime.R;
+
 import com.android.flighttime.dialog.DeleteItemDialog;
-import com.android.flighttime.listener.deleteDialogClickListener;
-import com.android.flighttime.mission.MissionCreatorActivity;
+import com.android.flighttime.listener.DeleteDialogClickListener;
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
@@ -44,28 +52,35 @@ import com.roughike.swipeselector.OnSwipeItemSelectedListener;
 import com.roughike.swipeselector.SwipeItem;
 import com.roughike.swipeselector.SwipeSelector;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements MainView, View.OnClickListener, OnSwipeItemSelectedListener, RecyclerViewExpandableItemManager.OnGroupCollapseListener,
-        RecyclerViewExpandableItemManager.OnGroupExpandListener, deleteDialogClickListener {
+        RecyclerViewExpandableItemManager.OnGroupExpandListener, DeleteDialogClickListener {
     private CoordinatorLayout coordinatorLayout;
     private ProgressBar progressBar;
     private SwipeSelector swipeYearSelector;
     private FloatingActionButton fab;
     private MainPresenter presenter;
+
     private RecyclerView missionRecyclerView;
+    private RecyclerView.LayoutManager layoutManager;
     private RecyclerViewExpandableItemManager recyclerViewExpandableItemManager;
     private RecyclerViewDragDropManager recyclerViewDragDropManager;
     private RecyclerViewSwipeManager recyclerViewSwipeManager;
     private RecyclerViewTouchActionGuardManager recyclerViewTouchActionGuardManager;
-    private static final String SAVED_STATE_EXPANDABLE_ITEM_MANAGER = "RecyclerViewExpandableItemManager";
-    private RecyclerView.LayoutManager layoutManager;
-    private Bundle savedInstanceState;
-    private Context context;
     //    private ExpandSwipeViewAdapter adapter;
     private RecyclerView.Adapter mWrappedAdapter;
     private ExpandableDataProvider dataProvider;
     private ExpandSwipeViewAdapter adapter;
+
+    private static final String SAVED_STATE_EXPANDABLE_ITEM_MANAGER = "RecyclerViewExpandableItemManager";
+    private Bundle savedInstanceState;
+    private Context context;
+
 
     private String TAG = MainActivity.class.getSimpleName();
 
@@ -90,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
     }
 
-    private void initRecycleView(ExpandSwipeViewAdapter adapter) {
+    private void initRecycleView(ExpandableDataProvider dataProvider) {
         missionRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(context);
 
@@ -124,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
         missionRecyclerView.setAdapter(mWrappedAdapter);  // requires *wrapped* adapter
         missionRecyclerView.setItemAnimator(animator);
         missionRecyclerView.setHasFixedSize(false);
+
         // additional decorations
         //noinspection StatementWithEmptyBody
         if (supportsViewElevation()) {
@@ -235,31 +251,39 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
             public void run() {
                 swipeYearSelector.setItems(swipeItems);
                 presenter.onMissionItems(swipeYearSelector.getSelectedItem().title);
+            }
+        });
 
+
+    }
+
+    @Override
+    public void setMissionItems(final List<MissionDB> missionDBlList) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                dataProvider = new ExpandableDataProvider(missionDBlList);
+                if (adapter == null) {
+                    Log.d(TAG, "setMissionItems adapter = null");
+                    initRecycleView(dataProvider);
+                } else {
+                    Log.d(TAG, "setMissionItems adapter refresh");
+                    adapter.refresh(dataProvider);
+                }
             }
         });
     }
 
     @Override
-    public void setMissionItems(final List<MissionDB> missionDBlList) {
-//        runOnUiThread(new Runnable() {
-//            public void run() {
-        dataProvider = new ExpandableDataProvider(missionDBlList);
-        if (adapter == null) {
-            adapter = new ExpandSwipeViewAdapter(recyclerViewExpandableItemManager, dataProvider);
-            initRecycleView(adapter);
-        } else {
-            adapter.refresh(dataProvider);
-        }
-    }
-//        });
-//    }
-
-    @Override
     public void showMessageSnackbar(int message, int action, final int groupPosition, final int childPosition) {
+        Log.d(TAG, groupPosition + " " + childPosition);
         final int missionId = dataProvider.getMissionItem(groupPosition).getMission().getId();
+        Log.d(TAG, missionId + " ");
 
+        int flightId = -1;
+        if (childPosition != -1)
+            flightId = dataProvider.getFlightItem(groupPosition, childPosition).getFlight().getId();
 
+        final int finalFlightId = flightId;
         Snackbar snackbar = Snackbar.make(
                 coordinatorLayout,
                 message,
@@ -268,10 +292,9 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
             public void onDismissed(Snackbar snackbar, int event) {
                 if (event != Snackbar.Callback.DISMISS_EVENT_ACTION)
                     if (childPosition != -1) {
-                        int flightId = dataProvider.getFlightItem(groupPosition, childPosition).getFlight().getId();
-                        Log.d(TAG, "onDeleteFlight" + missionId + " " + flightId);
-                        presenter.onDeleteFlight(missionId, flightId);
-                    } else if (groupPosition != -1 && childPosition == -1) {
+                        Log.d(TAG, "onDeleteFlight " + missionId + " " + childPosition);
+                        presenter.onDeleteFlight(missionId, finalFlightId);
+                    } else {
                         Log.d(TAG, "onDeleteMission" + missionId);
                         presenter.onDeleteMission(missionId);
                     }
@@ -280,9 +303,17 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
             @Override
             public void onShown(Snackbar snackbar) {
                 if (childPosition != -1) {
+                    Log.d(TAG, "removeFlightItem onShown  " + missionId + " " + childPosition);
                     dataProvider.removeFlightItem(groupPosition, childPosition);
                     adapter.notifyDataSetChanged();
-                } else if (groupPosition != -1) {
+                    AbstractExpandableDataProvider.MissionData data = dataProvider.getMissionItem(groupPosition);
+
+                    if (data.isPinned()) {
+                        // unpin if tapped the pinned item
+                        data.setPinned(true);
+                    }
+                } else {
+                    Log.d(TAG, "removeMissionItem onShown  " + missionId);
                     dataProvider.removeMissionItem(groupPosition);
                     adapter.notifyDataSetChanged();
                 }
@@ -317,7 +348,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     }
 
     @Override
-    public void showAlertDialog(String message) {
+    public void showAlertDialog(DeleteDialogClickListener listener) {
 
     }
 
@@ -329,7 +360,6 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
     @Override
     public void onGroupItemRemoved(int groupPosition) {
-        Log.d(TAG, "groupPosition" + groupPosition);
         final DialogFragment dialog = DeleteItemDialog.newInstance(groupPosition, RecyclerView.NO_POSITION);
         dialog.show(getSupportFragmentManager(), "delete_dialog");
     }
@@ -401,8 +431,8 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     }
 
     @Override
-    public void onUnderSwipeEditMissionButtonClicked(View v) {
-
+    public void onUnderSwipeEditMissionButtonClicked(int groupPosition, View v) {
+        presenter.navigateToChangeMission(dataProvider.getMissionItem(groupPosition).getMission().getId());
     }
 
     @Override
@@ -439,6 +469,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
         recyclerViewExpandableItemManager.scrollToGroup(groupPosition, childItemHeight, topMargin, bottomMargin);
     }
 
+    @Override
     public void notifyGroupItemRestored(int groupPosition) {
         adapter.notifyDataSetChanged();
         final long expandablePosition = RecyclerViewExpandableItemManager.getPackedPositionForGroup(groupPosition);
@@ -454,7 +485,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     }
 
     public void notifyGroupItemChanged(int groupPosition) {
-        Log.d(TAG,"notifyGroupItemChanged" + groupPosition);
+        Log.d(TAG, "notifyGroupItemChanged" + groupPosition);
         final long expandablePosition = RecyclerViewExpandableItemManager.getPackedPositionForGroup(groupPosition);
         final int flatPosition = recyclerViewExpandableItemManager.getFlatPosition(expandablePosition);
         adapter.notifyItemChanged(flatPosition);
@@ -493,4 +524,5 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
             notifyChildItemChanged(groupPosition, childPosition);
         }
     }
+
 }

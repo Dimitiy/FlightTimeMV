@@ -28,12 +28,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.android.flighttime.R;
-import com.android.flighttime.listener.deleteDialogClickListener;
+import com.android.flighttime.listener.DeleteDialogClickListener;
 
 public class DeleteItemDialog extends DialogFragment {
     private static final String KEY_GROUP_ITEM_POSITION = "mission_position";
     private static final String KEY_CHILD_ITEM_POSITION = "flight_position";
-    private deleteDialogClickListener listener;
+    private DeleteDialogClickListener listener;
 
     public static DeleteItemDialog newInstance(int groupPosition, int childPosition) {
         final DeleteItemDialog frag = new DeleteItemDialog();
@@ -90,7 +90,7 @@ public class DeleteItemDialog extends DialogFragment {
 
     @Override
     public void onAttach(Activity activity) {
-        listener = (deleteDialogClickListener) activity;
+        listener = (DeleteDialogClickListener) activity;
         super.onAttach(activity);
     }
 

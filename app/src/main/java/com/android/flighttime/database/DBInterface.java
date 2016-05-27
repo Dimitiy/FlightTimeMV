@@ -10,11 +10,11 @@ import io.realm.RealmResults;
  * Created by OldMan on 14.02.2016.
  */
 public interface DBInterface {
-    public void insertMission(String address, Calendar date, Calendar time);
+    public void insertMission(String address, Calendar date, long duration);
 
     public void insertFlightInMission(final int id, final FlightDB flight);
 
-    public void insertFlightInMission(final int id, final Calendar date, final Calendar duration);
+    public void insertFlightInMission(final int id, final Calendar date, final long duration);
 
     public void deleteMission(final int id);
 

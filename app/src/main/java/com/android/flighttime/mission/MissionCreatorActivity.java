@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.android.flighttime.R;
+import com.android.flighttime.dagger.MissionComponent;
 import com.android.flighttime.fragment.CityNameFragment;
 import com.android.flighttime.fragment.DateFragment;
 import com.android.flighttime.listener.CityChangeListener;
@@ -29,7 +30,8 @@ import me.drozdzynski.library.steppers.SteppersView;
 
 public class MissionCreatorActivity extends AppCompatActivity implements MissionCreatorView {
     private String nameCity = "";
-    private Calendar calendarDate, calendarTime;
+    private Calendar calendarDate;
+    private long duration = 0;
     private ProgressBar progressBar;
     private MissionCreatorPresenterImpl presenter;
 
@@ -40,12 +42,12 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
         Intent intent = getIntent();
         nameCity = intent.getStringExtra("city");
         final int typeOfActivity = intent.getIntExtra("type_of_activity", 0);
-        final int missionID = intent.getIntExtra("type_of_activity", 0);
+        final int missionID = intent.getIntExtra("mission_id", 0);
         calendarDate = Calendar.getInstance();
-        calendarTime = Calendar.getInstance();
         progressBar = (ProgressBar) findViewById(R.id.progress);
 
         presenter = new MissionCreatorPresenterImpl(this, getApplicationContext());
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
@@ -58,9 +60,9 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
             @Override
             public void onFinish() {
                 if (typeOfActivity == Constants.TYPE_OF_MISSION_ACTIVITY_CREATED)
-                    presenter.createMission(nameCity, calendarDate, calendarTime);
+                    presenter.createMission(nameCity, calendarDate, duration);
                 else {
-                    presenter.createFlight(missionID, calendarDate, calendarTime);
+                    presenter.createFlight(missionID, calendarDate, duration);
                 }
             }
         });
@@ -75,7 +77,6 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
 
         steppersViewConfig.setFragmentManager(getSupportFragmentManager());
 
-
         SteppersView steppersView = (SteppersView) findViewById(R.id.steppersView);
         steppersView.setConfig(steppersViewConfig);
         steppersView.setItems(getItems(typeOfActivity));
@@ -84,6 +85,10 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
 
     }
 
+//    private void createComponent(){
+//        MissionComponent component = DaggerMissionComponent.create();
+//        component.inject(this);
+//    }
     private ArrayList<SteppersItem> getItems(int i) {
         ArrayList<SteppersItem> steps = new ArrayList<>();
         while (i <= 2) {
@@ -124,11 +129,8 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
                     DateFragment timeFragment = DateFragment.newInstance(Constants.TIME_FORMAT);
                     timeFragment.addTimePickerListener(new TimePickerListener() {
                         @Override
-                        public void onSelectTimeCount(Calendar calendarMission) {
-                            calendarTime.set(Constants.BEGIN_COUNT_TIME_FLIGHT, Constants.BEGIN_COUNT_TIME_FLIGHT,
-                                    Constants.BEGIN_COUNT_TIME_FLIGHT, calendarMission.get(Calendar.HOUR),
-                                    calendarMission.get(Calendar.MINUTE));
-//                            calendarTime.set(Calendar.HOUR, );
+                        public void onSelectTimeCount(long calendarTime) {
+                            MissionCreatorActivity.this.duration = calendarTime;
                         }
                     });
                     item.setLabel(getResources().getString(R.string.choose_count_time));

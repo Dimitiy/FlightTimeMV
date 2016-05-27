@@ -8,12 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.flighttime.R;
 import com.android.flighttime.data.AbstractExpandableDataProvider;
 import com.android.flighttime.data.ExpandableDataProvider;
+import com.android.flighttime.R;
 import com.android.flighttime.holder.MyChildViewHolder;
 import com.android.flighttime.holder.MyGroupViewHolder;
-import com.android.flighttime.listener.EventListener;
 import com.android.flighttime.main.MainView;
 import com.android.flighttime.utils.DrawableUtils;
 import com.android.flighttime.utils.ViewUtils;
@@ -45,19 +44,16 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
     private View.OnClickListener mItemViewOnClickListener;
     private View.OnClickListener mSwipeableViewContainerOnClickListener;
     private View.OnClickListener mUnderSwipeableViewButtonOnClickListener;
-
     private View.OnClickListener mItemOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             onClickItemView(v);
         }
     };
-
-    public void notifyFlightItemInserted(int groupPosition, int childPosition) {
+    public void notifyFlightItemInserted(int groupPosition, int childPosition){
         mExpandableItemManager.notifyChildItemInserted(groupPosition, childPosition);
 
     }
-
     private void onClickItemView(View v) {
 
         RecyclerView.ViewHolder vh = RecyclerViewAdapterUtils.getViewHolder(v);
@@ -84,7 +80,7 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
                 mEventListener.onUnderSwipeAddFlightButtonClicked(groupPosition, v);
                 break;
             case R.id.editMission:
-                mEventListener.onUnderSwipeEditMissionButtonClicked(v);
+                mEventListener.onUnderSwipeEditMissionButtonClicked(groupPosition, v);
 
                 break;
 
@@ -472,6 +468,7 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onItemViewClick");
+
                 onItemViewClick(v);
             }
         };
@@ -551,7 +548,6 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
 
             if (!item.isPinned()) {
                 item.setPinned(true);
-                Log.d(TAG, "GroupSwipeLeftResultAction " + mGroupPosition + " " + mAdapter.mExpandableItemManager) ;
                 mAdapter.mExpandableItemManager.notifyGroupItemChanged(mGroupPosition);
                 mSetPinned = true;
             }

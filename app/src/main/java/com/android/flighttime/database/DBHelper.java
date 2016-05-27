@@ -45,32 +45,34 @@ public class DBHelper implements DBInterface {
     public void addListener(RealmChangeListener listener) {
         realm.addChangeListener(listener);
     }
-
+    public void deleteListener(RealmChangeListener listener) {
+        realm.removeChangeListener(listener);
+    }
     @Override
-    public void insertMission(final String city, final Calendar date, final Calendar time) {
+    public void insertMission(final String city, final Calendar date, final long  duration) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                Log.d(DBHelper.class.getCanonicalName().toString(), "start insertFlightInMission, city: " + city + " " + date.toString() + " " + time);
+                Log.d(DBHelper.class.getCanonicalName().toString(), "start insertFlightInMission, city: " + city + " " + date.toString() + " " + duration);
 
                 MissionDB mission = realm.createObject(MissionDB.class);
                 mission.setId(getPrimaryKey(mission));
                 mission.setCity(city);
                 mission.setDate(date.getTime());
-                mission.setDuration(DateFormatter.getCountMinute(time));
+                mission.setDuration(duration);
                 Log.d(TAG, "insertMission");
 
 
             }
         });
     }
-    public void insertFlightInMission(final int id, final Calendar date, final Calendar time) {
+    @Override
+    public void insertFlightInMission(final int id, final Calendar date, final long duration) {
         realm.executeTransaction(new Transaction() {
             @Override
             public void execute(Realm realm) {
-                Log.d(DBHelper.class.getCanonicalName().toString(), "start insertFlightInMission" + time + " " + date.toString() + " " + id);
-                long duration = DateFormatter.getCountMinute(time);
-                FlightDB flight = realm.createObject(FlightDB.class);
+                Log.d(DBHelper.class.getCanonicalName().toString(), "start insertFlightInMission " + duration + " " + date.toString() + " " + id);
+                 FlightDB flight = realm.createObject(FlightDB.class);
                 flight.setId(getPrimaryKey(flight));
                 flight.setDate(date.getTime());
                 flight.setDuration(duration);
@@ -189,6 +191,9 @@ public class DBHelper implements DBInterface {
 
     public void closeRealm(RealmChangeListener listener) {
         realm.removeChangeListener(listener);
+        realm.close();
+    }
+    public void closeRealm() {
         realm.close();
     }
 }

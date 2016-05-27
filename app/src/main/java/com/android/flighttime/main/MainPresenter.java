@@ -15,9 +15,10 @@ public interface MainPresenter {
 
     void navigateToCreateMission();
 
+
     void navigateToCreateFlight(AbstractExpandableDataProvider.MissionData mission, View v);
 
-    void navigateToChangeMission();
+    void navigateToChangeMission(int groupPosition);
 
     void onDeleteMission(int groupPosition);
 

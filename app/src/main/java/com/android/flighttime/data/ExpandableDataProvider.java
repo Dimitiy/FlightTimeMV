@@ -115,6 +115,8 @@ public class ExpandableDataProvider extends AbstractExpandableDataProvider {
 
     @Override
     public void removeMissionItem(int groupPosition) {
+        Log.d(TAG,  "removeMissionItem" + groupPosition + mData.size());
+
         mLastRemovedGroup = mData.remove(groupPosition);
         mLastRemovedGroupPosition = groupPosition;
 
@@ -140,6 +142,7 @@ public class ExpandableDataProvider extends AbstractExpandableDataProvider {
         final int newId = ((ConcreteMissionData) missionGroup.first).generateNewChildId();
         missionGroup.second.add(getFlightCount(groupPosition), new ConcreteFlightData(newId, flight));
     }
+
 
     @Override
     public long undoLastRemoval() {

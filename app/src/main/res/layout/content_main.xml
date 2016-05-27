@@ -9,6 +9,12 @@
     tools:context="com.android.flighttime.main.MainActivity"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:background="@color/colorPrimary">
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center" />
 
     <com.roughike.swipeselector.SwipeSelector
         android:id="@+id/swipeYear"
@@ -31,18 +37,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal|bottom"/>
+
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/snackbarCoordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </android.support.design.widget.CoordinatorLayout>
-    <ProgressBar
-        android:id="@+id/progress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:visibility="gone"
-        />
+
 </FrameLayout>
 

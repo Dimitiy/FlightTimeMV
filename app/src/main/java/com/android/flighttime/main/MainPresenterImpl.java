@@ -39,7 +39,7 @@ import java.util.List;
 import io.realm.RealmChangeListener;
 
 
-public class MainPresenterImpl implements MainPresenter, OnTaskCreateListener, FindItemsInteractor.OnMissionFinishedListener, FindItemsInteractor.OnYearsFinishedListener, RealmChangeListener {
+public class MainPresenterImpl implements MainPresenter,  FindItemsInteractor.OnMissionFinishedListener, FindItemsInteractor.OnYearsFinishedListener {
 
     private MainView mainView;
     private FindItemsInteractor findItemsInteractor;
@@ -56,9 +56,6 @@ public class MainPresenterImpl implements MainPresenter, OnTaskCreateListener, F
 
     @Override
     public void onResume() {
-        if (mainView != null) {
-            mainView.showProgress();
-        }
         findItemsInteractor.findYearsItems(dbHelper, this);
     }
 
@@ -89,32 +86,50 @@ public class MainPresenterImpl implements MainPresenter, OnTaskCreateListener, F
     }
 
     @Override
-    public void navigateToChangeMission() {
+    public void navigateToChangeMission(int missionID) {
 
     }
 
     @Override
     public void onDeleteMission(final int groupPosition) {
-        if (dbHelper != null)
-            dbHelper.deleteMission(groupPosition);
+        if (dbHelper != null) {
             dbHelper.addListener(new RealmChangeListener() {
                 @Override
                 public void onChange(Object element) {
-                    Log.d(TAG, "delete mission" + groupPosition);
+                    Log.d(TAG, "deleted mission" + groupPosition);
+                    dbHelper.deleteListener(this);
+//                    mainView.notifyGroupItemRestored(groupPosition);
                 }
             });
+            dbHelper.deleteMission(groupPosition);
+
+        }
     }
 
     @Override
-    public void onDeleteFlight(int groupPosition, int childPosition) {
-        if (dbHelper != null)
+    public void onDeleteFlight(final int groupPosition, final int childPosition) {
+        if (mainView != null) {
+            mainView.showProgress();
+        }
+        if (dbHelper != null) {
+            dbHelper.addListener(new RealmChangeListener() {
+                @Override
+                public void onChange(Object element) {
+                    Log.d(TAG, "delete flight in " + groupPosition + " " + childPosition);
+                    dbHelper.deleteListener(this);
+                    mainView.hideProgress();
+
+                }
+            });
             dbHelper.deleteFlightInMission(groupPosition, childPosition);
+
+        }
     }
 
     @Override
     public void onDestroy() {
         mainView = null;
-        dbHelper.closeRealm(this);
+        dbHelper.closeRealm();
 
     }
 
@@ -122,9 +137,9 @@ public class MainPresenterImpl implements MainPresenter, OnTaskCreateListener, F
     public void onYearsFinished(SwipeItem[] yearsList) {
         if (mainView != null) {
             mainView.setYears(yearsList);
-            mainView.hideProgress();
         }
     }
+
     @Override
     public void onMissionFinished(List<MissionDB> missionsList) {
         if (mainView != null) {
@@ -132,36 +147,5 @@ public class MainPresenterImpl implements MainPresenter, OnTaskCreateListener, F
             mainView.setMissionItems(missionsList);
             mainView.hideProgress();
         }
-    }
-
-
-
-    @Override
-    public void onMissionCreated(String address, Calendar date, Calendar time) {
-        Log.d("MissionCreated", address);
-        dbHelper.insertMission(address, date, time);
-        
-//        findItemsInteractor.findYearsItems(dbHelper, this);
-
-//        mainView.onit;
-//        mainView.setMissionItems();
-    }
-
-    @Override
-    public void onFlightCreated(AbstractExpandableDataProvider.MissionData mission, Calendar calendar) {
-        long second = (calendar.get(Calendar.HOUR) * 3600) + (calendar.get(Calendar.MINUTE) * 60);
-
-        FlightDB flight = new FlightDB();
-        flight.setId(dbHelper.getPrimaryKey(flight));
-        flight.setDate(calendar.getTime());
-        flight.setDuration(second);
-
-        dbHelper.insertFlightInMission(mission.getMission().getId(), flight);
-        mainView.onFlightItemCreated(mission.getMissionId(), flight);
-    }
-
-    @Override
-    public void onChange(Object element) {
-        Log.d(TAG, "element.getClass().toString()");
     }
 }

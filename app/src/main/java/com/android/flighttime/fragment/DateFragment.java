@@ -88,7 +88,6 @@ public class DateFragment extends Fragment implements View.OnClickListener, andr
             editDate.setText(DateFormatter.getDateFormat(calendar));
         else if (mParam1 == Constants.TIME_FORMAT) {
             Log.d("DateFragment", "TIME_FORMAT" + Integer.toString(mParam1));
-
             editDate.setText(DateFormatter.getTimeFormat(calendar));
         }
         editDate.setOnClickListener(this);
@@ -121,6 +120,6 @@ public class DateFragment extends Fragment implements View.OnClickListener, andr
         calendar.set(Calendar.HOUR, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
         editDate.setText(DateFormatter.getTimeFormat(calendar));
-        timePickerListener.onSelectTimeCount(calendar);
+        timePickerListener.onSelectTimeCount(DateFormatter.getCountMinute(calendar));
     }
 }

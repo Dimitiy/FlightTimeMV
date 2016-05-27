@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":app" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" external.system.module.group="FlightTime" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+<module external.linked.project.id=":app" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" external.system.module.group="FlightTimeMV" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
@@ -114,7 +114,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/8.4.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/8.4.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services/8.4.0/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.h6ah4i.android.widget.advrecyclerview/advrecyclerview/0.9.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.h6ah4i.android.widget.advrecyclerview/advrecyclerview/0.9.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.roughike/swipe-selector/1.0.6/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/io.realm/realm-android-library/0.91.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/me.drozdzynski.library.steppers/steppers/0.3.3-SNAPSHOT/jars" />
@@ -151,7 +151,6 @@
     <orderEntry type="library" exported="" name="play-services-vision-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="animated-vector-drawable-23.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-wallet-8.4.0" level="project" />
-    <orderEntry type="library" exported="" name="advrecyclerview-0.9.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-analytics-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-23.4.0" level="project" />
@@ -159,6 +158,7 @@
     <orderEntry type="library" exported="" name="recyclerview-v7-23.4.0" level="project" />
     <orderEntry type="library" exported="" name="jsr250-api-1.0" level="project" />
     <orderEntry type="library" exported="" name="support-vector-drawable-23.4.0" level="project" />
+    <orderEntry type="library" exported="" name="advrecyclerview-0.9.1" level="project" />
     <orderEntry type="library" exported="" name="realm-annotations-0.91.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-ads-8.4.0" level="project" />

@@ -12,7 +12,7 @@ import io.realm.RealmChangeListener;
 /**
  * Created by oldman on 19.05.16.
  */
-public class MissionCreatorPresenterImpl implements MissionCreatorPresenter, RealmChangeListener {
+public class MissionCreatorPresenterImpl implements MissionCreatorPresenter {
     private final MissionCreatorView missionView;
     private final Context context;
     private DBHelper dbHelper;
@@ -37,26 +37,41 @@ public class MissionCreatorPresenterImpl implements MissionCreatorPresenter, Rea
 
     @Override
     public void onDestroy() {
-        dbHelper.closeRealm(this);
+        dbHelper.closeRealm();
     }
 
     @Override
-    public void createMission(String name, Calendar date, Calendar time) {
+    public void createMission(final String name, Calendar date, final long duration) {
         missionView.showProgress();
-        dbHelper.addListener(this);
-        dbHelper.insertMission(name, date, time);
+        dbHelper.addListener(new RealmChangeListener() {
+            @Override
+            public void onChange(Object element) {
+                Log.d("MissionCreator", "createMission " + name + " " + duration);
+                onNavigateToMainView();
+                dbHelper.deleteListener(this);
+
+            }
+        });
+        dbHelper.insertMission(name, date, duration);
 
     }
 
     @Override
-    public void createFlight(int missionId, Calendar date, Calendar time) {
+    public void createFlight(final int missionId, Calendar date, final long  duration) {
         missionView.showProgress();
-        dbHelper.addListener(this);
-        dbHelper.insertFlightInMission(missionId, date, time);
+        dbHelper.addListener(new RealmChangeListener() {
+            @Override
+            public void onChange(Object element) {
+                Log.d("MissionCreator", "createFlight " + missionId + " " + duration);
+                onNavigateToMainView();
+                dbHelper.deleteListener(this);
+            }
+        });
+        dbHelper.insertFlightInMission(missionId, date, duration);
     }
 
-    @Override
-    public void onChange(Object element) {
-       missionView.navigateToMainView();
+    private void onNavigateToMainView() {
+        missionView.hideProgress();
+        missionView.navigateToMainView();
     }
 }

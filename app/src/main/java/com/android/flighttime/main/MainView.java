@@ -5,6 +5,7 @@ import android.view.View;
 import com.android.flighttime.database.FlightDB;
 import com.android.flighttime.database.MissionDB;
 import com.android.flighttime.listener.DatePickerListener;
+import com.android.flighttime.listener.DeleteDialogClickListener;
 import com.android.flighttime.listener.TimePickerListener;
 import com.roughike.swipeselector.SwipeItem;
 
@@ -24,7 +25,7 @@ public interface MainView {
 
     void showMessageSnackbar(int  message, int action, int groupPosition, int childPosition);
 
-    void showAlertDialog(String message);
+    void showAlertDialog(DeleteDialogClickListener  listener);
 
     void showSnackBar(String message);
 
@@ -42,6 +43,8 @@ public interface MainView {
 
     void onUnderSwipeAddFlightButtonClicked(int groupPosition, View v);
 
-    void onUnderSwipeEditMissionButtonClicked(View v);
+    void onUnderSwipeEditMissionButtonClicked(int groupPosition, View v);
+
+     void notifyGroupItemRestored(int groupPosition);
 
 }

@@ -29,7 +29,7 @@ public class DateFormatter {
     }
 
     public static long getCountMinute(Calendar calendar) {
-        long minute = calendar.getTimeInMillis() / COUNT_MILLISECOND_IN_MINUTE;
+        long minute = (calendar.get(Calendar.HOUR) * 3600) + (calendar.get(Calendar.MINUTE) * 60);
         Log.d("Date", "minute " + Long.toString(minute));
         return minute;
     }
