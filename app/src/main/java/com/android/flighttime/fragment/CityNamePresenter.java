@@ -9,11 +9,5 @@ public interface CityNamePresenter {
 
     void onStop();
 
-    void onStart();
-
-    void onBuildGoogleApiClient();
-
-    void onPlaceResult(String placeId);
-
     void onDestroy();
 }

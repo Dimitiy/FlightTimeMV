@@ -1,0 +1,58 @@
+{
+  "project_info": {
+    "project_number": "1015739329941",
+    "project_id": "flighttime-1319"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1015739329941:android:ad4356707f4037ec",
+        "android_client_info": {
+          "package_name": "com.android.flighttime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1015739329941-uti55ha0ce9vslr3b6df2cijlmlnr1pq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.flighttime",
+            "certificate_hash": "5BD5FC1318F2408B2F2037FE09FD9DC6F32139F5"
+          }
+        },
+        {
+          "client_id": "1015739329941-3rjj33mffdo7i82n0k7asstrl3tknvnj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1MyXe7kobSGJON9OVSR0ghNADafGd_TA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-78511145-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1015739329941-3rjj33mffdo7i82n0k7asstrl3tknvnj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2,
+          "test_banner_ad_unit_id": "ca-app-pub-3940256099942544/6300978111",
+          "test_interstitial_ad_unit_id": "ca-app-pub-3940256099942544/1033173712"
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

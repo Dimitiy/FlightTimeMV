@@ -4,7 +4,9 @@
     <string name="rule">Rule</string>
     <string name="requirements">Requirements</string>
     <string name="settings">Settings</string>
-
+    <string name="formatted_place_data">
+        Name: %1$s\nAddress: %2$s\nPhone: %3$s\nWebsite: %4$s\nRating: %5$s\nId: %6$s\n
+    </string>
 
     <string name="add_mission">Add mission</string>
     <string name="enter_travel_city">Enter the name of the village</string>

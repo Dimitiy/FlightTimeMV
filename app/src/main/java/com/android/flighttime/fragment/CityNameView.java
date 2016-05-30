@@ -2,6 +2,8 @@ package com.android.flighttime.fragment;
 
 import android.text.TextWatcher;
 
+import com.google.android.gms.common.api.Status;
+
 /**
  * Created by oldman on 19.05.16.
  */
@@ -10,8 +12,8 @@ public interface CityNameView {
 
     void hideProgress();
 
-    void showRecycleView();
+    void onPlaceSelected(String place);
 
-    void setGoogleApiClient(boolean isGoogleApiClient);
+    void onErrorPlaceSelection(Status status);
 
 }

@@ -2,7 +2,9 @@
 <resources>
     <string name="app_name">Время полета</string>
     <string name="action_settings">Настройки</string>
-
+ <string name="formatted_place_data">
+        Название: %1$s\nАдрес: %2$s\nТелефон: %3$s\nWebsite: %4$s\nRating: %5$s\nId: %6$s\n
+    </string>
     <string name="rule">Нормы</string>
     <string name="requirements">Требования</string>
     <string name="settings">Настройка</string>

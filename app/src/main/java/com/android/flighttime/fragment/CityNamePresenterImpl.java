@@ -1,103 +1,81 @@
 package com.android.flighttime.fragment;
 
+import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
-import android.widget.Toast;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.PlaceBuffer;
-import com.google.android.gms.location.places.Places;
+import com.android.flighttime.R;
+import com.android.flighttime.listener.GoogleEventListener;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
 /**
  * Created by oldman on 19.05.16.
  */
-public class CityNamePresenterImpl implements CityNamePresenter, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+public class CityNamePresenterImpl implements PlaceSelectionListener, GoogleEventListener, CityNamePresenter {
     private final CityNameView cityView;
-    private final Context context;
-    protected GoogleApiClient googleApiClient;
+//    private final Context context;
+    PlaceAutocompleteFragment autocompleteFragment;
 
+//    public CityNamePresenterImpl(CityNameView cityView, Context context) {
+//        this.context = context;
+//
+//    }
 
-    public CityNamePresenterImpl(CityNameView cityView, Context context) {
+    public CityNamePresenterImpl(CityNameFragment cityView, FragmentActivity fragmentManager) {
         this.cityView = cityView;
-        this.context = context;
-        onBuildGoogleApiClient();
+
+        autocompleteFragment = (PlaceAutocompleteFragment)
+                fragmentManager.getFragmentManager().findFragmentById(R.id.place_fragment);
+        autocompleteFragment.setOnPlaceSelectedListener(this);
+        autocompleteFragment.setHint("Search a Location");
+//        autocompleteFragment.setBoundsBias(BOUNDS_MOUNTAIN_VIEW);
     }
+
+
 
 
     @Override
     public void onResume() {
-        if (cityView != null) {
-            cityView.showProgress();
-        }
-        if (!googleApiClient.isConnected() && !googleApiClient.isConnecting()) {
-            Log.d("Google API", "Connecting");
-            googleApiClient.connect();
-        }
-    }
+     }
 
     @Override
     public void onStop() {
-        if (googleApiClient.isConnected()) {
-            googleApiClient.disconnect();
-        }
-    }
-
-    @Override
-    public void onBuildGoogleApiClient() {
-        googleApiClient = new GoogleApiClient.Builder(context)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .addApi(Places.GEO_DATA_API)
-                .build();
     }
 
     @Override
     public void onDestroy() {
-        if (cityView != null)
-            cityView.setGoogleApiClient(false);
-    }
-
-    public void onPlaceResult(String placeId) {
-        final PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
-                .getPlaceById(googleApiClient, placeId);
-        placeResult.setResultCallback(new ResultCallback<PlaceBuffer>() {
-            @Override
-            public void onResult(PlaceBuffer places) {
-                if (places.getCount() == 1) {
-                    cityView.showRecycleView();
-                } else {
-                    Toast.makeText(context, "OOPs!!! Something went wrong..", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        autocompleteFragment.onDestroy();
     }
 
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        cityView.setGoogleApiClient(true);
+    public void onConnected() {
+
     }
 
     @Override
-    public void onConnectionSuspended(int i) {
-        cityView.setGoogleApiClient(false);
+    public void onDisconnected() {
+
+    }
+
+
+
+    @Override
+    public void onPlaceSelected(Place place) {
+        cityView.onPlaceSelected(autocompleteFragment.getString(R.string.formatted_place_data, place
+                .getName(), place.getAddress(), place.getPhoneNumber(), place
+                .getWebsiteUri(), place.getRating(), place.getId()));
+
+//        if (!TextUtils.isEmpty(place.getAttributions())){
+//            attributionsTextView.setText(Html.fromHtml(place.getAttributions().toString() + " " + place.getAddress()));
+//            cityChangeListener.onNameCityChange(Html.fromHtml(place.getAttributions().toString()).toString());
     }
 
     @Override
-    public void onStart() {
-        googleApiClient.connect();
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        cityView.setGoogleApiClient(false);
+    public void onError(Status status) {
+        cityView.onErrorPlaceSelection(status);
     }
 }

@@ -11,4 +11,9 @@ public class Constants {
     public static final int TIME_FORMAT = 1;
     public static final int BEGIN_COUNT_TIME_FLIGHT = 0;
 
+    public static final int GOOGLE_DRIVE_CLIENT = 0;
+    public static final int GOOGLE_LOCATION_CLIENT = 1;
+
+
+
 }
