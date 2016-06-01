@@ -67,4 +67,9 @@ public class DateFormatter {
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
         return sdf.format(calendar.getTime());
     }
+    public static String getDateFormat(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
+        return sdf.format(date);
+    }
+
     }

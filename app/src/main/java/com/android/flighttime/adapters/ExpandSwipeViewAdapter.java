@@ -77,10 +77,10 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
                 break;
             // group item events
             case R.id.addFlight:
-                mEventListener.onUnderSwipeAddFlightButtonClicked(groupPosition, v);
+                mEventListener.onUnderSwipeAddFlightButtonClicked(groupPosition);
                 break;
             case R.id.editMission:
-                mEventListener.onUnderSwipeEditMissionButtonClicked(groupPosition, v);
+                mEventListener.onUnderSwipeEditMissionButtonClicked(groupPosition);
 
                 break;
 

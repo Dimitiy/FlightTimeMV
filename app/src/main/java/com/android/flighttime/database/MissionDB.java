@@ -1,7 +1,11 @@
 package com.android.flighttime.database;
 
+
+import org.parceler.Parcel;
+
 import java.util.Date;
 
+import io.realm.MissionDBRealmProxy;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -10,6 +14,9 @@ import io.realm.annotations.Required;
 /**
  * Created by OldMan on 13.02.2016.
  */
+@Parcel(implementations = { MissionDBRealmProxy.class },
+        value = Parcel.Serialization.BEAN,
+        analyze = { MissionDB.class })
 public class MissionDB extends RealmObject {
     @Required // Name is not nullable
     private String city;
@@ -56,9 +63,9 @@ public class MissionDB extends RealmObject {
         return flightDBRealmList;
     }
 
-    public void setFlightDBRealmList(RealmList<FlightDB> flightDBRealmList) {
-        this.flightDBRealmList = flightDBRealmList;
-    }
+//    public void setFlightDBRealmList(RealmList<FlightDB> flightDBRealmList) {
+//        this.flightDBRealmList = flightDBRealmList;
+//    }
 
 
     public String getCity() {

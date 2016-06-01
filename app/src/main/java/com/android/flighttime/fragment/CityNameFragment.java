@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +18,6 @@ import com.android.flighttime.listener.CityChangeListener;
 import com.android.flighttime.listener.OnBackPressedListener;
 import com.android.flighttime.utils.GoogleClient;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 
 
 public class CityNameFragment extends Fragment implements TextWatcher, CityNameView, OnBackPressedListener {
@@ -30,7 +29,7 @@ public class CityNameFragment extends Fragment implements TextWatcher, CityNameV
     private String oldNameCity;
     private CityNamePresenter presenter;
     private CityChangeListener cityChangeListener;
-    private TextView locationTextView;
+    private EditText locationTextView;
     private TextInputLayout nameLayout;
     private View view;
 
@@ -49,7 +48,10 @@ public class CityNameFragment extends Fragment implements TextWatcher, CityNameV
         fragment.setArguments(args);
         return fragment;
     }
-
+    public static CityNameFragment newInstance() {
+        CityNameFragment fragment = new CityNameFragment();
+        return fragment;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,14 +67,14 @@ public class CityNameFragment extends Fragment implements TextWatcher, CityNameV
 
         if (GoogleClient.checkGooglePlayServicesAvailable(getContext())) {
             view = inflater.inflate(R.layout.fragment_city_name, container, false);
-            locationTextView = (TextView) view.findViewById(R.id.txt_location);
+            locationTextView = (EditText) view.findViewById(R.id.txt_location);
         } else {
             view = inflater.inflate(R.layout.fragment_city_name_text, container, false);
-            locationTextView = (TextView) view.findViewById(R.id.txt_location);
+            locationTextView = (EditText) view.findViewById(R.id.txt_location);
             locationTextView.addTextChangedListener(this);
+            locationTextView.setFocusable(true);
         }
         nameLayout = (TextInputLayout) view.findViewById(R.id.til);
-//        autocompleteView.setFocusable(true);
         if (oldNameCity != null)
             locationTextView.setText(oldNameCity);
 

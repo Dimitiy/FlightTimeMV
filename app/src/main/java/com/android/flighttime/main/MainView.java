@@ -41,9 +41,9 @@ public interface MainView {
 
     void onItemViewClicked(View v, boolean pinned);
 
-    void onUnderSwipeAddFlightButtonClicked(int groupPosition, View v);
+    void onUnderSwipeAddFlightButtonClicked(int groupPosition);
 
-    void onUnderSwipeEditMissionButtonClicked(int groupPosition, View v);
+    void onUnderSwipeEditMissionButtonClicked(int groupPosition);
 
      void notifyGroupItemRestored(int groupPosition);
 

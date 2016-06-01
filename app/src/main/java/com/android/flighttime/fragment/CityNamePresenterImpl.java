@@ -1,9 +1,7 @@
 package com.android.flighttime.fragment;
 
-import android.app.Activity;
-import android.content.Context;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
+import android.widget.EditText;
 
 import com.android.flighttime.R;
 import com.android.flighttime.listener.GoogleEventListener;
@@ -17,9 +15,8 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener;
  */
 public class CityNamePresenterImpl implements PlaceSelectionListener, GoogleEventListener, CityNamePresenter {
     private final CityNameView cityView;
-//    private final Context context;
+    //    private final Context context;
     PlaceAutocompleteFragment autocompleteFragment;
-
 //    public CityNamePresenterImpl(CityNameView cityView, Context context) {
 //        this.context = context;
 //
@@ -30,17 +27,17 @@ public class CityNamePresenterImpl implements PlaceSelectionListener, GoogleEven
 
         autocompleteFragment = (PlaceAutocompleteFragment)
                 fragmentManager.getFragmentManager().findFragmentById(R.id.place_fragment);
-        autocompleteFragment.setOnPlaceSelectedListener(this);
-        autocompleteFragment.setHint("Search a Location");
+        if (autocompleteFragment != null) {
+            autocompleteFragment.setOnPlaceSelectedListener(this);
+            autocompleteFragment.setHint("Search a Location");
+        }
 //        autocompleteFragment.setBoundsBias(BOUNDS_MOUNTAIN_VIEW);
     }
 
 
-
-
     @Override
     public void onResume() {
-     }
+    }
 
     @Override
     public void onStop() {
@@ -60,7 +57,6 @@ public class CityNamePresenterImpl implements PlaceSelectionListener, GoogleEven
     public void onDisconnected() {
 
     }
-
 
 
     @Override

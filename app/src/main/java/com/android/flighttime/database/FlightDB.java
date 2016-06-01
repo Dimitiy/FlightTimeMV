@@ -1,7 +1,10 @@
 package com.android.flighttime.database;
 
+import org.parceler.Parcel;
+
 import java.util.Date;
 
+import io.realm.FlightDBRealmProxy;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -9,6 +12,9 @@ import io.realm.annotations.Required;
 /**
  * Created by OldMan on 13.02.2016.
  */
+@Parcel(implementations = {FlightDBRealmProxy.class},
+        value = Parcel.Serialization.BEAN,
+        analyze = {FlightDB.class})
 public class FlightDB extends RealmObject {
     @PrimaryKey
     private int id;
@@ -29,6 +35,7 @@ public class FlightDB extends RealmObject {
     public void setId(int id) {
         this.id = id;
     }
+
     public long getDuration() {
         return duration;
     }

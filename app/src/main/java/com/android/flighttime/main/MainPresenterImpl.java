@@ -21,6 +21,7 @@ package com.android.flighttime.main;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 
@@ -32,6 +33,8 @@ import com.android.flighttime.listener.OnTaskCreateListener;
 import com.android.flighttime.mission.MissionCreatorActivity;
 import com.android.flighttime.utils.Constants;
 import com.roughike.swipeselector.SwipeItem;
+
+import org.parceler.Parcels;
 
 import java.util.Calendar;
 import java.util.List;
@@ -77,7 +80,7 @@ public class MainPresenterImpl implements MainPresenter,  FindItemsInteractor.On
     }
 
     @Override
-    public void navigateToCreateFlight(AbstractExpandableDataProvider.MissionData mission, View v) {
+    public void navigateToCreateFlight(AbstractExpandableDataProvider.MissionData mission) {
         Intent intent = new Intent(context, MissionCreatorActivity.class);
         intent.putExtra("type_of_activity", Constants.TYPE_OF_FLIGHT_ACTIVITY_CREATED);
         intent.putExtra("mission_id", mission.getMission().getId());
@@ -86,8 +89,12 @@ public class MainPresenterImpl implements MainPresenter,  FindItemsInteractor.On
     }
 
     @Override
-    public void navigateToChangeMission(int missionID) {
-
+    public void navigateToChangeMission(MissionDB missionDB, int missionID) {
+        Intent intent = new Intent(context, MissionCreatorActivity.class);
+        intent.putExtra("type_of_activity", Constants.TYPE_OF_MISSION_ACTIVITY_CREATED);
+        intent.putExtra("mission", Parcels.wrap(missionDB));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     @Override

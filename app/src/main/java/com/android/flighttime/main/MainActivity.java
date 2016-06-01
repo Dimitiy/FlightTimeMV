@@ -418,8 +418,8 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     }
 
     @Override
-    public void onUnderSwipeAddFlightButtonClicked(int groupPosition, View v) {
-        presenter.navigateToCreateFlight(dataProvider.getMissionItem(groupPosition), v);
+    public void onUnderSwipeAddFlightButtonClicked(int groupPosition) {
+        presenter.navigateToCreateFlight(dataProvider.getMissionItem(groupPosition));
     }
 
     @Override
@@ -431,8 +431,8 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     }
 
     @Override
-    public void onUnderSwipeEditMissionButtonClicked(int groupPosition, View v) {
-        presenter.navigateToChangeMission(dataProvider.getMissionItem(groupPosition).getMission().getId());
+    public void onUnderSwipeEditMissionButtonClicked(int groupPosition) {
+        presenter.navigateToChangeMission(dataProvider.getMissionItem(groupPosition).getMission(), groupPosition);
     }
 
     @Override

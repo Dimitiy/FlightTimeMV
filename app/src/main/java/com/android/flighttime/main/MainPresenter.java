@@ -3,6 +3,7 @@ package com.android.flighttime.main;
 import android.view.View;
 
 import com.android.flighttime.data.AbstractExpandableDataProvider;
+import com.android.flighttime.database.MissionDB;
 import com.roughike.swipeselector.SwipeItem;
 
 /**
@@ -16,9 +17,9 @@ public interface MainPresenter {
     void navigateToCreateMission();
 
 
-    void navigateToCreateFlight(AbstractExpandableDataProvider.MissionData mission, View v);
+    void navigateToCreateFlight(AbstractExpandableDataProvider.MissionData mission);
 
-    void navigateToChangeMission(int groupPosition);
+    void navigateToChangeMission(MissionDB missionDB, int groupPosition);
 
     void onDeleteMission(int groupPosition);
 

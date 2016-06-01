@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.android.flighttime.R;
-import com.android.flighttime.dagger.MissionComponent;
+import com.android.flighttime.database.MissionDB;
 import com.android.flighttime.fragment.CityNameFragment;
 import com.android.flighttime.fragment.DateFragment;
 import com.android.flighttime.listener.CityChangeListener;
@@ -19,6 +19,9 @@ import com.android.flighttime.listener.DatePickerListener;
 import com.android.flighttime.listener.TimePickerListener;
 import com.android.flighttime.main.MainActivity;
 import com.android.flighttime.utils.Constants;
+import com.android.flighttime.utils.DateFormatter;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,14 +46,12 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
         nameCity = intent.getStringExtra("city");
         final int typeOfActivity = intent.getIntExtra("type_of_activity", 0);
         final int missionID = intent.getIntExtra("mission_id", 0);
+        final MissionDB mission = Parcels.unwrap(getIntent().getParcelableExtra("mission"));
         calendarDate = Calendar.getInstance();
         progressBar = (ProgressBar) findViewById(R.id.progress);
-
         presenter = new MissionCreatorPresenterImpl(this, getApplicationContext());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
-        // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -60,7 +61,11 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
             @Override
             public void onFinish() {
                 if (typeOfActivity == Constants.TYPE_OF_MISSION_ACTIVITY_CREATED)
+                    if(mission == null)
                     presenter.createMission(nameCity, calendarDate, duration);
+                    else
+                        presenter.updateMission(mission.getId(), nameCity, calendarDate, duration);
+
                 else {
                     presenter.createFlight(missionID, calendarDate, duration);
                 }
@@ -79,23 +84,24 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
 
         SteppersView steppersView = (SteppersView) findViewById(R.id.steppersView);
         steppersView.setConfig(steppersViewConfig);
-        steppersView.setItems(getItems(typeOfActivity));
+        steppersView.setItems(getItems(typeOfActivity, mission));
         steppersView.build();
 
 
     }
 
-//    private void createComponent(){
-//        MissionComponent component = DaggerMissionComponent.create();
-//        component.inject(this);
-//    }
-    private ArrayList<SteppersItem> getItems(int i) {
+    private ArrayList<SteppersItem> getItems(int i, MissionDB mission) {
         ArrayList<SteppersItem> steps = new ArrayList<>();
         while (i <= 2) {
             final SteppersItem item = new SteppersItem();
             switch (i) {
                 case 0:
-                    CityNameFragment cityNameFragment = CityNameFragment.newInstance(nameCity);
+                    CityNameFragment cityNameFragment;
+                    if (mission != null)
+                        cityNameFragment = CityNameFragment.newInstance(mission.getCity());
+                    else
+                        cityNameFragment = CityNameFragment.newInstance();
+
                     item.setLabel(getResources().getString(R.string.enter_travel_city));
                     item.setSubLabel(getResources().getString(R.string.home_airfield));
                     item.setPositiveButtonEnable(false);
@@ -112,7 +118,11 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
                     item.setFragment(cityNameFragment);
                     break;
                 case 1:
-                    DateFragment dateFragment = DateFragment.newInstance(Constants.DATE_FORMAT);
+                    DateFragment dateFragment;
+                    if (mission == null)
+                        dateFragment = DateFragment.newInstance(Constants.DATE_FORMAT);
+                    else
+                        dateFragment = DateFragment.newInstance(Constants.DATE_FORMAT, DateFormatter.getDateFormat(mission.getDate()));
                     dateFragment.addDatePickerListener(new DatePickerListener() {
                         @Override
                         public void onSelectDate(Calendar calendarMission) {
@@ -126,7 +136,12 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
                     break;
 
                 case 2:
-                    DateFragment timeFragment = DateFragment.newInstance(Constants.TIME_FORMAT);
+                    DateFragment timeFragment;
+                    if (mission == null)
+                        timeFragment = DateFragment.newInstance(Constants.TIME_FORMAT);
+                    else
+                        timeFragment = DateFragment.newInstance(Constants.TIME_FORMAT, String.valueOf(mission.getDuration()));
+
                     timeFragment.addTimePickerListener(new TimePickerListener() {
                         @Override
                         public void onSelectTimeCount(long calendarTime) {
