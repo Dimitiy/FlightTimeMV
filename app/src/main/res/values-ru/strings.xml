@@ -2,10 +2,13 @@
 <resources>
     <string name="app_name">Время полета</string>
     <string name="action_settings">Настройки</string>
- <string name="formatted_place_data">
-        Название: %1$s\nАдрес: %2$s\nТелефон: %3$s\nWebsite: %4$s\nRating: %5$s\nId: %6$s\n
+    <string name="formatted_place_data">
+        Название: %1$s Адрес: %2$s
     </string>
-    <string name="rule">Нормы</string>
+   <string name="format_year">%1$s год</string>
+   <string name="format_duration">%1$s ч.</string>
+
+   <string name="rule">Нормы</string>
     <string name="requirements">Требования</string>
     <string name="settings">Настройка</string>
 
@@ -18,9 +21,7 @@
 
 
     <string name="title_activity_create_mission">Укажите дату</string>
-    <string name="add_hour"> ч.</string>
     <string name="empty_mission">Cписок командировок пуст</string>
-    <string name="year">год</string>
     <string name="add_flight">Добавить вылет</string>
     <string name="flight_added">Вылет добавлен</string>
 

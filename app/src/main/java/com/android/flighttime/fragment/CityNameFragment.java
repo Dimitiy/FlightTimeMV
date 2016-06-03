@@ -26,7 +26,7 @@ public class CityNameFragment extends Fragment implements TextWatcher, CityNameV
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG = CityNameFragment.class.getSimpleName();
-    private String oldNameCity;
+    private String oldNameCity = null;
     private CityNamePresenter presenter;
     private CityChangeListener cityChangeListener;
     private EditText locationTextView;
@@ -67,16 +67,16 @@ public class CityNameFragment extends Fragment implements TextWatcher, CityNameV
 
         if (GoogleClient.checkGooglePlayServicesAvailable(getContext())) {
             view = inflater.inflate(R.layout.fragment_city_name, container, false);
-            locationTextView = (EditText) view.findViewById(R.id.txt_location);
         } else {
             view = inflater.inflate(R.layout.fragment_city_name_text, container, false);
             locationTextView = (EditText) view.findViewById(R.id.txt_location);
             locationTextView.addTextChangedListener(this);
             locationTextView.setFocusable(true);
+            if (oldNameCity != null)
+                locationTextView.setText(oldNameCity);
         }
         nameLayout = (TextInputLayout) view.findViewById(R.id.til);
-        if (oldNameCity != null)
-            locationTextView.setText(oldNameCity);
+
 
         return view;
     }
@@ -84,7 +84,7 @@ public class CityNameFragment extends Fragment implements TextWatcher, CityNameV
     @Override
     public void onStart() {
         super.onStart();
-        presenter = new CityNamePresenterImpl(this, getActivity());
+        presenter = new CityNamePresenterImpl(oldNameCity, this, getActivity());
     }
 
     @Override
@@ -111,8 +111,8 @@ public class CityNameFragment extends Fragment implements TextWatcher, CityNameV
 
     @Override
     public void onPlaceSelected(String place) {
-        locationTextView.setText(place);
-//        cityChangeListener.onNameCityChange(place);
+        if (cityChangeListener != null)
+            cityChangeListener.onNameCityChange(place.toString());
     }
 
     @Override

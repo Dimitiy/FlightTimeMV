@@ -15,10 +15,9 @@ import com.android.flighttime.R;
 import com.android.flighttime.listener.DatePickerListener;
 import com.android.flighttime.listener.TimePickerListener;
 import com.android.flighttime.utils.Constants;
-import com.android.flighttime.utils.DateFormatter;
+import com.android.flighttime.utils.Formatter;
 
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -99,10 +98,10 @@ public class DateFragment extends Fragment implements View.OnClickListener, andr
             calendar.set(Calendar.HOUR, Constants.BEGIN_COUNT_TIME_FLIGHT);
             calendar.set(Calendar.MINUTE, Constants.BEGIN_COUNT_TIME_FLIGHT);
             if (mParam1 == Constants.DATE_FORMAT)
-                editDate.setText(DateFormatter.getDateFormat(calendar));
+                editDate.setText(Formatter.getDateFormat(calendar));
             else if (mParam1 == Constants.TIME_FORMAT) {
                 Log.d("DateFragment", "TIME_FORMAT" + Integer.toString(mParam1));
-                editDate.setText(DateFormatter.getTimeFormat(calendar));
+                editDate.setText(Formatter.getTimeFormat(calendar));
             }
         }
         editDate.setOnClickListener(this);
@@ -126,7 +125,7 @@ public class DateFragment extends Fragment implements View.OnClickListener, andr
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         calendar.set(year, monthOfYear, dayOfMonth);
-        editDate.setText(DateFormatter.getDateFormat(calendar));
+        editDate.setText(Formatter.getDateFormat(calendar));
         datePickerListener.onSelectDate(calendar);
     }
 
@@ -134,8 +133,8 @@ public class DateFragment extends Fragment implements View.OnClickListener, andr
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         calendar.set(Calendar.HOUR, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
-        editDate.setText(DateFormatter.getTimeFormat(calendar));
-        timePickerListener.onSelectTimeCount(DateFormatter.getCountMinute(calendar));
+        editDate.setText(Formatter.getTimeFormat(calendar));
+        timePickerListener.onSelectTimeCount(Formatter.getCountMinute(calendar));
     }
 
 

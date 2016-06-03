@@ -41,18 +41,18 @@ public class MissionCreatorPresenterImpl implements MissionCreatorPresenter {
     }
 
     @Override
-    public void createMission(final String name, Calendar date, final long duration) {
+    public void createMission(final String name, Calendar date) {
         missionView.showProgress();
         dbHelper.addListener(new RealmChangeListener() {
             @Override
             public void onChange(Object element) {
-                Log.d("MissionCreator", "createMission " + name + " " + duration);
+                Log.d("MissionCreator", "createMission " + name);
                 onNavigateToMainView();
                 dbHelper.deleteListener(this);
 
             }
         });
-        dbHelper.insertMission(name, date, duration);
+        dbHelper.insertMission(name, date);
 
     }
 
@@ -70,9 +70,9 @@ public class MissionCreatorPresenterImpl implements MissionCreatorPresenter {
     }
 
     @Override
-    public void updateMission(int id, String nameCity, Calendar calendarDate, long duration) {
+    public void updateMission(int id, String nameCity, Calendar calendarDate) {
         missionView.showProgress();
-        Log.d("MissionCreator", "updateMission " + id + " " + duration);
+        Log.d("MissionCreator", "updateMission " + id);
 
         dbHelper.addListener(new RealmChangeListener() {
             @Override
@@ -81,7 +81,7 @@ public class MissionCreatorPresenterImpl implements MissionCreatorPresenter {
                 dbHelper.deleteListener(this);
             }
         });
-        dbHelper.updateMission(id, nameCity, calendarDate.getTime(), duration);
+        dbHelper.updateMission(id, nameCity, calendarDate.getTime());
     }
 
     private void onNavigateToMainView() {

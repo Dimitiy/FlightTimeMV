@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
+
         swipeYearSelector = (SwipeSelector) findViewById(R.id.swipeYear);
         swipeYearSelector.setOnItemSelectedListener(this);
 
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
                 (NinePatchDrawable) ContextCompat.getDrawable(context, R.drawable.material_shadow_z3));
         // swipe manager
         recyclerViewSwipeManager = new RecyclerViewSwipeManager();
-        adapter = new ExpandSwipeViewAdapter(recyclerViewExpandableItemManager, dataProvider);
+        adapter = new ExpandSwipeViewAdapter(recyclerViewExpandableItemManager, dataProvider, getApplicationContext());
         adapter.setEventListener(this);
 
         mWrappedAdapter = recyclerViewExpandableItemManager.createWrappedAdapter(adapter);         // wrap for expanding
@@ -163,6 +164,12 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     protected void onResume() {
         super.onResume();
         presenter.onResume();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     @Override
@@ -236,12 +243,21 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
     @Override
     public void showProgress() {
-        progressBar.setVisibility(View.VISIBLE);
+
+        runOnUiThread(new Runnable() {
+            public void run() {
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
     public void hideProgress() {
-        progressBar.setVisibility(View.GONE);
+        runOnUiThread(new Runnable() {
+            public void run() {
+                progressBar.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -253,8 +269,6 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
                 presenter.onMissionItems(swipeYearSelector.getSelectedItem().title);
             }
         });
-
-
     }
 
     @Override
@@ -275,10 +289,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
     @Override
     public void showMessageSnackbar(int message, int action, final int groupPosition, final int childPosition) {
-        Log.d(TAG, groupPosition + " " + childPosition);
         final int missionId = dataProvider.getMissionItem(groupPosition).getMission().getId();
-        Log.d(TAG, missionId + " ");
-
         int flightId = -1;
         if (childPosition != -1)
             flightId = dataProvider.getFlightItem(groupPosition, childPosition).getFlight().getId();
@@ -292,10 +303,8 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
             public void onDismissed(Snackbar snackbar, int event) {
                 if (event != Snackbar.Callback.DISMISS_EVENT_ACTION)
                     if (childPosition != -1) {
-                        Log.d(TAG, "onDeleteFlight " + missionId + " " + childPosition);
                         presenter.onDeleteFlight(missionId, finalFlightId);
                     } else {
-                        Log.d(TAG, "onDeleteMission" + missionId);
                         presenter.onDeleteMission(missionId);
                     }
             }
@@ -303,7 +312,6 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
             @Override
             public void onShown(Snackbar snackbar) {
                 if (childPosition != -1) {
-                    Log.d(TAG, "removeFlightItem onShown  " + missionId + " " + childPosition);
                     dataProvider.removeFlightItem(groupPosition, childPosition);
                     adapter.notifyDataSetChanged();
                     AbstractExpandableDataProvider.MissionData data = dataProvider.getMissionItem(groupPosition);
@@ -313,7 +321,6 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
                         data.setPinned(true);
                     }
                 } else {
-                    Log.d(TAG, "removeMissionItem onShown  " + missionId);
                     dataProvider.removeMissionItem(groupPosition);
                     adapter.notifyDataSetChanged();
                 }
@@ -360,6 +367,8 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
     @Override
     public void onGroupItemRemoved(int groupPosition) {
+        Log.d(TAG, "onGroupItemRemoved(groupPosition = " + groupPosition);
+
         final DialogFragment dialog = DeleteItemDialog.newInstance(groupPosition, RecyclerView.NO_POSITION);
         dialog.show(getSupportFragmentManager(), "delete_dialog");
     }

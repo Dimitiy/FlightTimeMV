@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,12 +18,13 @@ import com.android.flighttime.listener.DatePickerListener;
 import com.android.flighttime.listener.TimePickerListener;
 import com.android.flighttime.main.MainActivity;
 import com.android.flighttime.utils.Constants;
-import com.android.flighttime.utils.DateFormatter;
+import com.android.flighttime.utils.Formatter;
 
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import me.drozdzynski.library.steppers.OnCancelAction;
 import me.drozdzynski.library.steppers.OnFinishAction;
@@ -34,9 +34,14 @@ import me.drozdzynski.library.steppers.SteppersView;
 public class MissionCreatorActivity extends AppCompatActivity implements MissionCreatorView {
     private String nameCity = "";
     private Calendar calendarDate;
+    private Date oldDate;
     private long duration = 0;
+    private final int ZERO_STEPS = 0;
+    private final int FIRST_STEPS = 1;
+    private final int SECOND_STEPS = 2;
     private ProgressBar progressBar;
     private MissionCreatorPresenterImpl presenter;
+    private boolean isUpdateMission = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,11 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
         final int typeOfActivity = intent.getIntExtra("type_of_activity", 0);
         final int missionID = intent.getIntExtra("mission_id", 0);
         final MissionDB mission = Parcels.unwrap(getIntent().getParcelableExtra("mission"));
+        if (mission != null) {
+            isUpdateMission = true;
+            nameCity = mission.getCity();
+            oldDate = mission.getDate();
+        }
         calendarDate = Calendar.getInstance();
         progressBar = (ProgressBar) findViewById(R.id.progress);
         presenter = new MissionCreatorPresenterImpl(this, getApplicationContext());
@@ -61,10 +71,10 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
             @Override
             public void onFinish() {
                 if (typeOfActivity == Constants.TYPE_OF_MISSION_ACTIVITY_CREATED)
-                    if(mission == null)
-                    presenter.createMission(nameCity, calendarDate, duration);
+                    if (!isUpdateMission)
+                        presenter.createMission(nameCity, calendarDate);
                     else
-                        presenter.updateMission(mission.getId(), nameCity, calendarDate, duration);
+                        presenter.updateMission(mission.getId(), nameCity, calendarDate);
 
                 else {
                     presenter.createFlight(missionID, calendarDate, duration);
@@ -79,84 +89,86 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
                 MissionCreatorActivity.this.finish();
             }
         });
-
         steppersViewConfig.setFragmentManager(getSupportFragmentManager());
 
+        ArrayList<SteppersItem> steps = new ArrayList<>();
+        if (typeOfActivity == Constants.TYPE_OF_MISSION_ACTIVITY_CREATED) {
+            steps.add(ZERO_STEPS, getCityFragment());
+            steps.add(FIRST_STEPS, getDateFragment());
+        } else {
+            steps.add(ZERO_STEPS, getDateFragment());
+            steps.add(FIRST_STEPS, getDurationFragment());
+        }
         SteppersView steppersView = (SteppersView) findViewById(R.id.steppersView);
         steppersView.setConfig(steppersViewConfig);
-        steppersView.setItems(getItems(typeOfActivity, mission));
+        steppersView.setItems(steps);
         steppersView.build();
 
 
     }
 
-    private ArrayList<SteppersItem> getItems(int i, MissionDB mission) {
-        ArrayList<SteppersItem> steps = new ArrayList<>();
-        while (i <= 2) {
-            final SteppersItem item = new SteppersItem();
-            switch (i) {
-                case 0:
-                    CityNameFragment cityNameFragment;
-                    if (mission != null)
-                        cityNameFragment = CityNameFragment.newInstance(mission.getCity());
-                    else
-                        cityNameFragment = CityNameFragment.newInstance();
 
-                    item.setLabel(getResources().getString(R.string.enter_travel_city));
-                    item.setSubLabel(getResources().getString(R.string.home_airfield));
+    private SteppersItem getCityFragment() {
+        final SteppersItem item = new SteppersItem();
+        CityNameFragment cityNameFragment;
+        if (isUpdateMission)
+            cityNameFragment = CityNameFragment.newInstance(nameCity);
+        else
+            cityNameFragment = CityNameFragment.newInstance();
+
+        item.setLabel(getResources().getString(R.string.enter_travel_city));
+        item.setSubLabel(getResources().getString(R.string.home_airfield));
+        item.setPositiveButtonEnable(false);
+        cityNameFragment.addCityNameChangedListener(new CityChangeListener() {
+            @Override
+            public void onNameCityChange(String city) {
+                if (city.length() >= 3) {
+                    item.setPositiveButtonEnable(true);
+                    nameCity = city;
+                } else
                     item.setPositiveButtonEnable(false);
-                    cityNameFragment.addCityNameChangedListener(new CityChangeListener() {
-                        @Override
-                        public void onNameCityChange(String city) {
-                            if (city.length() >= 3) {
-                                item.setPositiveButtonEnable(true);
-                                nameCity = city;
-                            } else
-                                item.setPositiveButtonEnable(false);
-                        }
-                    });
-                    item.setFragment(cityNameFragment);
-                    break;
-                case 1:
-                    DateFragment dateFragment;
-                    if (mission == null)
-                        dateFragment = DateFragment.newInstance(Constants.DATE_FORMAT);
-                    else
-                        dateFragment = DateFragment.newInstance(Constants.DATE_FORMAT, DateFormatter.getDateFormat(mission.getDate()));
-                    dateFragment.addDatePickerListener(new DatePickerListener() {
-                        @Override
-                        public void onSelectDate(Calendar calendarMission) {
-                            calendarDate.set(calendarMission.get(Calendar.YEAR),
-                                    calendarMission.get(Calendar.MONTH),
-                                    calendarMission.get(Calendar.DAY_OF_MONTH));
-                        }
-                    });
-                    item.setLabel(getResources().getString(R.string.choose_date));
-                    item.setFragment(dateFragment);
-                    break;
-
-                case 2:
-                    DateFragment timeFragment;
-                    if (mission == null)
-                        timeFragment = DateFragment.newInstance(Constants.TIME_FORMAT);
-                    else
-                        timeFragment = DateFragment.newInstance(Constants.TIME_FORMAT, String.valueOf(mission.getDuration()));
-
-                    timeFragment.addTimePickerListener(new TimePickerListener() {
-                        @Override
-                        public void onSelectTimeCount(long calendarTime) {
-                            MissionCreatorActivity.this.duration = calendarTime;
-                        }
-                    });
-                    item.setLabel(getResources().getString(R.string.choose_count_time));
-                    item.setSubLabel(getResources().getString(R.string.have_flown));
-                    item.setFragment(timeFragment);
-                    break;
             }
-            steps.add(item);
-            i++;
-        }
-        return steps;
+        });
+        item.setFragment(cityNameFragment);
+        return item;
+    }
+
+    private SteppersItem getDateFragment() {
+        final SteppersItem item = new SteppersItem();
+
+        DateFragment dateFragment;
+        if (!isUpdateMission)
+            dateFragment = DateFragment.newInstance(Constants.DATE_FORMAT);
+        else
+            dateFragment = DateFragment.newInstance(Constants.DATE_FORMAT, Formatter.getDateFormat(oldDate));
+        dateFragment.addDatePickerListener(new DatePickerListener() {
+            @Override
+            public void onSelectDate(Calendar calendarMission) {
+                calendarDate.set(calendarMission.get(Calendar.YEAR),
+                        calendarMission.get(Calendar.MONTH),
+                        calendarMission.get(Calendar.DAY_OF_MONTH));
+            }
+        });
+        item.setLabel(getResources().getString(R.string.choose_date));
+        item.setFragment(dateFragment);
+        return item;
+    }
+
+    private SteppersItem getDurationFragment() {
+        final SteppersItem item = new SteppersItem();
+
+        DateFragment timeFragment;
+        timeFragment = DateFragment.newInstance(Constants.TIME_FORMAT);
+        timeFragment.addTimePickerListener(new TimePickerListener() {
+            @Override
+            public void onSelectTimeCount(long calendarTime) {
+                MissionCreatorActivity.this.duration = calendarTime;
+            }
+        });
+        item.setLabel(getResources().getString(R.string.choose_count_time));
+        item.setSubLabel(getResources().getString(R.string.have_flown));
+        item.setFragment(timeFragment);
+        return item;
     }
 
     @Override
@@ -194,7 +206,7 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
 //        if (backPressedListener != null) {
 //            backPressedListener.onBackPressed();
 //        } else {
-        navigateToMainView();
+//        navigateToMainView();
         super.onBackPressed();
 
 //        }
@@ -202,13 +214,12 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
 
     @Override
     public void showProgress() {
-        Log.d("Mission", "progress");
-        progressBar.setVisibility(View.VISIBLE);
+         progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override

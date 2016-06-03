@@ -99,6 +99,9 @@ public class MainPresenterImpl implements MainPresenter,  FindItemsInteractor.On
 
     @Override
     public void onDeleteMission(final int groupPosition) {
+        if (mainView != null)
+            mainView.showProgress();
+
         if (dbHelper != null) {
             dbHelper.addListener(new RealmChangeListener() {
                 @Override
@@ -106,6 +109,7 @@ public class MainPresenterImpl implements MainPresenter,  FindItemsInteractor.On
                     Log.d(TAG, "deleted mission" + groupPosition);
                     dbHelper.deleteListener(this);
 //                    mainView.notifyGroupItemRestored(groupPosition);
+                    mainView.hideProgress();
                 }
             });
             dbHelper.deleteMission(groupPosition);
@@ -115,9 +119,9 @@ public class MainPresenterImpl implements MainPresenter,  FindItemsInteractor.On
 
     @Override
     public void onDeleteFlight(final int groupPosition, final int childPosition) {
-        if (mainView != null) {
+        if (mainView != null)
             mainView.showProgress();
-        }
+
         if (dbHelper != null) {
             dbHelper.addListener(new RealmChangeListener() {
                 @Override

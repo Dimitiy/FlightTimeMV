@@ -1,5 +1,6 @@
 package com.android.flighttime.adapters;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import com.android.flighttime.holder.MyChildViewHolder;
 import com.android.flighttime.holder.MyGroupViewHolder;
 import com.android.flighttime.main.MainView;
 import com.android.flighttime.utils.DrawableUtils;
+import com.android.flighttime.utils.Formatter;
 import com.android.flighttime.utils.ViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
@@ -39,21 +41,18 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
 
     private static final String TAG = ExpandSwipeViewAdapter.class.getSimpleName().toString();
     private final RecyclerViewExpandableItemManager mExpandableItemManager;
+    private final Context context;
     private AbstractExpandableDataProvider mProvider;
     private MainView mEventListener;
     private View.OnClickListener mItemViewOnClickListener;
     private View.OnClickListener mSwipeableViewContainerOnClickListener;
-    private View.OnClickListener mUnderSwipeableViewButtonOnClickListener;
-    private View.OnClickListener mItemOnClickListener = new View.OnClickListener() {
+     private View.OnClickListener mItemOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             onClickItemView(v);
         }
     };
-    public void notifyFlightItemInserted(int groupPosition, int childPosition){
-        mExpandableItemManager.notifyChildItemInserted(groupPosition, childPosition);
 
-    }
     private void onClickItemView(View v) {
 
         RecyclerView.ViewHolder vh = RecyclerViewAdapterUtils.getViewHolder(v);
@@ -81,7 +80,6 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
                 break;
             case R.id.editMission:
                 mEventListener.onUnderSwipeEditMissionButtonClicked(groupPosition);
-
                 break;
 
             default:
@@ -270,7 +268,9 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
         // set text
         holder.missionText.setText(item.getMission().getCity());
         holder.textDate.setText(item.getMission().getDate().toString());
-        holder.textCount.setText(String.valueOf(item.getMission().getDuration()));
+        holder.textCount.setText(String.format(context.getString(R.string.format_duration), Formatter.getFormatDuration(item.getMission().getDuration())));
+
+//        .String.valueOf(item.getMission().getDuration()));
 
         // set background resource (target view ID: container)
         final int dragState = holder.getDragStateFlags();
@@ -332,9 +332,8 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
         Log.d(TAG, "onBindChildViewHolder " + groupPosition + " " + childPosition);
 
         // set text
-        Log.d(TAG, item.getFlight().getDate() + " ");
         holder.textDate.setText(item.getFlight().getDate().toString());
-        holder.textCount.setText(String.valueOf(item.getFlight().getDuration()));
+        holder.textCount.setText(String.format(context.getString(R.string.format_duration), Formatter.getFormatDuration(item.getFlight().getDuration())));
 
         final int dragState = holder.getDragStateFlags();
         final int swipeState = holder.getSwipeStateFlags();
@@ -461,9 +460,10 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
     }
 
     public ExpandSwipeViewAdapter(RecyclerViewExpandableItemManager expandableItemManager,
-                                  AbstractExpandableDataProvider dataProvider) {
+                                  AbstractExpandableDataProvider dataProvider, Context context) {
         mExpandableItemManager = expandableItemManager;
         mProvider = dataProvider;
+        this.context = context;
         mItemViewOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {

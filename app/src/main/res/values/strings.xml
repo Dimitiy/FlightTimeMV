@@ -5,7 +5,7 @@
     <string name="requirements">Requirements</string>
     <string name="settings">Settings</string>
     <string name="formatted_place_data">
-        Name: %1$s\nAddress: %2$s\nPhone: %3$s\nWebsite: %4$s\nRating: %5$s\nId: %6$s\n
+        Name: %1$s Address: %2$s
     </string>
 
     <string name="add_mission">Add mission</string>
@@ -17,9 +17,10 @@
 
     <string name="title_activity_create_mission">Specify the date</string>
 
-    <string name="add_hour"> hr</string>
+    <string name="format_duration">%1$s hr.</string>
+    <string name="format_year">%1$s yh.</string>
+
     <string name="empty_mission">Travel list is empty</string>
-    <string name="year">yh</string>
     <string name="add_flight">Add flight</string>
 
     <string name="flight_added">Flight added</string>

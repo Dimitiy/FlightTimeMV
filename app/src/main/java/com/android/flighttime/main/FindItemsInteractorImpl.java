@@ -24,7 +24,7 @@ import android.util.Log;
 import com.android.flighttime.R;
 import com.android.flighttime.database.DBHelper;
 import com.android.flighttime.database.MissionDB;
-import com.android.flighttime.utils.DateFormatter;
+import com.android.flighttime.utils.Formatter;
 import com.roughike.swipeselector.SwipeItem;
 
 import java.util.ArrayList;
@@ -49,9 +49,8 @@ public class FindItemsInteractorImpl implements FindItemsInteractor {
         if (!contentMap.isEmpty()) {
             for (Iterator<String> it = contentMap.keySet().iterator(); it.hasNext(); ) {
                 String key = it.next();
-                swipe.add(new SwipeItem(index, key + " " + context.getResources().getString(R.string.year),
-                        DateFormatter.getFormatTime(contentMap.get(key)) + " "
-                                + context.getResources().getString(R.string.add_hour)));
+                swipe.add(new SwipeItem(index, String.format(context.getString(R.string.format_year), key),
+                        String.format(context.getString(R.string.format_duration), Formatter.getFormatTime(contentMap.get(key)))));
                 index += 1;
             }
         } else
@@ -62,14 +61,14 @@ public class FindItemsInteractorImpl implements FindItemsInteractor {
     }
 
     @Override
-    public void findMissionItems(DBHelper realm, final String  year, OnMissionFinishedListener listener) {
+    public void findMissionItems(DBHelper realm, final String year, OnMissionFinishedListener listener) {
         List<MissionDB> list = realm.getMissionsYear(getYear(year));
         listener.onMissionFinished(list);
     }
 
     private int getYear(String year) {
         if (year.length() <= 8) {
-            return  DateFormatter.getYearDate(year.replaceAll("[^0-9]", ""));
+            return Formatter.getYearDate(year.replaceAll("[^0-9]", ""));
         }
         return 0;
     }

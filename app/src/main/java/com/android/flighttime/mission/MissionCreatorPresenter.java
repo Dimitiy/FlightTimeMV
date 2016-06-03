@@ -16,9 +16,9 @@ public interface MissionCreatorPresenter {
 
     void onDestroy();
 
-    void createMission(String name, Calendar date, long duration);
+    void createMission(String name, Calendar date);
 
     void createFlight(int missionId,  Calendar date, long  duration);
 
-    void updateMission(int id, String nameCity, Calendar calendarDate, long duration);
+    void updateMission(int id, String nameCity, Calendar calendarDate);
 }

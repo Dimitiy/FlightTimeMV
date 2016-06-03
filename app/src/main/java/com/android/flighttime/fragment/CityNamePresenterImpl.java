@@ -1,11 +1,13 @@
 package com.android.flighttime.fragment;
 
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.widget.EditText;
 
 import com.android.flighttime.R;
 import com.android.flighttime.listener.GoogleEventListener;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
@@ -17,19 +19,20 @@ public class CityNamePresenterImpl implements PlaceSelectionListener, GoogleEven
     private final CityNameView cityView;
     //    private final Context context;
     PlaceAutocompleteFragment autocompleteFragment;
-//    public CityNamePresenterImpl(CityNameView cityView, Context context) {
-//        this.context = context;
-//
-//    }
 
-    public CityNamePresenterImpl(CityNameFragment cityView, FragmentActivity fragmentManager) {
+    public CityNamePresenterImpl(String oldCity, CityNameFragment cityView, FragmentActivity fragmentManager) {
         this.cityView = cityView;
 
         autocompleteFragment = (PlaceAutocompleteFragment)
                 fragmentManager.getFragmentManager().findFragmentById(R.id.place_fragment);
         if (autocompleteFragment != null) {
+            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+                    .setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES).build();
             autocompleteFragment.setOnPlaceSelectedListener(this);
             autocompleteFragment.setHint("Search a Location");
+            autocompleteFragment.setFilter(typeFilter);
+            if (oldCity != null)
+                autocompleteFragment.setText(oldCity);
         }
 //        autocompleteFragment.setBoundsBias(BOUNDS_MOUNTAIN_VIEW);
     }
@@ -61,13 +64,9 @@ public class CityNamePresenterImpl implements PlaceSelectionListener, GoogleEven
 
     @Override
     public void onPlaceSelected(Place place) {
-        cityView.onPlaceSelected(autocompleteFragment.getString(R.string.formatted_place_data, place
-                .getName(), place.getAddress(), place.getPhoneNumber(), place
-                .getWebsiteUri(), place.getRating(), place.getId()));
+        autocompleteFragment.setText(place.getAddress());
+        cityView.onPlaceSelected(place.getAddress().toString());
 
-//        if (!TextUtils.isEmpty(place.getAttributions())){
-//            attributionsTextView.setText(Html.fromHtml(place.getAttributions().toString() + " " + place.getAddress()));
-//            cityChangeListener.onNameCityChange(Html.fromHtml(place.getAttributions().toString()).toString());
     }
 
     @Override
