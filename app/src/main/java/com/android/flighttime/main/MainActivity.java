@@ -1,42 +1,31 @@
 package com.android.flighttime.main;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.NinePatchDrawable;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Parcelable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.android.flighttime.R;
 import com.android.flighttime.adapters.ExpandSwipeViewAdapter;
 import com.android.flighttime.data.AbstractExpandableDataProvider;
 import com.android.flighttime.data.ExpandableDataProvider;
-import com.android.flighttime.database.DBHelper;
 import com.android.flighttime.database.FlightDB;
 import com.android.flighttime.database.MissionDB;
-
-import com.android.flighttime.R;
-
 import com.android.flighttime.dialog.DeleteItemDialog;
 import com.android.flighttime.listener.DeleteDialogClickListener;
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
@@ -52,11 +41,7 @@ import com.roughike.swipeselector.OnSwipeItemSelectedListener;
 import com.roughike.swipeselector.SwipeItem;
 import com.roughike.swipeselector.SwipeSelector;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements MainView, View.OnClickListener, OnSwipeItemSelectedListener, RecyclerViewExpandableItemManager.OnGroupCollapseListener,
         RecyclerViewExpandableItemManager.OnGroupExpandListener, DeleteDialogClickListener {
@@ -428,7 +413,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
     @Override
     public void onUnderSwipeAddFlightButtonClicked(int groupPosition) {
-        presenter.navigateToCreateFlight(dataProvider.getMissionItem(groupPosition));
+        presenter.navigateToCreateFlight(dataProvider.getMissionItem(groupPosition).getMission());
     }
 
     @Override
@@ -442,6 +427,12 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     @Override
     public void onUnderSwipeEditMissionButtonClicked(int groupPosition) {
         presenter.navigateToChangeMission(dataProvider.getMissionItem(groupPosition).getMission(), groupPosition);
+    }
+
+    @Override
+    public void onEditFlightSwiped(int groupPosition, int childPosition) {
+        presenter.navigateToChangeFlight(dataProvider.getMissionItem(groupPosition).getMission(), groupPosition, childPosition);
+
     }
 
     @Override

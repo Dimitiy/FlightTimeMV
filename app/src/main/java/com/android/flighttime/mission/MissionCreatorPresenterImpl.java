@@ -84,6 +84,21 @@ public class MissionCreatorPresenterImpl implements MissionCreatorPresenter {
         dbHelper.updateMission(id, nameCity, calendarDate.getTime());
     }
 
+    @Override
+    public void updateFlight(int idMission,int idFlight, Calendar date, long duration) {
+        missionView.showProgress();
+        Log.d("MissionCreator", "updateMission " + idMission + " idFlight " + idFlight);
+
+        dbHelper.addListener(new RealmChangeListener() {
+            @Override
+            public void onChange(Object element) {
+                onNavigateToMainView();
+                dbHelper.deleteListener(this);
+            }
+        });
+        dbHelper.updateFlightInMission(idMission, idFlight, date.getTime(), duration);
+    }
+
     private void onNavigateToMainView() {
         missionView.hideProgress();
         missionView.navigateToMainView();

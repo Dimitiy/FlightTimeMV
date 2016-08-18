@@ -80,10 +80,10 @@ public class MainPresenterImpl implements MainPresenter,  FindItemsInteractor.On
     }
 
     @Override
-    public void navigateToCreateFlight(AbstractExpandableDataProvider.MissionData mission) {
+    public void navigateToCreateFlight(MissionDB mission) {
         Intent intent = new Intent(context, MissionCreatorActivity.class);
         intent.putExtra("type_of_activity", Constants.TYPE_OF_FLIGHT_ACTIVITY_CREATED);
-        intent.putExtra("mission_id", mission.getMission().getId());
+        intent.putExtra("mission_id",mission.getId());
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
@@ -91,8 +91,18 @@ public class MainPresenterImpl implements MainPresenter,  FindItemsInteractor.On
     @Override
     public void navigateToChangeMission(MissionDB missionDB, int missionID) {
         Intent intent = new Intent(context, MissionCreatorActivity.class);
-        intent.putExtra("type_of_activity", Constants.TYPE_OF_MISSION_ACTIVITY_CREATED);
+        intent.putExtra("type_of_activity", Constants.TYPE_OF_MISSION_ACTIVITY_CHANGED);
         intent.putExtra("mission", Parcels.wrap(missionDB));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    @Override
+    public void navigateToChangeFlight(MissionDB mission, int groupPosition, int childPosition) {
+        Intent intent = new Intent(context, MissionCreatorActivity.class);
+        intent.putExtra("type_of_activity", Constants.TYPE_OF_FLIGHT_ACTIVITY_CHANGED);
+        intent.putExtra("mission", Parcels.wrap(mission));
+        intent.putExtra("flight_id", childPosition);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }

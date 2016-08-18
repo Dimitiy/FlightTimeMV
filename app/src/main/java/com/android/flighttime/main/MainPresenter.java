@@ -17,14 +17,16 @@ public interface MainPresenter {
     void navigateToCreateMission();
 
 
-    void navigateToCreateFlight(AbstractExpandableDataProvider.MissionData mission);
+    void navigateToCreateFlight(MissionDB mission);
 
     void navigateToChangeMission(MissionDB missionDB, int groupPosition);
+
+    void navigateToChangeFlight(MissionDB mission, int groupPosition,  int childPosition);
+
 
     void onDeleteMission(int groupPosition);
 
     void onDeleteFlight(int groupPosition, int childPosition);
-
 
     void onDestroy();
 }

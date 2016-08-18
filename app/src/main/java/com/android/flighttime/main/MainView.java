@@ -45,6 +45,8 @@ public interface MainView {
 
     void onUnderSwipeEditMissionButtonClicked(int groupPosition);
 
-     void notifyGroupItemRestored(int groupPosition);
+    void onEditFlightSwiped(int groupPosition, int childPosition);
+
+    void notifyGroupItemRestored(int groupPosition);
 
 }

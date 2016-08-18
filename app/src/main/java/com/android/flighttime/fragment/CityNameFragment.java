@@ -76,8 +76,6 @@ public class CityNameFragment extends Fragment implements TextWatcher, CityNameV
                 locationTextView.setText(oldNameCity);
         }
         nameLayout = (TextInputLayout) view.findViewById(R.id.til);
-
-
         return view;
     }
 
@@ -148,7 +146,7 @@ public class CityNameFragment extends Fragment implements TextWatcher, CityNameV
             locationTextView.setError(getString(R.string.city_error));
             view.requestFocus(locationTextView.getId());
         } else {
-            nameLayout.setErrorEnabled(false);
+//            nameLayout.setErrorEnabled(false);
         }
         if (cityChangeListener != null)
             cityChangeListener.onNameCityChange(s.toString());

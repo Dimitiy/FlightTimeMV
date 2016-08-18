@@ -21,4 +21,6 @@ public interface MissionCreatorPresenter {
     void createFlight(int missionId,  Calendar date, long  duration);
 
     void updateMission(int id, String nameCity, Calendar calendarDate);
+
+    void updateFlight(int idMission, int idFlight, Calendar date, long  duration);
 }

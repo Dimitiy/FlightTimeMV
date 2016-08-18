@@ -30,12 +30,14 @@ import java.util.Calendar;
 public class DateFragment extends Fragment implements View.OnClickListener, android.app.DatePickerDialog.OnDateSetListener, android.app.TimePickerDialog.OnTimeSetListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM_1 = "type_picker";
-    private static final String ARG_PARAM_2 = "mission_date";
+    private static final String pickerType = "type_picker";
+    private static final String previousDate = "date";
+    private static final String previousDuration = "duration";
 
     // TODO: Rename and change types of parameters
-    private int mParam1;
-    private String mParam2;
+    private int datePickerType;
+    private long prevDuration = -1;
+    private String prevDate;
     private Calendar calendar;
     private Button editDate;
     private DatePickerListener datePickerListener;
@@ -53,16 +55,18 @@ public class DateFragment extends Fragment implements View.OnClickListener, andr
     public static DateFragment newInstance(int param1) {
         DateFragment fragment = new DateFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_PARAM_1, param1);
+        args.putInt(pickerType, param1);
         fragment.setArguments(args);
         return fragment;
     }
-    public static DateFragment newInstance(int param1, String date) {
+    public static DateFragment newInstance(int param1, String param2, long param3) {
         DateFragment fragment = new DateFragment();
         Bundle args = new Bundle();
         Log.d("DateFragment", "param1" + Integer.toString(param1));
-        args.putInt(ARG_PARAM_1, param1);
-        args.putString(ARG_PARAM_2, date);
+        args.putInt(pickerType, param1);
+        args.putString(previousDate, param2);
+        args.putLong(previousDuration, param3);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -79,9 +83,10 @@ public class DateFragment extends Fragment implements View.OnClickListener, andr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getInt(ARG_PARAM_1);
-            mParam2 = getArguments().getString(ARG_PARAM_2);
-            Log.d("DateFragment", "mParam1" + Integer.toString(mParam1));
+            datePickerType = getArguments().getInt(pickerType);
+            prevDate = getArguments().getString(previousDate);
+            prevDuration = getArguments().getLong(previousDuration);
+            Log.d("DateFragment", "param" + Integer.toString(datePickerType));
         }
     }
 
@@ -92,15 +97,17 @@ public class DateFragment extends Fragment implements View.OnClickListener, andr
         View view = inflater.inflate(R.layout.fragment_date, container, false);
         editDate = (Button) view.findViewById(R.id.button);
         calendar = Calendar.getInstance();
-        if(mParam2 != null)
-            editDate.setText(mParam2);
+        if(prevDate != null)
+            editDate.setText(prevDate);
+        else if(prevDuration != -1)
+            editDate.setText(previousDuration);
         else {
             calendar.set(Calendar.HOUR, Constants.BEGIN_COUNT_TIME_FLIGHT);
             calendar.set(Calendar.MINUTE, Constants.BEGIN_COUNT_TIME_FLIGHT);
-            if (mParam1 == Constants.DATE_FORMAT)
+            if (datePickerType == Constants.DATE_FORMAT)
                 editDate.setText(Formatter.getDateFormat(calendar));
-            else if (mParam1 == Constants.TIME_FORMAT) {
-                Log.d("DateFragment", "TIME_FORMAT" + Integer.toString(mParam1));
+            else if (datePickerType == Constants.TIME_FORMAT) {
+                Log.d("DateFragment", "TIME_FORMAT" + Integer.toString(datePickerType));
                 editDate.setText(Formatter.getTimeFormat(calendar));
             }
         }
@@ -110,12 +117,12 @@ public class DateFragment extends Fragment implements View.OnClickListener, andr
 
     @Override
     public void onClick(View v) {
-        if (mParam1 == Constants.DATE_FORMAT) {
+        if (datePickerType == Constants.DATE_FORMAT) {
             Dialog picker = new android.app.DatePickerDialog(getActivity(), R.style.MyDatePickerDialogTheme, this,
                     calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
             picker.setTitle(getResources().getString(R.string.choose_flight_date));
             picker.show();
-        } else if (mParam1 == Constants.TIME_FORMAT) {
+        } else if (datePickerType == Constants.TIME_FORMAT) {
             Dialog timePickerDialog = new android.app.TimePickerDialog(getActivity(), R.style.MyDatePickerDialogTheme, this, Constants.BEGIN_COUNT_TIME_FLIGHT, Constants.BEGIN_COUNT_TIME_FLIGHT, true);
             timePickerDialog.setTitle(getResources().getString(R.string.choose_flight_time));
             timePickerDialog.show();

@@ -22,7 +22,7 @@ public interface DBInterface {
 
     public void updateMission(final int id, final String city, final Date date);
 
-    public void updateFlightInMission(final int id_mission, final int id_flight, long duration, Date date);
+    public void updateFlightInMission(final int id_mission, final int id_flight,  Date date, long duration);
 
     public RealmResults<MissionDB> getMissionsYear(int year);
 

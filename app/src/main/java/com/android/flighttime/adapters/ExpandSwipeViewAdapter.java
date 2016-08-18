@@ -107,7 +107,6 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
         mProvider = null;
         mProvider = dataProvider;
         notifyDataSetChanged();
-
     }
 
     @Override
@@ -140,7 +139,6 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
                 bgResId = R.drawable.bg_swipe_group_item_right;
                 break;
         }
-
         holder.itemView.setBackgroundResource(bgResId);
     }
 
@@ -198,7 +196,6 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
     @Override
     public void onMoveGroupItem(int fromGroupPosition, int toGroupPosition) {
         mProvider.moveMissionItem(fromGroupPosition, toGroupPosition);
-
     }
 
     @Override
@@ -360,8 +357,12 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
             holder.mContainer.setBackgroundResource(bgResId);
         }
         // set swiping properties
+//        holder.setSwipeItemHorizontalSlideAmount(
+//                item.isPinned() ? Swipeable.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
         holder.setSwipeItemHorizontalSlideAmount(
-                item.isPinned() ? Swipeable.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
+                item.isPinned() ? -0.4f : 0);
+        holder.setMaxRightSwipeAmount(0.58f);
+        holder.setMaxLeftSwipeAmount(-0.58f);
     }
 
     @Override
@@ -415,9 +416,7 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
 
     @Override
     public SwipeResultAction onSwipeChildItem(MyChildViewHolder holder, int groupPosition, int childPosition, int result) {
-        Log.d(ExpandSwipeViewAdapter.class.getSimpleName(), "onSwipeChildItem(groupPosition = " + groupPosition + ", childPosition = " + childPosition + ", result = " + result + ")");
-
-        switch (result) {
+         switch (result) {
             // swipe right
             case Swipeable.RESULT_SWIPED_RIGHT:
                 if (mProvider.getFlightItem(groupPosition, childPosition).isPinned()) {
@@ -626,9 +625,8 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
         @Override
         protected void onSlideAnimationEnd() {
             super.onSlideAnimationEnd();
-
             if (mSetPinned && mAdapter.mEventListener != null) {
-                mAdapter.mEventListener.onChildItemPinned(mGroupPosition, mChildPosition);
+                mAdapter.mEventListener.onEditFlightSwiped(mGroupPosition, mChildPosition);
             }
         }
 

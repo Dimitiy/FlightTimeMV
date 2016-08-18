@@ -124,11 +124,13 @@ public class DBHelper implements DBInterface {
         });
     }
 
-    public void updateFlightInMission(final int id_mission, final int id_flight, final long duration, final Date date) {
+    public void updateFlightInMission(final int id_mission, final int id_flight, final Date date, final long duration) {
         realm.executeTransaction(new Transaction() {
             @Override
             public void execute(Realm realm) {
                 MissionDB mission = realm.where(MissionDB.class).equalTo("id_mission", true).findFirst();
+                mission.setDuration(mission.getDuration()-mission.getFlightDBRealmList().get(id_flight).getDuration());
+
                 Log.d("DBHelper", "updateFlightInMission" + mission.getFlightDBRealmList().get(id_flight) + "");
                 mission.getFlightDBRealmList().get(id_flight).setDate(date);
                 mission.getFlightDBRealmList().get(id_flight).setDuration(duration);

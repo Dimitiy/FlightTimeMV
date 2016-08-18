@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,13 +33,14 @@ import me.drozdzynski.library.steppers.SteppersItem;
 import me.drozdzynski.library.steppers.SteppersView;
 
 public class MissionCreatorActivity extends AppCompatActivity implements MissionCreatorView {
-    private String nameCity = "";
+    private String nameCity = null;
     private Calendar calendarDate;
-    private Date oldDate;
+    private Date previousDate = null;
+    private long previousDuration = -1;
+
     private long duration = 0;
     private final int ZERO_STEPS = 0;
     private final int FIRST_STEPS = 1;
-    private final int SECOND_STEPS = 2;
     private ProgressBar progressBar;
     private MissionCreatorPresenterImpl presenter;
     private boolean isUpdateMission = false;
@@ -48,14 +50,20 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_mission);
         Intent intent = getIntent();
-        nameCity = intent.getStringExtra("city");
-        final int typeOfActivity = intent.getIntExtra("type_of_activity", 0);
-        final int missionID = intent.getIntExtra("mission_id", 0);
+        final int typeOfActivity = intent.getIntExtra("type_of_activity", -1);
+        final int missionID = intent.getIntExtra("mission_id", -1);
+        final int flightID = intent.getIntExtra("flight_id", -1);
+
+        Log.d("Mission", typeOfActivity + " " + missionID + flightID + nameCity);
         final MissionDB mission = Parcels.unwrap(getIntent().getParcelableExtra("mission"));
-        if (mission != null) {
-            isUpdateMission = true;
+        if (typeOfActivity == Constants.TYPE_OF_MISSION_ACTIVITY_CHANGED && mission != null) {
             nameCity = mission.getCity();
-            oldDate = mission.getDate();
+
+            previousDate = mission.getDate();
+        }else if(typeOfActivity == Constants.TYPE_OF_FLIGHT_ACTIVITY_CHANGED && mission != null) {
+            Log.d("Mission",mission.getFlightDBRealmList().toString());
+            previousDate = mission.getFlightDBRealmList().get(flightID).getDate();
+            previousDuration = mission.getFlightDBRealmList().get(flightID).getDuration();
         }
         calendarDate = Calendar.getInstance();
         progressBar = (ProgressBar) findViewById(R.id.progress);
@@ -70,14 +78,23 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
         steppersViewConfig.setOnFinishAction(new OnFinishAction() {
             @Override
             public void onFinish() {
-                if (typeOfActivity == Constants.TYPE_OF_MISSION_ACTIVITY_CREATED)
-                    if (!isUpdateMission)
+                switch (typeOfActivity) {
+                    case Constants.TYPE_OF_MISSION_ACTIVITY_CREATED:
                         presenter.createMission(nameCity, calendarDate);
-                    else
-                        presenter.updateMission(mission.getId(), nameCity, calendarDate);
-
-                else {
-                    presenter.createFlight(missionID, calendarDate, duration);
+                        break;
+                    case Constants.TYPE_OF_MISSION_ACTIVITY_CHANGED:
+                        if (mission != null) {
+                            presenter.updateMission(mission.getId(), nameCity, calendarDate);
+                        }
+                        break;
+                    case Constants.TYPE_OF_FLIGHT_ACTIVITY_CREATED:
+                        if (missionID != -1)
+                            presenter.createFlight(missionID, calendarDate, duration);
+                        break;
+                    case Constants.TYPE_OF_FLIGHT_ACTIVITY_CHANGED:
+                        if (missionID != -1 && flightID != -1)
+                            presenter.updateFlight(missionID, flightID, calendarDate, duration);
+                        break;
                 }
             }
         });
@@ -92,7 +109,7 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
         steppersViewConfig.setFragmentManager(getSupportFragmentManager());
 
         ArrayList<SteppersItem> steps = new ArrayList<>();
-        if (typeOfActivity == Constants.TYPE_OF_MISSION_ACTIVITY_CREATED) {
+        if (typeOfActivity == Constants.TYPE_OF_MISSION_ACTIVITY_CREATED || typeOfActivity == Constants.TYPE_OF_MISSION_ACTIVITY_CHANGED) {
             steps.add(ZERO_STEPS, getCityFragment());
             steps.add(FIRST_STEPS, getDateFragment());
         } else {
@@ -103,15 +120,13 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
         steppersView.setConfig(steppersViewConfig);
         steppersView.setItems(steps);
         steppersView.build();
-
-
     }
 
 
     private SteppersItem getCityFragment() {
         final SteppersItem item = new SteppersItem();
         CityNameFragment cityNameFragment;
-        if (isUpdateMission)
+        if (nameCity != null)
             cityNameFragment = CityNameFragment.newInstance(nameCity);
         else
             cityNameFragment = CityNameFragment.newInstance();
@@ -137,10 +152,10 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
         final SteppersItem item = new SteppersItem();
 
         DateFragment dateFragment;
-        if (!isUpdateMission)
+        if (previousDate == null)
             dateFragment = DateFragment.newInstance(Constants.DATE_FORMAT);
         else
-            dateFragment = DateFragment.newInstance(Constants.DATE_FORMAT, Formatter.getDateFormat(oldDate));
+            dateFragment = DateFragment.newInstance(Constants.DATE_FORMAT, Formatter.getDateFormat(previousDate), previousDuration);
         dateFragment.addDatePickerListener(new DatePickerListener() {
             @Override
             public void onSelectDate(Calendar calendarMission) {
@@ -156,9 +171,13 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
 
     private SteppersItem getDurationFragment() {
         final SteppersItem item = new SteppersItem();
-
         DateFragment timeFragment;
-        timeFragment = DateFragment.newInstance(Constants.TIME_FORMAT);
+
+        if (previousDuration == -1)
+            timeFragment = DateFragment.newInstance(Constants.TIME_FORMAT);
+        else
+            timeFragment = DateFragment.newInstance(Constants.TIME_FORMAT, Formatter.getDateFormat(previousDate), previousDuration);
+
         timeFragment.addTimePickerListener(new TimePickerListener() {
             @Override
             public void onSelectTimeCount(long calendarTime) {
@@ -214,7 +233,7 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
 
     @Override
     public void showProgress() {
-         progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
