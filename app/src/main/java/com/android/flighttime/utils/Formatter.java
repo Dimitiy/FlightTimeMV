@@ -11,10 +11,12 @@ import java.util.Date;
  * Created by OldMan on 22.03.2016.
  */
 public class Formatter {
-    private static int COUNT_MINUTE_IN_HOUR = 60;
+    private static int COUNT_MINUTE_IN_HOUR = 3600;
 
-    public static String getFormatTime(long time) {
-        return new SimpleDateFormat("HH:mm").format(new Date(time));
+    public static String getFormatTime(long timeInMillis) {
+        int hours = (int)(timeInMillis/(1000 * 60 * 60));
+        int minutes = (int)((timeInMillis/(1000 * 60)) % 60);
+        return hours+":"+minutes;
     }
 
     public static int getYearDate(String year) {
@@ -28,10 +30,10 @@ public class Formatter {
         return cal.get(Calendar.YEAR);
     }
 
-    public static long getCountMinute(Calendar calendar) {
-        long minute = (calendar.get(Calendar.HOUR) * 3600) + (calendar.get(Calendar.MINUTE) * 60);
-        Log.d("Date", "minute " + Long.toString(minute));
-        return minute;
+    public static long getCountMillis(Calendar calendar) {
+        long millis = (calendar.get(Calendar.HOUR) * 3600 + calendar.get(Calendar.MINUTE) * 60)*1000;
+        Log.d("Date", "minute " + Long.toString(millis));
+        return millis;
     }
 
     public static Date getYearDate(int year, int month, int day) {
@@ -73,10 +75,12 @@ public class Formatter {
         return sdf.format(date);
     }
 
-    public static String getFormatDuration(long duration) {
-       Log.d("FORMATTER",  String.valueOf(duration/COUNT_MINUTE_IN_HOUR) + String.valueOf(duration % COUNT_MINUTE_IN_HOUR));
+    public static String getFormatDuration(long timeInMillis) {
+       int hours = (int)(timeInMillis/(1000 * 60 * 60));
+        int minutes = (int)((timeInMillis/(1000 * 60)) % 60);
 
-        return String.valueOf(duration/COUNT_MINUTE_IN_HOUR) + ":" + String.valueOf(duration % COUNT_MINUTE_IN_HOUR) ;
+
+        return ( (hours < 10) ? "0" + hours : "" + hours)+ ((minutes < 10) ? ":0" + minutes : ":"+ minutes) ;
 
     }
 }

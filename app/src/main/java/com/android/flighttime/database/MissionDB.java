@@ -2,6 +2,7 @@ package com.android.flighttime.database;
 
 
 import org.parceler.Parcel;
+import org.parceler.ParcelPropertyConverter;
 
 import java.util.Date;
 
@@ -27,13 +28,6 @@ public class MissionDB extends RealmObject {
     private long duration;
     private RealmList<FlightDB> flightDBRealmList;
 
-//    public MissionDB(int id, String city,  Date date, long duration, RealmList<FlightDB> flightDBRealmList) {
-//        this.city = city;
-//        this.id = id;
-//        this.date = date;
-//        this.duration = duration;
-//        this.flightDBRealmList = flightDBRealmList;
-//    }
 
     public int getId() {
         return id;
@@ -62,10 +56,10 @@ public class MissionDB extends RealmObject {
     public RealmList<FlightDB> getFlightDBRealmList() {
         return flightDBRealmList;
     }
-
-//    public void setFlightDBRealmList(RealmList<FlightDB> flightDBRealmList) {
-//        this.flightDBRealmList = flightDBRealmList;
-//    }
+    @ParcelPropertyConverter(FlightDBListParcelConverter.class)
+    public void setFlightDBRealmList(RealmList<FlightDB> flightDBRealmList) {
+        this.flightDBRealmList = flightDBRealmList;
+    }
 
 
     public String getCity() {

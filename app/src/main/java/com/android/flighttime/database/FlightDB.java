@@ -22,12 +22,6 @@ public class FlightDB extends RealmObject {
     private Date date;
     private long duration;
 
-//    public FlightDB(long duration, Date date, int id) {
-//        this.duration = duration;
-//        this.date = date;
-//        this.id = id;
-//    }
-
     public int getId() {
         return id;
     }

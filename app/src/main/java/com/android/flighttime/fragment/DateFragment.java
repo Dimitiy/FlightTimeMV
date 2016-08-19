@@ -18,6 +18,7 @@ import com.android.flighttime.utils.Constants;
 import com.android.flighttime.utils.Formatter;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,8 +37,8 @@ public class DateFragment extends Fragment implements View.OnClickListener, andr
 
     // TODO: Rename and change types of parameters
     private int datePickerType;
-    private long prevDuration = -1;
-    private String prevDate;
+    private long prevDuration = 0;
+    private Date prevDate;
     private Calendar calendar;
     private Button editDate;
     private DatePickerListener datePickerListener;
@@ -59,12 +60,13 @@ public class DateFragment extends Fragment implements View.OnClickListener, andr
         fragment.setArguments(args);
         return fragment;
     }
-    public static DateFragment newInstance(int param1, String param2, long param3) {
+
+    public static DateFragment newInstance(int param1, Date param2, long param3) {
         DateFragment fragment = new DateFragment();
         Bundle args = new Bundle();
         Log.d("DateFragment", "param1" + Integer.toString(param1));
         args.putInt(pickerType, param1);
-        args.putString(previousDate, param2);
+        args.putSerializable(previousDate, param2);
         args.putLong(previousDuration, param3);
 
         fragment.setArguments(args);
@@ -84,7 +86,7 @@ public class DateFragment extends Fragment implements View.OnClickListener, andr
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             datePickerType = getArguments().getInt(pickerType);
-            prevDate = getArguments().getString(previousDate);
+            prevDate = (Date) getArguments().getSerializable(previousDate);
             prevDuration = getArguments().getLong(previousDuration);
             Log.d("DateFragment", "param" + Integer.toString(datePickerType));
         }
@@ -97,11 +99,10 @@ public class DateFragment extends Fragment implements View.OnClickListener, andr
         View view = inflater.inflate(R.layout.fragment_date, container, false);
         editDate = (Button) view.findViewById(R.id.button);
         calendar = Calendar.getInstance();
-        if(prevDate != null)
-            editDate.setText(prevDate);
-        else if(prevDuration != -1)
-            editDate.setText(previousDuration);
-        else {
+        if (prevDate != null) {
+            editDate.setText(Formatter.getDateFormat(prevDate));
+        }
+        else if (prevDuration == 0L) {
             calendar.set(Calendar.HOUR, Constants.BEGIN_COUNT_TIME_FLIGHT);
             calendar.set(Calendar.MINUTE, Constants.BEGIN_COUNT_TIME_FLIGHT);
             if (datePickerType == Constants.DATE_FORMAT)
@@ -110,6 +111,8 @@ public class DateFragment extends Fragment implements View.OnClickListener, andr
                 Log.d("DateFragment", "TIME_FORMAT" + Integer.toString(datePickerType));
                 editDate.setText(Formatter.getTimeFormat(calendar));
             }
+        } else {
+            editDate.setText(Formatter.getFormatTime(prevDuration));
         }
         editDate.setOnClickListener(this);
         return view;
@@ -141,7 +144,7 @@ public class DateFragment extends Fragment implements View.OnClickListener, andr
         calendar.set(Calendar.HOUR, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
         editDate.setText(Formatter.getTimeFormat(calendar));
-        timePickerListener.onSelectTimeCount(Formatter.getCountMinute(calendar));
+        timePickerListener.onSelectTimeCount(Formatter.getCountMillis(calendar));
     }
 
 

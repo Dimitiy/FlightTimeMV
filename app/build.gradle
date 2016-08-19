@@ -8,7 +8,7 @@ android {
         config {
             keyAlias 'release'
             keyPassword 'rodnik1607'
-            storeFile file('C:/Users/OldMan/.android/release.jks')
+            storeFile file('/home/oldman/release.keystore.jks')
             storePassword 'Gazprom1607'
         }
     }

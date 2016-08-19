@@ -49,11 +49,9 @@ public class MissionCreatorPresenterImpl implements MissionCreatorPresenter {
                 Log.d("MissionCreator", "createMission " + name);
                 onNavigateToMainView();
                 dbHelper.deleteListener(this);
-
             }
         });
         dbHelper.insertMission(name, date);
-
     }
 
     @Override

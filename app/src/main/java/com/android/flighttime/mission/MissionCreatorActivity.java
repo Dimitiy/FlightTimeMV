@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import io.realm.RealmObject;
 import me.drozdzynski.library.steppers.OnCancelAction;
 import me.drozdzynski.library.steppers.OnFinishAction;
 import me.drozdzynski.library.steppers.SteppersItem;
@@ -36,9 +37,9 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
     private String nameCity = null;
     private Calendar calendarDate;
     private Date previousDate = null;
-    private long previousDuration = -1;
-
+    private long previousDuration = 0;
     private long duration = 0;
+
     private final int ZERO_STEPS = 0;
     private final int FIRST_STEPS = 1;
     private ProgressBar progressBar;
@@ -56,12 +57,11 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
 
         Log.d("Mission", typeOfActivity + " " + missionID + flightID + nameCity);
         final MissionDB mission = Parcels.unwrap(getIntent().getParcelableExtra("mission"));
+
         if (typeOfActivity == Constants.TYPE_OF_MISSION_ACTIVITY_CHANGED && mission != null) {
             nameCity = mission.getCity();
-
             previousDate = mission.getDate();
         }else if(typeOfActivity == Constants.TYPE_OF_FLIGHT_ACTIVITY_CHANGED && mission != null) {
-            Log.d("Mission",mission.getFlightDBRealmList().toString());
             previousDate = mission.getFlightDBRealmList().get(flightID).getDate();
             previousDuration = mission.getFlightDBRealmList().get(flightID).getDuration();
         }
@@ -83,9 +83,8 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
                         presenter.createMission(nameCity, calendarDate);
                         break;
                     case Constants.TYPE_OF_MISSION_ACTIVITY_CHANGED:
-                        if (mission != null) {
+                        if (mission != null)
                             presenter.updateMission(mission.getId(), nameCity, calendarDate);
-                        }
                         break;
                     case Constants.TYPE_OF_FLIGHT_ACTIVITY_CREATED:
                         if (missionID != -1)
@@ -154,8 +153,10 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
         DateFragment dateFragment;
         if (previousDate == null)
             dateFragment = DateFragment.newInstance(Constants.DATE_FORMAT);
-        else
-            dateFragment = DateFragment.newInstance(Constants.DATE_FORMAT, Formatter.getDateFormat(previousDate), previousDuration);
+        else {
+            calendarDate.setTime(previousDate);
+            dateFragment = DateFragment.newInstance(Constants.DATE_FORMAT, previousDate, 0);
+        }
         dateFragment.addDatePickerListener(new DatePickerListener() {
             @Override
             public void onSelectDate(Calendar calendarMission) {
@@ -173,10 +174,10 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
         final SteppersItem item = new SteppersItem();
         DateFragment timeFragment;
 
-        if (previousDuration == -1)
+        if (previousDuration == 0L)
             timeFragment = DateFragment.newInstance(Constants.TIME_FORMAT);
         else
-            timeFragment = DateFragment.newInstance(Constants.TIME_FORMAT, Formatter.getDateFormat(previousDate), previousDuration);
+            timeFragment = DateFragment.newInstance(Constants.TIME_FORMAT, null, previousDuration);
 
         timeFragment.addTimePickerListener(new TimePickerListener() {
             @Override

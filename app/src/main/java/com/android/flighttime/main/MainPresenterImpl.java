@@ -102,6 +102,7 @@ public class MainPresenterImpl implements MainPresenter,  FindItemsInteractor.On
         Intent intent = new Intent(context, MissionCreatorActivity.class);
         intent.putExtra("type_of_activity", Constants.TYPE_OF_FLIGHT_ACTIVITY_CHANGED);
         intent.putExtra("mission", Parcels.wrap(mission));
+        intent.putExtra("mission_id",groupPosition);
         intent.putExtra("flight_id", childPosition);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
