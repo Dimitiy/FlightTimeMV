@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="android-util-1.10.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.michael-rapp/android-util/1.10.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.michael-rapp/android-util/1.10.1/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.michael-rapp/android-util/1.10.1/e97e1319de4a5325518e028080ca24d897e8e27a/android-util-1.10.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

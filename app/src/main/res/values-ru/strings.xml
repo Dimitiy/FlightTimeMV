@@ -10,7 +10,7 @@
 
    <string name="rule">Нормы</string>
     <string name="requirements">Требования</string>
-    <string name="settings">Настройка</string>
+    <string name="settings">Настройки</string>
 
     <string name="add_mission">Добавить командировку</string>
     <string name="enter_travel_city">Укажите населенный пункт</string>
@@ -44,5 +44,7 @@
     <string name="cancel">Отмена</string>
     <string name="city_error">Название города не может быть пустым</string>
     <string name="step">Шаг №</string>
+    <string name="share">Пригласить друзей</string>
+    <string name="help">Помощь</string>
 
 </resources>

@@ -42,5 +42,7 @@
     <string name="cancel">Cancel</string>
     <string name="city_error">City name can not be empty</string>
     <string name="step">Step №</string>
+    <string name="share">Invite friends</string>
+    <string name="help">Help</string>
 
 </resources>

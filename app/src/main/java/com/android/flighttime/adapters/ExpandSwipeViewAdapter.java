@@ -14,7 +14,7 @@ import com.android.flighttime.data.ExpandableDataProvider;
 import com.android.flighttime.R;
 import com.android.flighttime.holder.MyChildViewHolder;
 import com.android.flighttime.holder.MyGroupViewHolder;
-import com.android.flighttime.main.MainView;
+import com.android.flighttime.main.MainActivityView;
 import com.android.flighttime.utils.DrawableUtils;
 import com.android.flighttime.utils.Formatter;
 import com.android.flighttime.utils.ViewUtils;
@@ -43,7 +43,7 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
     private final RecyclerViewExpandableItemManager mExpandableItemManager;
     private final Context context;
     private AbstractExpandableDataProvider mProvider;
-    private MainView mEventListener;
+    private MainActivityView mEventListener;
     private View.OnClickListener mItemViewOnClickListener;
     private View.OnClickListener mSwipeableViewContainerOnClickListener;
      private View.OnClickListener mItemOnClickListener = new View.OnClickListener() {
@@ -440,11 +440,11 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
         }
     }
 
-    public MainView getEventListener() {
+    public MainActivityView getEventListener() {
         return mEventListener;
     }
 
-    public void setEventListener(MainView eventListener) {
+    public void setEventListener(MainActivityView eventListener) {
         mEventListener = eventListener;
     }
 

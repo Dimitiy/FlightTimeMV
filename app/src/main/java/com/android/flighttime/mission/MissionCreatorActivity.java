@@ -83,8 +83,8 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
                         presenter.createMission(nameCity, calendarDate);
                         break;
                     case Constants.TYPE_OF_MISSION_ACTIVITY_CHANGED:
-                        if (mission != null)
-                            presenter.updateMission(mission.getId(), nameCity, calendarDate);
+                        if (missionID != -1)
+                            presenter.updateMission(missionID, nameCity, calendarDate);
                         break;
                     case Constants.TYPE_OF_FLIGHT_ACTIVITY_CREATED:
                         if (missionID != -1)
@@ -92,7 +92,7 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
                         break;
                     case Constants.TYPE_OF_FLIGHT_ACTIVITY_CHANGED:
                         if (missionID != -1 && flightID != -1)
-                            presenter.updateFlight(missionID, flightID, calendarDate, duration);
+                            presenter.updateFlight(missionID, mission.getFlightDBRealmList().get(flightID).getId(), calendarDate, duration);
                         break;
                 }
             }

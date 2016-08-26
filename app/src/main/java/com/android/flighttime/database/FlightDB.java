@@ -7,11 +7,13 @@ import java.util.Date;
 import io.realm.FlightDBRealmProxy;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
  * Created by OldMan on 13.02.2016.
  */
+@RealmClass
 @Parcel(implementations = {FlightDBRealmProxy.class},
         value = Parcel.Serialization.BEAN,
         analyze = {FlightDB.class})

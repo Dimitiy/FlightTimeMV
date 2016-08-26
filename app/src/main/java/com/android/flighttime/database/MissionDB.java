@@ -10,11 +10,13 @@ import io.realm.MissionDBRealmProxy;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
  * Created by OldMan on 13.02.2016.
  */
+@RealmClass
 @Parcel(implementations = { MissionDBRealmProxy.class },
         value = Parcel.Serialization.BEAN,
         analyze = { MissionDB.class })

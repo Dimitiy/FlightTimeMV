@@ -1,12 +1,16 @@
 package com.android.flighttime.main;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.NinePatchDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
@@ -15,6 +19,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,12 +27,17 @@ import android.widget.ProgressBar;
 
 import com.android.flighttime.R;
 import com.android.flighttime.adapters.ExpandSwipeViewAdapter;
+import com.android.flighttime.adapters.YearsCoverFlowAdapter;
 import com.android.flighttime.data.AbstractExpandableDataProvider;
 import com.android.flighttime.data.ExpandableDataProvider;
+import com.android.flighttime.data.YearEntity;
 import com.android.flighttime.database.FlightDB;
 import com.android.flighttime.database.MissionDB;
 import com.android.flighttime.dialog.DeleteItemDialog;
 import com.android.flighttime.listener.DeleteDialogClickListener;
+import com.azoft.carousellayoutmanager.CarouselLayoutManager;
+import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
+import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
@@ -37,19 +47,27 @@ import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandab
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
-import com.roughike.swipeselector.OnSwipeItemSelectedListener;
-import com.roughike.swipeselector.SwipeItem;
-import com.roughike.swipeselector.SwipeSelector;
 
+
+import com.melnykov.fab.FloatingActionButton;
+import com.tiancaicc.springfloatingactionmenu.MenuItemView;
+import com.tiancaicc.springfloatingactionmenu.OnMenuActionListener;
+import com.tiancaicc.springfloatingactionmenu.SpringFloatingActionMenu;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements MainView, View.OnClickListener, OnSwipeItemSelectedListener, RecyclerViewExpandableItemManager.OnGroupCollapseListener,
+//import icepick.Icepick;
+//import icepick.State;
+
+public class MainActivity extends AppCompatActivity implements MainActivityView, View.OnClickListener, CarouselLayoutManager.OnCenterItemSelectionListener, RecyclerViewExpandableItemManager.OnGroupCollapseListener,
         RecyclerViewExpandableItemManager.OnGroupExpandListener, DeleteDialogClickListener {
     private CoordinatorLayout coordinatorLayout;
-    private ProgressBar progressBar;
-    private SwipeSelector swipeYearSelector;
     private FloatingActionButton fab;
-    private MainPresenter presenter;
+    //    @State
+    private ProgressBar progressBar;
+
+    private MainActivityPresenter presenter;
 
     private RecyclerView missionRecyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -61,35 +79,114 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     private RecyclerView.Adapter mWrappedAdapter;
     private ExpandableDataProvider dataProvider;
     private ExpandSwipeViewAdapter adapter;
+    private YearsCoverFlowAdapter yearsAdapter = null;
 
     private static final String SAVED_STATE_EXPANDABLE_ITEM_MANAGER = "RecyclerViewExpandableItemManager";
     private Bundle savedInstanceState;
     private Context context;
 
-
+    private RecyclerView yearsRecyclerView;
+    private CarouselLayoutManager carouselLayoutManager;
     private String TAG = MainActivity.class.getSimpleName();
+    private SpringFloatingActionMenu springFloatingActionMenu;
+    private int frameDuration = 20;
+    private AnimationDrawable frameAnim;
+    private AnimationDrawable frameReverseAnim;
+    private Resources resources;
+    private static int[] frameAnimRes = new int[]{
+            R.drawable.ic_add,
+            R.drawable.ic_close,
+    };
+
+    public MainActivity() {
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        Icepick.restoreInstanceState(this, savedInstanceState);
         setContentView(R.layout.activity_main);
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id
                 .coordinatorLayout);
         context = getApplicationContext();
+        resources = getResources();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        CollapsingToolbarLayout collapsingToolbar =
+                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar.setTitleEnabled(false);
+
+        createFabFrameAnim();
+        createFabReverseFrameAnim();
+
+        final FloatingActionButton fab = new FloatingActionButton(this);
+        fab.setType(FloatingActionButton.TYPE_NORMAL);
+        fab.setImageDrawable(frameAnim);
+//        fab.setImageResource(android.R.drawable.ic_dialog_email);
+        fab.setColorPressedResId(R.color.colorPrimary);
+        fab.setColorNormalResId(R.color.fab_normal_state);
+        fab.setColorRippleResId(R.color.text_color);
+        fab.setShadow(true);
+
         progressBar = (ProgressBar) findViewById(R.id.progress);
+        springFloatingActionMenu = new SpringFloatingActionMenu.Builder(this)
+                .fab(fab)
+                .addMenuItem(R.color.menu_add_mission, R.drawable.ic_add_mission, resources.getString(R.string.add_mission), R.color.text_color, this)
+                .addMenuItem(R.color.menu_invite_friends, R.drawable.ic_person_add, resources.getString(R.string.share), R.color.text_color, this)
+                .addMenuItem(R.color.menu_settings, R.drawable.ic_settings, resources.getString(R.string.settings), R.color.text_color, this)
+                .addMenuItem(R.color.menu_transparent, -1, "", R.color.text_color, this)
+                .addMenuItem(R.color.menu_help, R.mipmap.ic_help, resources.getString(R.string.help), R.color.text_color, this)
+                .animationType(SpringFloatingActionMenu.ANIMATION_TYPE_TUMBLR)
+                .revealColor(R.color.menu_background)
+                .gravity(Gravity.RIGHT | Gravity.BOTTOM)
+                .onMenuActionListner(new OnMenuActionListener() {
+                    @Override
+                    public void onMenuOpen() {
+                        fab.setImageDrawable(frameAnim);
+                        frameReverseAnim.stop();
+                        frameAnim.start();
+                    }
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(this);
-
-        swipeYearSelector = (SwipeSelector) findViewById(R.id.swipeYear);
-        swipeYearSelector.setOnItemSelectedListener(this);
-
-        presenter = new MainPresenterImpl(this, getApplicationContext());
+                    @Override
+                    public void onMenuClose() {
+                        fab.setImageDrawable(frameReverseAnim);
+                        frameAnim.stop();
+                        frameReverseAnim.start();
+                    }
+                })
+                .build();
+        initYearsRecycleView();
+        presenter = new MainActivityPresenterImpl(this, getApplicationContext());
 
     }
+
+    private void createFabFrameAnim() {
+        frameAnim = new AnimationDrawable();
+        frameAnim.setOneShot(true);
+        for (int res : frameAnimRes) {
+            frameAnim.addFrame(resources.getDrawable(res), frameDuration);
+        }
+    }
+
+    private void createFabReverseFrameAnim() {
+        frameReverseAnim = new AnimationDrawable();
+        frameReverseAnim.setOneShot(true);
+        for (int i = frameAnimRes.length - 1; i >= 0; i--) {
+            frameReverseAnim.addFrame(resources.getDrawable(frameAnimRes[i]), frameDuration);
+        }
+    }
+
+    private void initYearsRecycleView() {
+        // vertical and cycle layout
+        carouselLayoutManager = new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, true);
+        carouselLayoutManager.setPostLayoutListener(new CarouselZoomPostLayoutListener());
+
+        yearsRecyclerView = (RecyclerView) findViewById(R.id.years_recycler_view);
+        yearsRecyclerView.setLayoutManager(carouselLayoutManager);
+        yearsRecyclerView.setHasFixedSize(true);
+
+    }
+
 
     private void initRecycleView(ExpandableDataProvider dataProvider) {
         missionRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -154,7 +251,12 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        if (springFloatingActionMenu.isMenuOpen()) {
+            springFloatingActionMenu.hideMenu();
+        } else {
+            super.onBackPressed();
+        }
+//        finish();
     }
 
     @Override
@@ -210,7 +312,10 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
             outState.putParcelable(
                     SAVED_STATE_EXPANDABLE_ITEM_MANAGER,
                     recyclerViewExpandableItemManager.getSavedState());
+
         }
+//        Icepick.saveInstanceState(this, outState);
+
     }
 
     @Override
@@ -246,14 +351,21 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     }
 
     @Override
-    public void setYears(final SwipeItem[] swipeItems) {
-        Log.d(TAG, swipeItems.toString());
-        runOnUiThread(new Runnable() {
-            public void run() {
-                swipeYearSelector.setItems(swipeItems);
-                presenter.onMissionItems(swipeYearSelector.getSelectedItem().title);
-            }
-        });
+    public void setYears(final ArrayList<YearEntity> yearsList) {
+        Log.d(TAG, yearsList.toString());
+
+
+        yearsAdapter = new YearsCoverFlowAdapter(this, yearsList);
+        yearsRecyclerView.setAdapter(yearsAdapter);
+        yearsRecyclerView.addOnScrollListener(new CenterScrollListener());
+        carouselLayoutManager.addOnItemSelectionListener(this);
+
+    }
+
+    @Override
+    public void onCenterItemChanged(int adapterPosition) {
+        Log.d("Main", "adapterPosition  " + adapterPosition);
+        presenter.onMissionItems(yearsAdapter.getItem(adapterPosition).getYears());
     }
 
     @Override
@@ -437,18 +549,25 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.fab:
+
+        MenuItemView menuItemView = (MenuItemView) v;
+        if (menuItemView != null) {
+            String menu = menuItemView.getLabelTextView().getText().toString();
+            if (menu.equals(resources.getString(R.string.add_mission)))
                 presenter.navigateToCreateMission();
-            default:
-                break;
+            else if (menu.equals(resources.getString(R.string.share))) {
+                final String appPackageName = "org.telegram.messenger";
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                }
+            }
+
         }
+
     }
 
-    @Override
-    public void onItemSelected(SwipeItem item) {
-        presenter.onMissionItems(item.title);
-    }
 
     @Override
     public void onGroupCollapse(int groupPosition, boolean fromUser) {
@@ -525,4 +644,6 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
         }
     }
 
+
 }
+
