@@ -1,5 +1,6 @@
 package com.android.flighttime.main;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -17,7 +18,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.android.flighttime.R;
+import com.android.flighttime.preference.SettingsActivity;
 import com.android.flighttime.adapters.ExpandSwipeViewAdapter;
 import com.android.flighttime.adapters.YearsCoverFlowAdapter;
 import com.android.flighttime.data.AbstractExpandableDataProvider;
@@ -35,6 +36,8 @@ import com.android.flighttime.database.FlightDB;
 import com.android.flighttime.database.MissionDB;
 import com.android.flighttime.dialog.DeleteItemDialog;
 import com.android.flighttime.listener.DeleteDialogClickListener;
+import com.android.flighttime.utils.Constants;
+import com.android.flighttime.utils.Permissions;
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
@@ -111,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
                 .coordinatorLayout);
         context = getApplicationContext();
         resources = getResources();
-
+        Permissions.isStoragePermissionGranted(this);
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitleEnabled(false);
@@ -131,11 +134,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
         progressBar = (ProgressBar) findViewById(R.id.progress);
         springFloatingActionMenu = new SpringFloatingActionMenu.Builder(this)
                 .fab(fab)
+                .addMenuItem(R.color.menu_help, R.mipmap.ic_help, resources.getString(R.string.help), R.color.text_color, this)
+                .addMenuItem(R.color.menu_settings, R.drawable.ic_settings, resources.getString(R.string.settings), R.color.text_color, this)
                 .addMenuItem(R.color.menu_add_mission, R.drawable.ic_add_mission, resources.getString(R.string.add_mission), R.color.text_color, this)
                 .addMenuItem(R.color.menu_invite_friends, R.drawable.ic_person_add, resources.getString(R.string.share), R.color.text_color, this)
-                .addMenuItem(R.color.menu_settings, R.drawable.ic_settings, resources.getString(R.string.settings), R.color.text_color, this)
-                .addMenuItem(R.color.menu_transparent, -1, "", R.color.text_color, this)
-                .addMenuItem(R.color.menu_help, R.mipmap.ic_help, resources.getString(R.string.help), R.color.text_color, this)
+//                .addMenuItem(R.color.menu_transparent, -1, "", R.color.text_color, this)
                 .animationType(SpringFloatingActionMenu.ANIMATION_TYPE_TUMBLR)
                 .revealColor(R.color.menu_background)
                 .gravity(Gravity.RIGHT | Gravity.BOTTOM)
@@ -256,7 +259,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
         } else {
             super.onBackPressed();
         }
-//        finish();
     }
 
     @Override
@@ -353,18 +355,30 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
     @Override
     public void setYears(final ArrayList<YearEntity> yearsList) {
         Log.d(TAG, yearsList.toString());
+        if (yearsAdapter == null) {
+            yearsAdapter = new YearsCoverFlowAdapter(this, yearsList);
+            yearsRecyclerView.setAdapter(yearsAdapter);
+            yearsRecyclerView.addOnScrollListener(new CenterScrollListener());
+            carouselLayoutManager.addOnItemSelectionListener(this);
+            carouselLayoutManager.setMaxVisibleItems(Constants.MAX_VISIBLE_ITEMS);
+        } else {
+            yearsAdapter.swap(yearsList);
+            if (carouselLayoutManager.getCenterItemPosition() == 1)
+                onMissionItems(carouselLayoutManager.getCenterItemPosition() - 1);
+            else
+                onMissionItems(carouselLayoutManager.getCenterItemPosition());
+        }
 
-
-        yearsAdapter = new YearsCoverFlowAdapter(this, yearsList);
-        yearsRecyclerView.setAdapter(yearsAdapter);
-        yearsRecyclerView.addOnScrollListener(new CenterScrollListener());
-        carouselLayoutManager.addOnItemSelectionListener(this);
-
+//        onMissionItems(carouselLayoutManager.getCenterItemPosition());
     }
 
     @Override
     public void onCenterItemChanged(int adapterPosition) {
         Log.d("Main", "adapterPosition  " + adapterPosition);
+        onMissionItems(adapterPosition);
+    }
+
+    public void onMissionItems(int adapterPosition) {
         presenter.onMissionItems(yearsAdapter.getItem(adapterPosition).getYears());
     }
 
@@ -403,6 +417,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
                         presenter.onDeleteFlight(missionId, finalFlightId);
                     } else {
                         presenter.onDeleteMission(missionId);
+//                         if (adapter.getGroupCount() == 0)
+//                            onResume();
                     }
             }
 
@@ -468,6 +484,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
 
         final DialogFragment dialog = DeleteItemDialog.newInstance(groupPosition, RecyclerView.NO_POSITION);
         dialog.show(getSupportFragmentManager(), "delete_dialog");
+    }
+
+    @Override
+    public void notifyOnGroupItemRemoved() {
+        if (adapter.getGroupCount() == 0)
+            presenter.onFindYearsItems();
     }
 
     @Override
@@ -553,19 +575,21 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
         MenuItemView menuItemView = (MenuItemView) v;
         if (menuItemView != null) {
             String menu = menuItemView.getLabelTextView().getText().toString();
-            if (menu.equals(resources.getString(R.string.add_mission)))
+            if (menu.equals(resources.getString(R.string.add_mission))) {
                 presenter.navigateToCreateMission();
-            else if (menu.equals(resources.getString(R.string.share))) {
+                springFloatingActionMenu.hideMenu();
+            } else if (menu.equals(resources.getString(R.string.share))) {
                 final String appPackageName = "org.telegram.messenger";
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
                 } catch (android.content.ActivityNotFoundException anfe) {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                 }
+            } else if (menu.equals(resources.getString(R.string.settings))) {
+                Intent i = new Intent(this, SettingsActivity.class);
+                startActivity(i);
             }
-
         }
-
     }
 
 
@@ -594,6 +618,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
         final long expandablePosition = RecyclerViewExpandableItemManager.getPackedPositionForGroup(groupPosition);
         final int flatPosition = recyclerViewExpandableItemManager.getFlatPosition(expandablePosition);
         missionRecyclerView.scrollToPosition(flatPosition);
+
     }
 
     public void notifyChildItemRestored(int groupPosition, int childPosition) {

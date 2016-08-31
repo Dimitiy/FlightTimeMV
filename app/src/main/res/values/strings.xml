@@ -8,6 +8,19 @@
         Name: %1$s Address: %2$s
     </string>
 
+    <string name="backup">Backup</string>
+    <string name="perform_a_backup">PERFORM A BACKUP</string>
+    <string name="text_for_backup">
+        Backup helps prevent the loss of your data. When you reinstall FlightTime you can restore your data from a backup. The backup will be stored in the root of the SD-card phone.
+    </string>
+    <string name="import_backup">Import backup</string>
+    <string name="import_local_backup">Import local backup</string>
+    <string name="select_a_file">Select a file</string>
+
+    <string name="text_for_import_backup">
+    In the case of data backup, you can import it into the application.</string>
+
+    <!--. You can restore them after reinstalling FlightTime. The backup will be stored in the root of the phone's SD-card-->
     <string name="add_mission">Add mission</string>
     <string name="enter_travel_city">Enter the name of the village</string>
     <string name="home_airfield">Home airfield</string>
@@ -44,5 +57,12 @@
     <string name="step">Step №</string>
     <string name="share">Invite friends</string>
     <string name="help">Help</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
 
 </resources>

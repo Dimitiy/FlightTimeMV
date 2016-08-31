@@ -57,6 +57,12 @@ public class MainActivityPresenterImpl implements MainActivityPresenter,  MainIn
     }
 
     @Override
+    public void onFindYearsItems() {
+        findItemsInteractor.findYearsItems(dbHelper, this);
+
+    }
+
+    @Override
     public void onMissionItems(String year) {
         if (mainView != null) {
             mainView.showProgress();
@@ -114,7 +120,7 @@ public class MainActivityPresenterImpl implements MainActivityPresenter,  MainIn
                 public void onChange(Object element) {
                     Log.d(TAG, "deleted mission" + groupPosition);
                     dbHelper.deleteListener(this);
-//                    mainView.notifyGroupItemRestored(groupPosition);
+                    mainView.notifyOnGroupItemRemoved();
                     mainView.hideProgress();
                 }
             });

@@ -46,21 +46,23 @@ dependencies {
     compile('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.9.1@aar') {
         transitive = true
     }
-    compile 'org.parceler:parceler-api:1.1.5'
     apt 'org.parceler:parceler:1.1.5'
-    compile 'com.android.support:design:24.2.0'
-    compile 'com.google.android.gms:play-services-drive:9.0.1'
-    compile 'com.google.android.gms:play-services-location:9.0.1'
-    compile 'me.drozdzynski.library.steppers:steppers:0.3.3-SNAPSHOT'
     //-----------------------------------------------------------------------------
     //    compile 'frankiesardo:icepick:3.2.0-SNAPSHOT'
     //    provided 'frankiesardo:icepick-processor:3.2.0-SNAPSHOT'
     //-----------------------------------------------------------------------------
+    
+
+    compile 'org.parceler:parceler-api:1.1.5'
+    compile 'com.android.support:design:24.2.0'
+    compile 'com.google.android.gms:play-services-drive:9.0.1'
+    compile 'com.google.android.gms:play-services-location:9.0.1'
+    compile 'me.drozdzynski.library.steppers:steppers:0.3.3-SNAPSHOT'
     compile 'com.azoft.carousellayoutmanager:carousel:1.1.5'
     compile 'com.tiancaicc.springfloatingactionmenu:library:0.0.2'
-    compile 'com.github.michael-rapp:android-preference-activity:4.2.4'
-
+    compile 'com.android.support:preference-v14:24.2.0'
     compile 'junit:junit:4.12'
+    compile 'com.android.support:support-v4:24.2.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

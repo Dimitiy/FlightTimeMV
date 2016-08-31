@@ -34,6 +34,8 @@ public interface MainActivityView {
 
     void onGroupItemRemoved(int groupPosition);
 
+    void notifyOnGroupItemRemoved();
+
     void onChildItemRemoved(int groupPosition, int childPosition);
 
     void onGroupItemPinned(int groupPosition);

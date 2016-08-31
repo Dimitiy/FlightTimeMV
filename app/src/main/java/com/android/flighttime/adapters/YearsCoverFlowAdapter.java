@@ -2,6 +2,7 @@ package com.android.flighttime.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +27,20 @@ public class YearsCoverFlowAdapter extends RecyclerView.Adapter<YearsViewHolder>
     private TextView year;
 
 
-
     private TextView countHoursInYear;
-    public YearsCoverFlowAdapter(Context context,ArrayList<YearEntity> data) {
+
+    public YearsCoverFlowAdapter(Context context, ArrayList<YearEntity> data) {
         mContext = context;
         mData = data;
+    }
+
+    public void swap(ArrayList<YearEntity> data) {
+        if (mData != null) {
+            Log.d("swap", data.listIterator().toString());
+            mData.clear();
+            mData.addAll(data);
+            notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -57,6 +67,7 @@ public class YearsCoverFlowAdapter extends RecyclerView.Adapter<YearsViewHolder>
     public YearEntity getItem(int pos) {
         return mData.get(pos);
     }
+
     @Override
     public int getItemCount() {
         return mData.size();

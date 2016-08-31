@@ -1,8 +1,10 @@
 package com.android.flighttime.main;
 
+import android.content.Context;
 import android.view.View;
 
 import com.android.flighttime.data.AbstractExpandableDataProvider;
+import com.android.flighttime.database.DBHelper;
 import com.android.flighttime.database.MissionDB;
 
 /**
@@ -10,6 +12,8 @@ import com.android.flighttime.database.MissionDB;
  */
 public interface MainActivityPresenter {
     void onResume();
+
+    void onFindYearsItems();
 
     void onMissionItems(String year);
 

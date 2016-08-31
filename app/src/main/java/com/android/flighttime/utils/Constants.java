@@ -18,5 +18,6 @@ public class Constants {
     public static final int GOOGLE_LOCATION_CLIENT = 1;
 
 
-
+    public static final int MAX_VISIBLE_ITEMS = 5;
+    public static int VersionRealm = 1;
 }

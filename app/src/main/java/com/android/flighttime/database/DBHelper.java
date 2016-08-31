@@ -3,6 +3,8 @@ package com.android.flighttime.database;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.flighttime.MyApplication;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,7 +33,7 @@ public class DBHelper implements DBInterface {
 
     public DBHelper(Context ctx) {
         this.mContext = ctx;
-        realm = getDefaultInstance();
+        realm = MyApplication.getRealm();
 
     }
 

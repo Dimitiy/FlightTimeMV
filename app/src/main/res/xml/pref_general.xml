@@ -1,0 +1,43 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:persistent="false"
+        android:selectable="false"
+        android:icon="@drawable/ic_cloud_upload"
+        android:title="@string/backup" />
+    <Preference
+       android:persistent="false"
+        android:selectable="false"
+        android:icon="@drawable/ic_transparent_button"
+        android:summary="@string/text_for_backup"
+        />
+
+    <Preference
+        android:key="backup_button"
+        android:widgetLayout="@layout/backup_button"></Preference>
+
+    <Preference
+        android:persistent="false"
+        android:selectable="false"
+        android:icon="@drawable/ic_cloud_download"
+        android:title="@string/import_backup" />
+    <Preference
+        android:persistent="false"
+        android:selectable="false"
+        android:icon="@drawable/ic_transparent_button"
+        android:summary="@string/text_for_import_backup"
+        />
+
+    <Preference
+        android:key="import_backup_button"
+        android:widgetLayout="@layout/import_backup_button"></Preference>
+
+    <Preference
+        android:key="select_a_file_button"
+        android:widgetLayout="@layout/select_file_button"></Preference>
+
+    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+         dismiss it. -->
+    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+
+</PreferenceScreen>
