@@ -96,18 +96,17 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.azoft.carousellayoutmanager/carousel/1.1.5/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.getkeepsafe.relinker/relinker/1.2.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/9.0.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.0.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/9.0.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/9.0.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/9.0.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/9.0.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/9.0.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/9.0.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.0.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-core/9.0.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/9.0.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.h6ah4i.android.widget.advrecyclerview/advrecyclerview/0.9.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/9.4.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.4.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/9.4.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-places/9.4.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/9.4.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/9.4.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/9.4.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.4.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-core/9.4.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/9.4.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.h6ah4i.android.widget.advrecyclerview/advrecyclerview/0.9.3/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.melnykov/floatingactionbutton/1.3.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.tiancaicc.springfloatingactionmenu/library/0.0.2/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.tumblr/backboard/0.1.0/jars" />
@@ -129,45 +128,44 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 24 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="firebase-iid-9.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-compat-24.2.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-24.2.0" level="project" />
+    <orderEntry type="library" exported="" name="play-services-base-9.4.0" level="project" />
     <orderEntry type="library" exported="" name="carousel-1.1.5" level="project" />
-    <orderEntry type="library" exported="" name="play-services-base-9.0.1" level="project" />
     <orderEntry type="library" exported="" name="relinker-1.2.1" level="project" />
     <orderEntry type="library" exported="" name="library-0.0.2" level="project" />
     <orderEntry type="library" exported="" name="realm-annotations-1.2.0" level="project" />
     <orderEntry type="library" exported="" name="floatingactionbutton-1.3.0" level="project" />
     <orderEntry type="library" exported="" name="support-fragment-24.2.0" level="project" />
+    <orderEntry type="library" exported="" name="firebase-analytics-impl-9.4.0" level="project" />
     <orderEntry type="library" exported="" name="animated-vector-drawable-24.2.0" level="project" />
     <orderEntry type="library" exported="" name="design-24.2.0" level="project" />
+    <orderEntry type="library" exported="" name="firebase-core-9.4.0" level="project" />
     <orderEntry type="library" exported="" name="rebound-0.3.8" level="project" />
     <orderEntry type="library" exported="" name="realm-android-library-1.2.0" level="project" />
+    <orderEntry type="library" exported="" name="firebase-common-9.4.0" level="project" />
     <orderEntry type="library" exported="" name="systembartint-1.0.3" level="project" />
-    <orderEntry type="library" exported="" name="play-services-drive-9.0.1" level="project" />
+    <orderEntry type="library" exported="" name="play-services-maps-9.4.0" level="project" />
     <orderEntry type="library" exported="" name="preference-v7-24.2.0" level="project" />
-    <orderEntry type="library" exported="" name="advrecyclerview-0.9.1" level="project" />
-    <orderEntry type="library" exported="" name="firebase-core-9.0.1" level="project" />
-    <orderEntry type="library" exported="" name="firebase-common-9.0.1" level="project" />
+    <orderEntry type="library" exported="" name="firebase-iid-9.4.0" level="project" />
+    <orderEntry type="library" exported="" name="advrecyclerview-0.9.3" level="project" />
     <orderEntry type="library" exported="" name="support-media-compat-24.2.0" level="project" />
     <orderEntry type="library" exported="" name="preference-v14-24.2.0" level="project" />
     <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-24.2.0" level="project" />
-    <orderEntry type="library" exported="" name="play-services-basement-9.0.1" level="project" />
-    <orderEntry type="library" exported="" name="play-services-maps-9.0.1" level="project" />
     <orderEntry type="library" exported="" name="steppers-0.3.3-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="support-core-ui-24.2.0" level="project" />
     <orderEntry type="library" exported="" name="support-core-utils-24.2.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-24.2.0" level="project" />
-    <orderEntry type="library" exported="" name="play-services-tasks-9.0.1" level="project" />
+    <orderEntry type="library" exported="" name="play-services-basement-9.4.0" level="project" />
+    <orderEntry type="library" exported="" name="play-services-tasks-9.4.0" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-24.2.0" level="project" />
     <orderEntry type="library" exported="" name="support-vector-drawable-24.2.0" level="project" />
-    <orderEntry type="library" exported="" name="firebase-analytics-impl-9.0.1" level="project" />
     <orderEntry type="library" exported="" name="hamcrest-core-1.3" level="project" />
-    <orderEntry type="library" exported="" name="play-services-location-9.0.1" level="project" />
+    <orderEntry type="library" exported="" name="play-services-places-9.4.0" level="project" />
     <orderEntry type="library" exported="" name="backboard-0.1.0" level="project" />
     <orderEntry type="library" exported="" name="junit-4.12" level="project" />
-    <orderEntry type="library" exported="" name="firebase-analytics-9.0.1" level="project" />
+    <orderEntry type="library" exported="" name="firebase-analytics-9.4.0" level="project" />
     <orderEntry type="library" exported="" name="parceler-api-1.1.5" level="project" />
   </component>
 </module>

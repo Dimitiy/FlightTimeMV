@@ -3,21 +3,16 @@
     <color name="colorPrimary">#2196F3</color>
     <color name="colorPrimaryDark">#1976D2</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorBlue">#1565C0</color>
     <color name="colorGreen">#9ed166</color>
     <color name="colorlightGreen">#00b8ba</color>
-    <color name="colorIndigo">#3f51b5</color>
-    <color name="lightGray">#e0e0e0</color>
     <color name="fab_normal_state">#FFB805</color>
 
-    <color name="fab">#529ecc</color>
     <color name="text_color">#fff</color>
 
     <color name="menu_add_mission">#536DFE</color>
     <color name="menu_settings">#009688</color>
     <color name="menu_invite_friends">#03A9F4</color>
     <color name="menu_help">#4CAF50</color>
-    <color name="menu_transparent">#00FFFFFF</color>
     <color name="menu_background">#36465d</color>
     <color name="menu_preference">#009688</color>
     <color name="state_menu_preference">#00796B</color>
@@ -44,12 +39,8 @@
     <color name="bg_group_item_swiping_active_state">#ffbb99ff</color>
 
     <color name="bg_swipe_item_neutral">@android:color/transparent</color>
-    <color name="bg_swipe_item_pinned">#9ed166</color>
-    <color name="bg_swipe_item_dismiss">#ff2f8b2a</color>
     <color name="bg_swipe_group_item_pinned">#fff45f30</color>
     <color name="bg_swipe_group_pinned">#9ed166</color>
 
     <color name="snackbar_action_color_done">#ffccccff</color>
-    <color name="material_text_color">#FFFFFF</color>
-    <color name="material_list_row_border_color">#BDBDBD</color>
 </resources>

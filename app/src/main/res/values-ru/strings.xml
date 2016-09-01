@@ -2,14 +2,9 @@
 <resources>
     <string name="app_name">FlightTime</string>
     <string name="action_settings">Настройки</string>
-    <string name="formatted_place_data">
-        Название: %1$s Адрес: %2$s
-    </string>
     <string name="format_year">%1$s год</string>
     <string name="format_duration">%1$s ч.</string>
 
-    <string name="rule">Нормы</string>
-    <string name="requirements">Требования</string>
     <string name="settings">Настройки</string>
 
     <string name="add_mission">Добавить</string>
@@ -20,20 +15,11 @@
     <string name="have_flown">при наличии вылетов</string>
 
 
-    <string name="title_activity_create_mission">Укажите дату</string>
     <string name="empty_mission">Cписок командировок пуст</string>
-    <string name="add_flight">Добавить вылет</string>
-    <string name="flight_added">Вылет добавлен</string>
 
-    <string name="edit_selected">Редактировать выделенное</string>
-    <string name="expand_all">Развернуть всё</string>
-    <string name="collapse_all">Свернуть всё</string>
-
-    <string name="snack_bar_text_item_removed">Объект удален</string>
     <string name="snack_bar_text_group_item_removed">Коммандировка удалена</string>
     <string name="snack_bar_text_child_item_removed">Полет удален</string>
     <string name="snack_bar_action_undo">Отмена</string>
-    <string name="snack_bar_text_button_clicked">Выбрана коммандировка (position = %1$d)</string>
 
     <string name="dialog_deleted_mission">Удалить коммандировку?</string>
     <string name="dialog_deleted_flight">Удалить вылет?</string>
@@ -43,7 +29,6 @@
     <string name="next">Далее</string>
     <string name="cancel">Отмена</string>
     <string name="city_error">Название города не может быть пустым</string>
-    <string name="step">Шаг №</string>
     <string name="share">Рассказать</string>
     <string name="help">Помощь</string>
 
@@ -64,7 +49,6 @@
     <string name="title_activity_settings">Settings</string>
 
     <!-- Example General settings -->
-    <string name="pref_header_general">General</string>
 
 
 </resources>

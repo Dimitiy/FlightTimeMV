@@ -80,7 +80,7 @@
             android:textColor="@android:color/secondary_text_dark"
             />
 
-        <com.android.flighttime.widget.ExpandableItemIndicator
+        <com.shiz.flighttime.widget.ExpandableItemIndicator
             android:id="@+id/indicator"
             android:layout_width="24dp"
             android:layout_height="24dp"

@@ -6,22 +6,24 @@ apply plugin: 'android-apt'
 android {
     signingConfigs {
         config {
-            keyAlias 'release'
-            keyPassword 'rodnik1607'
-            storeFile file('/home/oldman/release.keystore.jks')
+            keyAlias 'batka'
+            keyPassword '1D1wglFYjS'
+            storeFile file('C:/Users/OldMan/.android/release.jks')
             storePassword 'Gazprom1607'
         }
     }
     compileSdkVersion 24
-    buildToolsVersion '24.0.1'
+    buildToolsVersion '24.0.2'
     defaultConfig {
-        applicationId "com.android.flighttime"
-//        multiDexEnabled true
+        applicationId 'com.shiz.flighttime'
         minSdkVersion 17
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
+//        jackOptions {
+//            enabled true
+//        }
     }
     buildTypes {
         release {
@@ -43,7 +45,7 @@ dependencies {
     //    compile fileTree(include: '*.jar', dir: 'libs')
     //    apt 'com.google.dagger:dagger-compiler:2.2'
     //    provided 'javax.annotation:jsr250-api:1.0'
-    compile('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.9.1@aar') {
+    compile('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.9.3@aar') {
         transitive = true
     }
     apt 'org.parceler:parceler:1.1.5'
@@ -51,12 +53,9 @@ dependencies {
     //    compile 'frankiesardo:icepick:3.2.0-SNAPSHOT'
     //    provided 'frankiesardo:icepick-processor:3.2.0-SNAPSHOT'
     //-----------------------------------------------------------------------------
-    
-
     compile 'org.parceler:parceler-api:1.1.5'
     compile 'com.android.support:design:24.2.0'
-    compile 'com.google.android.gms:play-services-drive:9.0.1'
-    compile 'com.google.android.gms:play-services-location:9.0.1'
+    compile 'com.google.android.gms:play-services-places:9.4.0'
     compile 'me.drozdzynski.library.steppers:steppers:0.3.3-SNAPSHOT'
     compile 'com.azoft.carousellayoutmanager:carousel:1.1.5'
     compile 'com.tiancaicc.springfloatingactionmenu:library:0.0.2'
