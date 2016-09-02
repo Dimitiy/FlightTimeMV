@@ -10,6 +10,8 @@ import com.shiz.flighttime.listener.DeleteDialogClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import za.co.riggaroo.materialhelptutorial.TutorialItem;
+
 /**
  * Created by OldMan on 09.05.2016.
  */
@@ -23,6 +25,8 @@ public interface MainActivityView {
     void setMissionItems(List<MissionDB> missionDBlList);
 
     void showMessageSnackbar(int message, int action, int groupPosition, int childPosition);
+
+    void loadTutorial(ArrayList<TutorialItem> tutorialItems);
 
     void showAlertDialog(DeleteDialogClickListener listener);
 

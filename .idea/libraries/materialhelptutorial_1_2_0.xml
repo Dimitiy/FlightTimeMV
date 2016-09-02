@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="materialhelptutorial-1.2.0">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/za.co.riggaroo/materialhelptutorial/1.2.0/res" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/za.co.riggaroo/materialhelptutorial/1.2.0/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/za.co.riggaroo/materialhelptutorial/1.2.0/fdccd79990f7caa2d065c1c7494ddb2fdd828be8/materialhelptutorial-1.2.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

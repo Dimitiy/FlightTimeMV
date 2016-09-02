@@ -31,14 +31,14 @@ public class SettingsIteractorImpl implements SettingsIteractor {
     public void exportRealmDB() {
         Realm realm = MyApplication.getRealm();
 
-        String realmPath = new File(context.getFilesDir(), getAppName() + ".realm").getAbsolutePath();
+//        String realmPath = new File(context.getFilesDir(), getAppName() + ".realm").getAbsolutePath();
         try {
             // create a backup file
             File exportRealmFile = getExportFile();
+            Log.d(TAG, exportRealmFile.getAbsolutePath() + "");
 
             // if backup file already exists, delete it
             exportRealmFile.delete();
-
             // copy current realm to backup file
             try {
                 if (exportRealmFile.canWrite())
@@ -58,7 +58,7 @@ public class SettingsIteractorImpl implements SettingsIteractor {
     public void importRealmDB() {
 //        String restoreFilePath = EXPORT_REALM_PATH + "/" + EXPORT_REALM_FILE_NAME;
 
-//        copyBundledRealmFile(restoreFilePath);
+        copyBundledRealmFile(getExportFile().getAbsolutePath());
         Log.d(TAG, "Data restore is done");
     }
 
@@ -67,7 +67,6 @@ public class SettingsIteractorImpl implements SettingsIteractor {
             File file = getRealmPath();
 
             FileOutputStream outputStream = new FileOutputStream(file);
-
             FileInputStream inputStream = new FileInputStream(new File(oldFilePath));
 
             byte[] buf = new byte[1024];
@@ -88,13 +87,25 @@ public class SettingsIteractorImpl implements SettingsIteractor {
     }
 
     private File getExportFile() {
+        File f;
         if (android.os.Environment.getExternalStorageState().equals(
                 android.os.Environment.MEDIA_MOUNTED)) {
+            Log.d("Settings", "MEDIA_MOUNTED");
+            f = new File(Environment.getExternalStorageDirectory() + File.separator
+                    + getAppName(), getAppName() + ".realm");
+            if (!f.exists()) {
+                f.mkdirs();
+            }
             return new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
                     + getAppName(), getAppName() + ".realm");
         } else {
             /* save the folder in internal memory of phone */
-            return new File(Environment.getDataDirectory().getAbsolutePath(), getAppName() + ".realm");
+            Log.d("Settings", "!media_mounted");
+            f = new File(Environment.getDataDirectory() + File.separator + getAppName(), getAppName() + ".realm");
+            if (!f.exists()) {
+                f.mkdirs();
+            }
+            return f;
         }
     }
 

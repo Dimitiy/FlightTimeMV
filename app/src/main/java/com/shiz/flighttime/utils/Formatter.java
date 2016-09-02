@@ -1,6 +1,9 @@
 package com.shiz.flighttime.utils;
 
+import android.content.Context;
 import android.util.Log;
+
+import com.shiz.flighttime.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -71,16 +74,14 @@ public class Formatter {
     }
 
     public static String getDateFormat(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat();
         return sdf.format(date);
     }
 
-    public static String getFormatDuration(long timeInMillis) {
+    public static String getFormatDuration(Context context, long timeInMillis) {
         int hours = (int) (timeInMillis / (1000 * 60 * 60));
         int minutes = (int) ((timeInMillis / (1000 * 60)) % 60);
-
-
-        return ((hours < 10) ? "0" + hours : "" + hours) + ((minutes < 10) ? ":0" + minutes : ":" + minutes);
-
+        return String.format(context.getString(R.string.format_hour), ((hours < 10) ? "0" + hours : "" + hours))
+                + String.format(context.getString(R.string.format_minute), ((minutes < 10) ? ":0" + minutes : ":" + minutes));
     }
 }

@@ -50,7 +50,7 @@ public class MainInteractorImpl implements MainInteractor {
             for (Iterator<String> it = contentMap.keySet().iterator(); it.hasNext(); ) {
                 String key = it.next();
                 mData.add(new YearEntity(String.format(context.getString(R.string.format_year), key),
-                        String.format(context.getString(R.string.format_duration), Formatter.getFormatTime(contentMap.get(key)))));
+                        Formatter.getFormatDuration(context, contentMap.get(key))));
             }
         } else
             mData.add(new YearEntity(context.getResources().getString(R.string.empty_mission),

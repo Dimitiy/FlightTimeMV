@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.shiz.flighttime.R;
 import com.shiz.flighttime.database.MissionDB;
 import com.shiz.flighttime.data.YearEntity;
 import com.shiz.flighttime.database.DBHelper;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmChangeListener;
+import za.co.riggaroo.materialhelptutorial.TutorialItem;
 
 
 public class MainActivityPresenterImpl implements MainActivityPresenter, MainInteractor.OnMissionFinishedListener, MainInteractor.OnYearsFinishedListener {
@@ -154,6 +156,29 @@ public class MainActivityPresenterImpl implements MainActivityPresenter, MainInt
         mainView = null;
         dbHelper.closeRealm();
 
+    }
+
+    @Override
+    public void onGetTutorialItems() {
+        TutorialItem tutorialItem1 = new TutorialItem(R.string.work_with_mission, R.string.tutorial_work_with_mission,
+                R.color.menu_help, R.mipmap.swipe_tutorial,  R.mipmap.ic_swipe);
+//
+//        TutorialItem tutorialItem2 = new TutorialItem(R.string.slide_2_volunteer_professionals, R.string.slide_2_volunteer_professionals_subtitle,
+//                R.color.slide_2,  R.drawable.tut_page_2_front,  R.drawable.tut_page_2_background);
+//
+        TutorialItem tutorialItem3 = new TutorialItem(context.getString(R.string.action_settings), null,
+                R.color.menu_invite_friends, R.mipmap.ic_edit);
+//
+//        TutorialItem tutorialItem4 = new TutorialItem(R.string.slide_4_different_languages, R.string.slide_4_different_languages_subtitle,
+//                R.color.slide_4,  R.drawable.tut_page_4_foreground, R.drawable.tut_page_4_background);
+//
+        ArrayList<TutorialItem> tutorialItems = new ArrayList<>();
+        tutorialItems.add(tutorialItem1);
+//        tutorialItems.add(tutorialItem2);
+        tutorialItems.add(tutorialItem3);
+//        tutorialItems.add(tutorialItem4);
+
+        mainView.loadTutorial(tutorialItems);
     }
 
     @Override

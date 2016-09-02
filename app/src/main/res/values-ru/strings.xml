@@ -5,6 +5,9 @@
     <string name="format_year">%1$s год</string>
     <string name="format_duration">%1$s ч.</string>
 
+    <string name="format_hour">%1$s ч.</string>
+    <string name="format_minute">%1$s мин.</string>
+
     <string name="settings">Настройки</string>
 
     <string name="add_mission">Добавить</string>
@@ -47,6 +50,8 @@
        В случае наличия резервной копии данных, Вы можете импортировать ее в приложение.
     </string>
     <string name="title_activity_settings">Settings</string>
+    <string name="work_with_mission">Работа с командировками</string>
+    <string name="tutorial_work_with_mission">Для доступа к меню редактирования командировки, добавления вылетов и удаления, используйте swipe</string>
 
     <!-- Example General settings -->
 

@@ -17,8 +17,6 @@ import io.realm.RealmConfiguration;
 public class MyApplication extends Application {
 
 
-    private static MyApplication application;
-
     public static MyApplication get(Context context) {
         return (MyApplication) context.getApplicationContext();
     }
@@ -30,7 +28,6 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        application = this;
         RealmConfiguration config = new RealmConfiguration.Builder(this).name(getResources().getString(R.string.app_name)).deleteRealmIfMigrationNeeded().
         schemaVersion(Constants.VersionRealm).
                 build();

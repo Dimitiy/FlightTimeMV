@@ -186,6 +186,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements Set
     @Override
     public void onImportBackupButtonClick(View view) {
         Toast.makeText(this, "Hello2", Toast.LENGTH_SHORT).show();
+        presenter.importBackup();
 
     }
 

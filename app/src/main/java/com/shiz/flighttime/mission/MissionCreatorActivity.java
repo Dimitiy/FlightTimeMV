@@ -95,6 +95,9 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
                         if (missionID != -1 && flightID != -1)
                             presenter.updateFlight(missionID, mission.getFlightDBRealmList().get(flightID).getId(), calendarDate, duration);
                         break;
+                    default:
+                        presenter.createMission(nameCity, calendarDate);
+                        break;
                 }
             }
         });

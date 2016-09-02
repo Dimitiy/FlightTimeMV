@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.shiz.flighttime.R;
 import com.shiz.flighttime.database.FlightDB;
@@ -56,6 +57,9 @@ import com.tiancaicc.springfloatingactionmenu.SpringFloatingActionMenu;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import za.co.riggaroo.materialhelptutorial.TutorialItem;
+import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
 
 //import icepick.Icepick;
 //import icepick.State;
@@ -345,7 +349,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
     public void setYears(final ArrayList<YearEntity> yearsList) {
         Log.d(TAG, yearsList.toString());
         if (yearsAdapter == null) {
-            yearsAdapter = new YearsCoverFlowAdapter(this, yearsList);
+            yearsAdapter = new YearsCoverFlowAdapter(yearsList);
             yearsRecyclerView.setAdapter(yearsAdapter);
             yearsRecyclerView.addOnScrollListener(new CenterScrollListener());
             carouselLayoutManager.addOnItemSelectionListener(this);
@@ -357,8 +361,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
             else
                 onMissionItems(carouselLayoutManager.getCenterItemPosition());
         }
-
-//        onMissionItems(carouselLayoutManager.getCenterItemPosition());
     }
 
     @Override
@@ -439,6 +441,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
         snackbar.show();
     }
 
+    @Override
+    public void loadTutorial(ArrayList<TutorialItem> tutorialItems) {
+        Intent mainAct = new Intent(this, MaterialTutorialActivity.class);
+        mainAct.putParcelableArrayListExtra(MaterialTutorialActivity.MATERIAL_TUTORIAL_ARG_TUTORIAL_ITEMS, tutorialItems);
+        startActivityForResult(mainAct, Constants.REQUEST_CODE);
+    }
+
     private void onItemUndoActionClicked() {
         final long result = dataProvider.undoLastRemoval();
         if (result == RecyclerViewExpandableItemManager.NO_EXPANDABLE_POSITION) {
@@ -465,7 +474,14 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
     public void showSnackBar(String message) {
 
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //    super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == Constants.REQUEST_CODE){
+            Toast.makeText(this, "Tutorial finished", Toast.LENGTH_LONG).show();
 
+        }
+    }
 
     @Override
     public void onGroupItemRemoved(int groupPosition) {
@@ -568,17 +584,17 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
                 presenter.navigateToCreateMission();
                 springFloatingActionMenu.hideMenu();
             } else if (menu.equals(resources.getString(R.string.share))) {
-                final String appPackageName = "com.telegram.messenger";
-//
                 ShareCompat.IntentBuilder.from(this)
                         .setType("text/plain")
                         .setText(Constants.URL_APPLICATION)
                         .setChooserTitle("FlightTime")
+                        .setSubject("Flight")
                         .startChooser();
-//
             } else if (menu.equals(resources.getString(R.string.settings))) {
                 Intent i = new Intent(this, SettingsActivity.class);
                 startActivity(i);
+            } else if (menu.equals(resources.getString(R.string.help))) {
+                presenter.onGetTutorialItems();
             }
         }
     }

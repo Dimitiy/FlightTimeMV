@@ -183,6 +183,9 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
             case Swipeable.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
                 bgResId = R.drawable.bg_swipe_item_right;
                 break;
+            default:
+                bgResId = R.drawable.bg_swipe_item_neutral;
+                break;
         }
         holder.itemView.setBackgroundResource(bgResId);
     }
@@ -291,8 +294,8 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
         final AbstractExpandableDataProvider.MissionData item = mProvider.getMissionItem(groupPosition);
         // set text
         holder.missionText.setText(item.getMission().getCity());
-        holder.textDate.setText(item.getMission().getDate().toString());
-        holder.textCount.setText(String.format(context.getString(R.string.format_duration), Formatter.getFormatDuration(item.getMission().getDuration())));
+        holder.textDate.setText(Formatter.getDateFormat(item.getMission().getDate()));
+        holder.textCount.setText(Formatter.getFormatDuration(context, item.getMission().getDuration()));
 
 //        .String.valueOf(item.getMission().getDuration()));
 
@@ -356,8 +359,8 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
         Log.d(TAG, "onBindChildViewHolder " + groupPosition + " " + childPosition);
 
         // set text
-        holder.textDate.setText(item.getFlight().getDate().toString());
-        holder.textCount.setText(String.format(context.getString(R.string.format_duration), Formatter.getFormatDuration(item.getFlight().getDuration())));
+        holder.textDate.setText(Formatter.getDateFormat(item.getFlight().getDate()));
+        holder.textCount.setText(Formatter.getFormatDuration(context, item.getFlight().getDuration()));
 
         final int dragState = holder.getDragStateFlags();
         final int swipeState = holder.getSwipeStateFlags();

@@ -20,15 +20,12 @@ import java.util.ArrayList;
 public class YearsCoverFlowAdapter extends RecyclerView.Adapter<YearsViewHolder> {
 
     private ArrayList<YearEntity> mData = new ArrayList<>(0);
-    private Context mContext;
-    private int lastPosition = -1;
     private TextView year;
 
 
     private TextView countHoursInYear;
 
-    public YearsCoverFlowAdapter(Context context, ArrayList<YearEntity> data) {
-        mContext = context;
+    public YearsCoverFlowAdapter(ArrayList<YearEntity> data) {
         mData = data;
     }
 
@@ -52,7 +49,6 @@ public class YearsCoverFlowAdapter extends RecyclerView.Adapter<YearsViewHolder>
     public void onBindViewHolder(YearsViewHolder holder, int position) {
         year = holder.year;
         countHoursInYear = holder.countHoursInYear;
-
         year.setText(mData.get(position).getYears());
         countHoursInYear.setText(mData.get(position).getCountHoursInYear());
     }

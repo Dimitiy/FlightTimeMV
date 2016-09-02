@@ -8,7 +8,7 @@ android {
         config {
             keyAlias 'batka'
             keyPassword '1D1wglFYjS'
-            storeFile file('C:/Users/OldMan/.android/release.jks')
+            storeFile file('/home/oldman/Android/release.jks')
             storePassword 'Gazprom1607'
         }
     }
@@ -24,6 +24,7 @@ android {
 //        jackOptions {
 //            enabled true
 //        }
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
@@ -62,6 +63,7 @@ dependencies {
     compile 'com.android.support:preference-v14:24.2.0'
     compile 'junit:junit:4.12'
     compile 'com.android.support:support-v4:24.2.0'
+    compile 'za.co.riggaroo:materialhelptutorial:1.+'
 }
 
 apply plugin: 'com.google.gms.google-services'

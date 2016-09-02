@@ -27,4 +27,6 @@ public interface MainActivityPresenter {
     void onDeleteFlight(int groupPosition, int childPosition);
 
     void onDestroy();
+
+    void onGetTutorialItems();
 }
