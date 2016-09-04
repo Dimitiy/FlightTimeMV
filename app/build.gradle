@@ -8,7 +8,7 @@ android {
         config {
             keyAlias 'batka'
             keyPassword '1D1wglFYjS'
-            storeFile file('/home/oldman/Android/release.jks')
+            storeFile file('C:/Users/OldMan/.android/release.jks')
             storePassword 'Gazprom1607'
         }
     }
@@ -64,6 +64,7 @@ dependencies {
     compile 'junit:junit:4.12'
     compile 'com.android.support:support-v4:24.2.0'
     compile 'za.co.riggaroo:materialhelptutorial:1.+'
+    compile 'com.github.angads25:filepicker:1.0.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

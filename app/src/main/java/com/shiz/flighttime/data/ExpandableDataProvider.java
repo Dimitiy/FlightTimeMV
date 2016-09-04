@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ExpandableDataProvider extends AbstractExpandableDataProvider {
-    private static final String TAG = ExpandableDataProvider.class.getSimpleName().toString();
+    private static final String TAG = ExpandableDataProvider.class.getSimpleName();
     private List<Pair<MissionData, List<FlightData>>> mData;
 
     // for undo group item

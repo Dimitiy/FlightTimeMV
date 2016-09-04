@@ -10,12 +10,12 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableSwipeabl
 /**
  * Created by OldMan on 28.04.2016.
  */
-public class MyBaseViewHolder extends AbstractDraggableSwipeableItemViewHolder implements ExpandableItemViewHolder {
+class MyBaseViewHolder extends AbstractDraggableSwipeableItemViewHolder implements ExpandableItemViewHolder {
     public FrameLayout mContainer;
     public View mDragHandle;
     private int mExpandStateFlags;
 
-    public MyBaseViewHolder(View v) {
+    MyBaseViewHolder(View v) {
         super(v);
         mContainer = (FrameLayout) v.findViewById(R.id.container);
         mDragHandle = v.findViewById(R.id.drag_handle);

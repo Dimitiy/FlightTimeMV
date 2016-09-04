@@ -1,6 +1,5 @@
 package com.shiz.flighttime.mission;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.shiz.flighttime.database.DBHelper;
@@ -14,13 +13,11 @@ import io.realm.RealmChangeListener;
  */
 public class MissionCreatorPresenterImpl implements MissionCreatorPresenter {
     private final MissionCreatorView missionView;
-    private final Context context;
     private DBHelper dbHelper;
 
-    public MissionCreatorPresenterImpl(MissionCreatorView missionView, Context context) {
+    public MissionCreatorPresenterImpl(MissionCreatorView missionView) {
         this.missionView = missionView;
-        this.context = context;
-        dbHelper = new DBHelper(context);
+        dbHelper = new DBHelper();
     }
 
 
@@ -42,7 +39,9 @@ public class MissionCreatorPresenterImpl implements MissionCreatorPresenter {
 
     @Override
     public void createMission(final String name, Calendar date) {
-        missionView.showProgress();
+        if (missionView != null) {
+            missionView.showProgress();
+        }
         dbHelper.addListener(new RealmChangeListener() {
             @Override
             public void onChange(Object element) {
@@ -56,7 +55,9 @@ public class MissionCreatorPresenterImpl implements MissionCreatorPresenter {
 
     @Override
     public void createFlight(int missionId, Calendar date, long duration) {
-        missionView.showProgress();
+        if (missionView != null) {
+            missionView.showProgress();
+        }
         dbHelper.addListener(new RealmChangeListener() {
             @Override
             public void onChange(Object element) {
@@ -69,7 +70,8 @@ public class MissionCreatorPresenterImpl implements MissionCreatorPresenter {
 
     @Override
     public void updateMission(int id, String nameCity, Calendar calendarDate) {
-        missionView.showProgress();
+        if (missionView != null)
+            missionView.showProgress();
         Log.d("MissionCreator", "updateMission " + id);
 
         dbHelper.addListener(new RealmChangeListener() {
@@ -84,7 +86,8 @@ public class MissionCreatorPresenterImpl implements MissionCreatorPresenter {
 
     @Override
     public void updateFlight(int idMission, int idFlight, Calendar date, long duration) {
-        missionView.showProgress();
+        if (missionView != null)
+            missionView.showProgress();
         Log.d("MissionCreator", "updateMission " + idMission + " idFlight " + idFlight);
 
         dbHelper.addListener(new RealmChangeListener() {
@@ -98,7 +101,9 @@ public class MissionCreatorPresenterImpl implements MissionCreatorPresenter {
     }
 
     private void onNavigateToMainView() {
-        missionView.hideProgress();
-        missionView.navigateToMainView();
+        if (missionView != null) {
+            missionView.hideProgress();
+            missionView.navigateToMainView();
+        }
     }
 }

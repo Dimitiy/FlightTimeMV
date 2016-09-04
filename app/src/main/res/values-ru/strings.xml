@@ -50,8 +50,12 @@
        В случае наличия резервной копии данных, Вы можете импортировать ее в приложение.
     </string>
     <string name="title_activity_settings">Settings</string>
-    <string name="work_with_mission">Работа с командировками</string>
-    <string name="tutorial_work_with_mission">Для доступа к меню редактирования командировки, добавления вылетов и удаления, используйте swipe</string>
+    <string name="work_with_mission">Работа с данными</string>
+    <string name="tutorial_work_with_mission">Для редактирования командировок и добавления вылетов используйте левый swipe</string>
+
+    <string name="deleting_data">Удаление данных</string>
+    <string name="tutorial_deleting_data">  Для того, чтобы удалить вылет или командировку, используйте правый swipe.
+  </string>
 
     <!-- Example General settings -->
 

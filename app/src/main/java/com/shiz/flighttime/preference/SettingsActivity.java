@@ -1,7 +1,11 @@
 package com.shiz.flighttime.preference;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,9 +13,11 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +28,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.shiz.flighttime.R;
+import com.github.angads25.filepicker.controller.DialogSelectionListener;
+import com.github.angads25.filepicker.model.DialogProperties;
+import com.github.angads25.filepicker.view.FilePickerDialog;
 import com.shiz.flighttime.AppCompatPreferenceActivity;
+import com.shiz.flighttime.R;
+import com.shiz.flighttime.main.MainActivity;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -36,7 +46,7 @@ import com.shiz.flighttime.AppCompatPreferenceActivity;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class SettingsActivity extends AppCompatPreferenceActivity implements SettingsActivityView {
+public class SettingsActivity extends AppCompatPreferenceActivity implements SettingsActivityView, DialogSelectionListener {
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
@@ -67,7 +77,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements Set
      * to reflect its new value.
      */
     private SettingsPresenter presenter;
-    private Context context;
 
     /**
      * Helper method to determine if the device has an extra-large screen. For
@@ -137,20 +146,17 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements Set
         });
     }
 
+    //    @Override
+//    public void onBackPressed(){
+//        Intent i = new Intent(this, MainActivity.class);
+//        startActivity(i);
+//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
         addPreferencesFromResource(R.xml.pref_general);
-        context = getApplicationContext();
-        presenter = new SettingsPresenterImpl(context);
-        // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-        // to their values. When their values change, their summaries are
-        // updated to reflect the new value, per the Android Design
-        // guidelines.
-//        bindPreferenceSummaryToValue(findPreference("example_text"));
-//        bindPreferenceSummaryToValue(findPreference("example_list"));
-
+        presenter = new SettingsPresenterImpl(this, getApplicationContext());
     }
 
     /**
@@ -179,20 +185,50 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements Set
 
     @Override
     public void onBackupButtonClick(View view) {
-        Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
-        presenter.updateBackup();
+        presenter.exportBackup();
     }
 
     @Override
     public void onImportBackupButtonClick(View view) {
-        Toast.makeText(this, "Hello2", Toast.LENGTH_SHORT).show();
         presenter.importBackup();
-
     }
 
     @Override
     public void onSelectFileButtonClick(View view) {
-        Toast.makeText(this, "Hello2", Toast.LENGTH_SHORT).show();
+        presenter.onPropertiesDialog();
     }
 
+    @Override
+    public void onCreateDialogPicker(DialogProperties properties) {
+        FilePickerDialog dialog = new FilePickerDialog(this, properties);
+        dialog.setDialogSelectionListener(this);
+        dialog.show();
+    }
+
+    @Override
+    public void onRestartApplication() {
+        Intent intent = new Intent(this, MainActivity.class);
+        AlarmManager mgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis(), PendingIntent.getActivity(this.getBaseContext(), 0,intent,PendingIntent.FLAG_UPDATE_CURRENT));
+        android.os.Process.killProcess(android.os.Process.myPid());
+    }
+
+    @Override
+    public void onSelectedFilePaths(String[] files) {
+        Log.d("Settings", files[0].toString());
+        if (files[0] != null)
+            presenter.importBackupFromPath(files[0]);
+    }
+
+    //Add this method to show Dialog when the required permission has been granted to the app.
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case FilePickerDialog.EXTERNAL_READ_PERMISSION_GRANT: {
+                if (grantResults.length <= 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Permission is Required for getting list of files", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
 }

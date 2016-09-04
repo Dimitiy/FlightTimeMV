@@ -4,5 +4,5 @@ package com.shiz.flighttime.listener;
  * Created by oldman on 19.05.16.
  */
 public interface OnBackPressedListener {
-    public void onBackPressed();
+    void onBackPressed();
 }

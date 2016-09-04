@@ -47,7 +47,10 @@
     <string name="help">Help</string>
     <string name="title_activity_settings">Settings</string>
     <string name="work_with_mission">Working with missions</string>
-    <string name="tutorial_work_with_mission">To access the trip editing menu, adding and removing departures, use swipe.</string>
+    <string name="tutorial_work_with_mission">To edit and add trips departures use swipe left.</string>
+
+    <string name="deleting_data">Deleting data</string>
+    <string name="tutorial_deleting_data">In order to remove the flight or trip, use the right swipe.</string>
 
     <!-- Strings related to Settings -->
 

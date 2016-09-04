@@ -39,7 +39,7 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
         implements ExpandableDraggableItemAdapter<MyGroupViewHolder, MyChildViewHolder>,
         ExpandableSwipeableItemAdapter<MyGroupViewHolder, MyChildViewHolder> {
 
-    private static final String TAG = ExpandSwipeViewAdapter.class.getSimpleName().toString();
+    private static final String TAG = ExpandSwipeViewAdapter.class.getSimpleName();
     private final RecyclerViewExpandableItemManager mExpandableItemManager;
     private final Context context;
     private AbstractExpandableDataProvider mProvider;
@@ -82,13 +82,15 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
     }
 
     private void onClickItemView(View v) {
-
+        int flatPosition = 0;
         RecyclerView.ViewHolder vh = RecyclerViewAdapterUtils.getViewHolder(v);
-        int flatPosition = vh.getAdapterPosition();
-
-        if (flatPosition == RecyclerView.NO_POSITION) {
+        if (vh == null) {
+            flatPosition = vh.getAdapterPosition();
             return;
         }
+        if (flatPosition == RecyclerView.NO_POSITION)
+            return;
+
 
         long expandablePosition = mExpandableItemManager.getExpandablePosition(flatPosition);
         int groupPosition = RecyclerViewExpandableItemManager.getPackedPositionGroup(expandablePosition);
@@ -333,11 +335,8 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
                 holder.textCount.setTextColor(colorGrey);
                 holder.textDate.setTextColor(colorGrey);
             }
-            if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
-                isExpanded = true;
-            } else {
-                isExpanded = false;
-            }
+            isExpanded = (expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0;
+
             holder.mContainer.setBackgroundResource(bgResId);
             holder.mIndicator.setExpandedState(isExpanded, animateIndicator);
         }

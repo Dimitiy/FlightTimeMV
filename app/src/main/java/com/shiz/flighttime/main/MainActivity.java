@@ -72,8 +72,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
             R.drawable.ic_close,
     };
     private CoordinatorLayout coordinatorLayout;
-    private FloatingActionButton fab;
-    //    @State
     private ProgressBar progressBar;
     private MainActivityPresenter presenter;
     private RecyclerView missionRecyclerView;
@@ -160,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
         frameAnim = new AnimationDrawable();
         frameAnim.setOneShot(true);
         for (int res : frameAnimRes) {
-            frameAnim.addFrame(resources.getDrawable(res), frameDuration);
+            frameAnim.addFrame(ContextCompat.getDrawable(context, res), frameDuration);
         }
     }
 
@@ -168,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
         frameReverseAnim = new AnimationDrawable();
         frameReverseAnim.setOneShot(true);
         for (int i = frameAnimRes.length - 1; i >= 0; i--) {
-            frameReverseAnim.addFrame(resources.getDrawable(frameAnimRes[i]), frameDuration);
+            frameReverseAnim.addFrame(ContextCompat.getDrawable(context, frameAnimRes[i]), frameDuration);
         }
     }
 
@@ -246,7 +244,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         if (springFloatingActionMenu.isMenuOpen()) {
             springFloatingActionMenu.hideMenu();
         } else {
@@ -369,7 +366,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
         onMissionItems(adapterPosition);
     }
 
-    public void onMissionItems(int adapterPosition) {
+    private void onMissionItems(int adapterPosition) {
         presenter.onMissionItems(yearsAdapter.getItem(adapterPosition).getYears());
     }
 
@@ -576,7 +573,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
 
     @Override
     public void onClick(View v) {
-
         MenuItemView menuItemView = (MenuItemView) v;
         if (menuItemView != null) {
             String menu = menuItemView.getLabelTextView().getText().toString();
@@ -587,12 +583,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
                 ShareCompat.IntentBuilder.from(this)
                         .setType("text/plain")
                         .setText(Constants.URL_APPLICATION)
-                        .setChooserTitle("FlightTime")
-                        .setSubject("Flight")
+                        .setSubject(context.getString(R.string.app_name))
                         .startChooser();
             } else if (menu.equals(resources.getString(R.string.settings))) {
                 Intent i = new Intent(this, SettingsActivity.class);
                 startActivity(i);
+                finish();
             } else if (menu.equals(resources.getString(R.string.help))) {
                 presenter.onGetTutorialItems();
             }
@@ -628,14 +624,14 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
 
     }
 
-    public void notifyChildItemRestored(int groupPosition, int childPosition) {
+    private void notifyChildItemRestored(int groupPosition, int childPosition) {
         adapter.notifyDataSetChanged();
         final long expandablePosition = RecyclerViewExpandableItemManager.getPackedPositionForChild(groupPosition, childPosition);
         final int flatPosition = recyclerViewExpandableItemManager.getFlatPosition(expandablePosition);
         missionRecyclerView.scrollToPosition(flatPosition);
     }
 
-    public void notifyGroupItemChanged(int groupPosition) {
+    private void notifyGroupItemChanged(int groupPosition) {
         Log.d(TAG, "notifyGroupItemChanged" + groupPosition);
         final long expandablePosition = RecyclerViewExpandableItemManager.getPackedPositionForGroup(groupPosition);
         final int flatPosition = recyclerViewExpandableItemManager.getFlatPosition(expandablePosition);
@@ -652,13 +648,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
         }
     }
 
-    public void notifyChildItemChanged(int groupPosition, int childPosition) {
+    private void notifyChildItemChanged(int groupPosition, int childPosition) {
         final long expandablePosition = RecyclerViewExpandableItemManager.getPackedPositionForChild(groupPosition, childPosition);
         final int flatPosition = recyclerViewExpandableItemManager.getFlatPosition(expandablePosition);
         adapter.notifyItemChanged(flatPosition);
     }
 
-    public void onGroupItemClicked(int groupPosition) {
+    private void onGroupItemClicked(int groupPosition) {
         AbstractExpandableDataProvider.MissionData data = dataProvider.getMissionItem(groupPosition);
         if (data.isPinned()) {
             // unpin if tapped the pinned item
@@ -667,7 +663,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
         }
     }
 
-    public void onChildItemClicked(int groupPosition, int childPosition) {
+    private void onChildItemClicked(int groupPosition, int childPosition) {
         AbstractExpandableDataProvider.FlightData data = dataProvider.getFlightItem(groupPosition, childPosition);
         if (data.isPinned()) {
             // unpin if tapped the pinned item

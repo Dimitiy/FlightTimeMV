@@ -93,9 +93,8 @@ public class CityNameFragment extends BaseNameFragment implements TextWatcher, C
 
     @Override
     public void onPlaceSelected(String place) {
-        Log.d(TAG, "onError: place = " + place.toString());
         if (cityChangeListener != null)
-            cityChangeListener.onNameCityChange(place.toString());
+            cityChangeListener.onNameCityChange(place);
     }
 
     @Override

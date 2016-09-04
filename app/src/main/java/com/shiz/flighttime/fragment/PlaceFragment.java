@@ -28,7 +28,6 @@ public class PlaceFragment extends BaseNameFragment implements PlaceSelectionLis
     private static final String TAG = PlaceFragment.class.getSimpleName();
     private String oldNameCity = null;
     private CityChangeListener cityChangeListener;
-    private View view;
     private PlaceAutocompleteFragment autocompleteFragment;
 
     /**
@@ -58,7 +57,7 @@ public class PlaceFragment extends BaseNameFragment implements PlaceSelectionLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_place, container, false);
+        View view = inflater.inflate(R.layout.fragment_place, container, false);
 
         if (GoogleClient.checkGooglePlayServicesAvailable(getContext())) {
             autocompleteFragment = (PlaceAutocompleteFragment)
@@ -105,7 +104,7 @@ public class PlaceFragment extends BaseNameFragment implements PlaceSelectionLis
     @Override
     public void onPlaceSelected(String place) {
         if (cityChangeListener != null)
-            cityChangeListener.onNameCityChange(place.toString());
+            cityChangeListener.onNameCityChange(place);
     }
 
     @Override

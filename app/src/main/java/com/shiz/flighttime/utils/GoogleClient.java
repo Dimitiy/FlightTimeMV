@@ -49,21 +49,21 @@ public class GoogleClient implements GoogleApiClient.ConnectionCallbacks,
     /**
      * Handles resolution callbacks.
      */
-    public void onConnect() {
-        if (!googleApiClient.isConnected() && !googleApiClient.isConnecting()) {
-            googleApiClient.connect();
-        }
-    }
-
-    /**
-     * Called when activity gets invisible. Connection to Drive service needs to
-     * be disconnected as soon as an activity is invisible.
-     */
-    public void onDisconnect() {
-        if (googleApiClient != null) {
-            googleApiClient.disconnect();
-        }
-    }
+//    public void onConnect() {
+//        if (!googleApiClient.isConnected() && !googleApiClient.isConnecting()) {
+//            googleApiClient.connect();
+//        }
+//    }
+//
+//    /**
+//     * Called when activity gets invisible. Connection to Drive service needs to
+//     * be disconnected as soon as an activity is invisible.
+//     */
+//    public void onDisconnect() {
+//        if (googleApiClient != null) {
+//            googleApiClient.disconnect();
+//        }
+//    }
 
     /**
      * Called when {@code mGoogleApiClient} is connected.

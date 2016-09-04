@@ -68,7 +68,7 @@ public class MissionCreatorActivity extends AppCompatActivity implements Mission
         }
         calendarDate = Calendar.getInstance();
         progressBar = (ProgressBar) findViewById(R.id.progress);
-        presenter = new MissionCreatorPresenterImpl(this, getApplicationContext());
+        presenter = new MissionCreatorPresenterImpl(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

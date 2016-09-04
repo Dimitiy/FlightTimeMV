@@ -19,6 +19,7 @@ package com.shiz.flighttime.dialog;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -89,11 +90,14 @@ public class DeleteItemDialog extends DialogFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        listener = (DeleteDialogClickListener) activity;
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        Activity activity;
+        if (context instanceof Activity){
+            activity=(Activity) context;
+            listener = (DeleteDialogClickListener) activity;
+        }
+        super.onAttach(context);
     }
-
     @Override
     public void onDetach() {
         listener = null;

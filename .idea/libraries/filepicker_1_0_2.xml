@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="filepicker-1.0.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.angads25/filepicker/1.0.2/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.angads25/filepicker/1.0.2/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.angads25/filepicker/1.0.2/5c2535ad736411087489d3286476bcf66568462f/filepicker-1.0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

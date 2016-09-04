@@ -22,7 +22,7 @@ public class MissionModule {
 //    @Provides
 //    @Singleton
     MissionCreatorPresenterImpl providePresenter(MissionCreatorView missionView, Context context) {
-        return new MissionCreatorPresenterImpl(missionView, context);
+        return new MissionCreatorPresenterImpl(missionView);
     }
 
 }

@@ -11,6 +11,4 @@ import com.shiz.flighttime.listener.CityChangeListener;
 public abstract class BaseNameFragment extends Fragment {
     public void addCityNameChangedListener(CityChangeListener cityChangeListener) {
     }
-
-    ;
 }

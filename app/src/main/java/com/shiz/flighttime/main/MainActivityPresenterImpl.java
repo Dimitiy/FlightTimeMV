@@ -23,9 +23,9 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.shiz.flighttime.R;
-import com.shiz.flighttime.database.MissionDB;
 import com.shiz.flighttime.data.YearEntity;
 import com.shiz.flighttime.database.DBHelper;
+import com.shiz.flighttime.database.MissionDB;
 import com.shiz.flighttime.mission.MissionCreatorActivity;
 import com.shiz.flighttime.utils.Constants;
 
@@ -49,7 +49,7 @@ public class MainActivityPresenterImpl implements MainActivityPresenter, MainInt
     public MainActivityPresenterImpl(MainActivityView mainView, Context context) {
         this.mainView = mainView;
         this.context = context;
-        dbHelper = new DBHelper(context);
+        dbHelper = new DBHelper();
         findItemsInteractor = new MainInteractorImpl(context);
     }
 
@@ -122,12 +122,13 @@ public class MainActivityPresenterImpl implements MainActivityPresenter, MainInt
                 public void onChange(Object element) {
                     Log.d(TAG, "deleted mission" + groupPosition);
                     dbHelper.deleteListener(this);
-                    mainView.notifyOnGroupItemRemoved();
-                    mainView.hideProgress();
+                    if (mainView != null) {
+                        mainView.notifyOnGroupItemRemoved();
+                        mainView.hideProgress();
+                    }
                 }
             });
             dbHelper.deleteMission(groupPosition);
-
         }
     }
 
@@ -142,8 +143,9 @@ public class MainActivityPresenterImpl implements MainActivityPresenter, MainInt
                 public void onChange(Object element) {
                     Log.d(TAG, "delete flight in " + groupPosition + " " + childPosition);
                     dbHelper.deleteListener(this);
-                    mainView.hideProgress();
-
+                    if (mainView != null) {
+                        mainView.hideProgress();
+                    }
                 }
             });
             dbHelper.deleteFlightInMission(groupPosition, childPosition);
@@ -160,25 +162,20 @@ public class MainActivityPresenterImpl implements MainActivityPresenter, MainInt
 
     @Override
     public void onGetTutorialItems() {
-        TutorialItem tutorialItem1 = new TutorialItem(R.string.work_with_mission, R.string.tutorial_work_with_mission,
-                R.color.menu_help, R.mipmap.swipe_tutorial,  R.mipmap.ic_swipe);
-//
-//        TutorialItem tutorialItem2 = new TutorialItem(R.string.slide_2_volunteer_professionals, R.string.slide_2_volunteer_professionals_subtitle,
-//                R.color.slide_2,  R.drawable.tut_page_2_front,  R.drawable.tut_page_2_background);
-//
-        TutorialItem tutorialItem3 = new TutorialItem(context.getString(R.string.action_settings), null,
-                R.color.menu_invite_friends, R.mipmap.ic_edit);
-//
-//        TutorialItem tutorialItem4 = new TutorialItem(R.string.slide_4_different_languages, R.string.slide_4_different_languages_subtitle,
-//                R.color.slide_4,  R.drawable.tut_page_4_foreground, R.drawable.tut_page_4_background);
+        TutorialItem tutorialItem1 = new TutorialItem(context.getString(R.string.work_with_mission), context.getString(R.string.tutorial_work_with_mission),
+                R.color.menu_help, R.drawable.left_swipe_tutorial);
+        TutorialItem tutorialItem2 = new TutorialItem(context.getString(R.string.deleting_data), context.getString(R.string.tutorial_deleting_data),
+                R.color.menu_invite_friends, R.drawable.right_swipe_tutorial);
+        TutorialItem tutorialItem3 = new TutorialItem(context.getString(R.string.backup), context.getString(R.string.text_for_backup),
+                R.color.text_button_menu_preference, R.drawable.ic_settings, android.R.drawable.stat_sys_warning);
 //
         ArrayList<TutorialItem> tutorialItems = new ArrayList<>();
         tutorialItems.add(tutorialItem1);
-//        tutorialItems.add(tutorialItem2);
+        tutorialItems.add(tutorialItem2);
         tutorialItems.add(tutorialItem3);
-//        tutorialItems.add(tutorialItem4);
-
-        mainView.loadTutorial(tutorialItems);
+        if (mainView != null) {
+            mainView.loadTutorial(tutorialItems);
+        }
     }
 
     @Override

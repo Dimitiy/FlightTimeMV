@@ -1,9 +1,6 @@
 package com.shiz.flighttime.database;
 
-import android.content.Context;
 import android.util.Log;
-
-import com.shiz.flighttime.MyApplication;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,15 +22,13 @@ import static io.realm.Realm.Transaction;
  * Created by OldMan on 14.02.2016.
  */
 public class DBHelper implements DBInterface {
-    private Context mContext;
     private Realm realm;
     private String TAG = "DBHelper";
     private RealmAsyncTask transaction;
 
-    public DBHelper(Context ctx) {
-        this.mContext = ctx;
-        realm = MyApplication.getRealm();
-
+    public DBHelper() {
+        realm = Realm.getDefaultInstance();
+        realm.setAutoRefresh(true);
     }
 
     public void onStop() {
@@ -44,11 +39,13 @@ public class DBHelper implements DBInterface {
 
 
     public void addListener(RealmChangeListener listener) {
-        realm.addChangeListener(listener);
+        if (!realm.isClosed())
+            realm.addChangeListener(listener);
     }
 
     public void deleteListener(RealmChangeListener listener) {
-        realm.removeChangeListener(listener);
+        if (!realm.isClosed())
+            realm.removeChangeListener(listener);
     }
 
     @Override
@@ -56,8 +53,6 @@ public class DBHelper implements DBInterface {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                Log.d(DBHelper.class.getCanonicalName().toString(), "start insertFlightInMission, city: " + city + " " + date.toString());
-
                 MissionDB mission = realm.createObject(MissionDB.class);
                 mission.setId(getPrimaryKey(mission));
                 mission.setCity(city);
@@ -74,7 +69,6 @@ public class DBHelper implements DBInterface {
         realm.executeTransaction(new Transaction() {
             @Override
             public void execute(Realm realm) {
-                Log.d(DBHelper.class.getCanonicalName().toString(), "start insertFlightInMission " + duration + " " + date.toString() + " " + id);
                 FlightDB flight = realm.createObject(FlightDB.class);
                 flight.setId(getPrimaryKey(flight));
                 flight.setDate(date.getTime());
@@ -84,8 +78,6 @@ public class DBHelper implements DBInterface {
                         .findFirst();
                 mission.getFlightDBRealmList().add(flight);
                 mission.setDuration(mission.getDuration() + duration);
-                Log.d(DBHelper.class.getCanonicalName().toString(), "insertFlightInMission" + mission.getDuration());
-
             }
         });
     }
@@ -99,8 +91,6 @@ public class DBHelper implements DBInterface {
                         .findFirst();
                 mission.getFlightDBRealmList().add(flight);
                 mission.setDuration(mission.getDuration() + flight.getDuration());
-                Log.d(DBHelper.class.getCanonicalName().toString(), "insertFlightInMission" + mission.getId());
-
             }
         });
     }
@@ -111,8 +101,6 @@ public class DBHelper implements DBInterface {
             public void execute(Realm realm) {
                 MissionDB results = realm.where(MissionDB.class).equalTo("id", id).findFirst();
                 results.deleteFromRealm();
-                Log.d(DBHelper.class.getCanonicalName().toString(), "deleteMission " + id);
-
             }
         });
     }
