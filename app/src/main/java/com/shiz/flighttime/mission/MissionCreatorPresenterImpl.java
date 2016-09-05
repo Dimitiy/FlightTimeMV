@@ -20,7 +20,6 @@ public class MissionCreatorPresenterImpl implements MissionCreatorPresenter {
         dbHelper = new DBHelper();
     }
 
-
     @Override
     public void onResume() {
         if (missionView != null) {

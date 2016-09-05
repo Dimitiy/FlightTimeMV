@@ -25,9 +25,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.shiz.flighttime.R;
-import com.shiz.flighttime.database.FlightDB;
-import com.shiz.flighttime.database.MissionDB;
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
@@ -41,11 +38,14 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeMana
 import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 import com.melnykov.fab.FloatingActionButton;
+import com.shiz.flighttime.R;
 import com.shiz.flighttime.adapters.ExpandSwipeViewAdapter;
 import com.shiz.flighttime.adapters.YearsCoverFlowAdapter;
 import com.shiz.flighttime.data.AbstractExpandableDataProvider;
 import com.shiz.flighttime.data.ExpandableDataProvider;
 import com.shiz.flighttime.data.YearEntity;
+import com.shiz.flighttime.database.FlightDB;
+import com.shiz.flighttime.database.MissionDB;
 import com.shiz.flighttime.dialog.DeleteItemDialog;
 import com.shiz.flighttime.listener.DeleteDialogClickListener;
 import com.shiz.flighttime.preference.SettingsActivity;
@@ -471,10 +471,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
     public void showSnackBar(String message) {
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //    super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == Constants.REQUEST_CODE){
+        if (resultCode == RESULT_OK && requestCode == Constants.REQUEST_CODE) {
             Toast.makeText(this, "Tutorial finished", Toast.LENGTH_LONG).show();
 
         }
@@ -548,12 +549,15 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
     }
 
     @Override
-    public void onUnderSwipeAddFlightButtonClicked(int groupPosition) {
-        presenter.navigateToCreateFlight(dataProvider.getMissionItem(groupPosition).getMission());
+    public void onUnderSwipeAddFlightButtonClicked(View groupPosition) {
+        int position = missionRecyclerView.getChildAdapterPosition(groupPosition);
+        if (position != RecyclerView.NO_POSITION)
+            presenter.navigateToCreateFlight(dataProvider.getMissionItem(position).getMission());
     }
 
     @Override
     public void onFlightItemCreated(int id, FlightDB flight) {
+        Log.d(TAG, "onFlightItemCreated id " + id);
         dataProvider.addFlightItem(id, flight);
         int childCount = dataProvider.getFlightCount(id);
         recyclerViewExpandableItemManager.notifyChildItemInserted(id, childCount - 1);
@@ -561,8 +565,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
     }
 
     @Override
-    public void onUnderSwipeEditMissionButtonClicked(int groupPosition) {
-        presenter.navigateToChangeMission(dataProvider.getMissionItem(groupPosition).getMission(), groupPosition);
+    public void onUnderSwipeEditMissionButtonClicked(View groupPosition) {
+        int position = missionRecyclerView.getChildAdapterPosition(groupPosition);
+        if (position != RecyclerView.NO_POSITION)
+            presenter.navigateToChangeMission(dataProvider.getMissionItem(position).getMission(), position);
     }
 
     @Override

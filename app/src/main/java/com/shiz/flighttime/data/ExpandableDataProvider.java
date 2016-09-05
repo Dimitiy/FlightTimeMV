@@ -40,7 +40,6 @@ public class ExpandableDataProvider extends AbstractExpandableDataProvider {
 
                 for (FlightDB flight : flightList) {
                     final int childId = concreteMissionData.generateNewChildId();
-
                     Log.d(TAG, "childId " + childId + " id " + flight.getId());
                     flightData.add(new ConcreteFlightData(childId, flight));
                 }
@@ -64,7 +63,6 @@ public class ExpandableDataProvider extends AbstractExpandableDataProvider {
         if (groupPosition < 0 || groupPosition >= getMissionCount()) {
             throw new IndexOutOfBoundsException("groupPosition = " + groupPosition);
         }
-
         return mData.get(groupPosition).first;
     }
 
@@ -73,13 +71,11 @@ public class ExpandableDataProvider extends AbstractExpandableDataProvider {
         if (groupPosition < 0 || groupPosition >= getMissionCount()) {
             throw new IndexOutOfBoundsException("groupPosition = " + groupPosition);
         }
-
         final List<FlightData> children = mData.get(groupPosition).second;
 
         if (childPosition < 0 || childPosition >= children.size()) {
             throw new IndexOutOfBoundsException("childPosition = " + childPosition);
         }
-
         return children.get(childPosition);
     }
 

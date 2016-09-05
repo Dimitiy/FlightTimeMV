@@ -62,7 +62,6 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onItemViewClick");
-
                 onItemViewClick(v);
             }
         };
@@ -84,14 +83,13 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
     private void onClickItemView(View v) {
         int flatPosition = 0;
         RecyclerView.ViewHolder vh = RecyclerViewAdapterUtils.getViewHolder(v);
+        RecyclerViewAdapterUtils.getParentViewHolderItemView(v);
         if (vh == null) {
             flatPosition = vh.getAdapterPosition();
             return;
         }
         if (flatPosition == RecyclerView.NO_POSITION)
             return;
-
-
         long expandablePosition = mExpandableItemManager.getExpandablePosition(flatPosition);
         int groupPosition = RecyclerViewExpandableItemManager.getPackedPositionGroup(expandablePosition);
         int childPosition = RecyclerViewExpandableItemManager.getPackedPositionChild(expandablePosition);
@@ -106,10 +104,12 @@ public class ExpandSwipeViewAdapter extends AbstractExpandableItemAdapter<MyGrou
                 break;
             // group item events
             case R.id.addFlight:
-                mEventListener.onUnderSwipeAddFlightButtonClicked(groupPosition);
+                if (mEventListener != null)
+                    mEventListener.onUnderSwipeAddFlightButtonClicked(RecyclerViewAdapterUtils.getParentViewHolderItemView(v));
                 break;
             case R.id.editMission:
-                mEventListener.onUnderSwipeEditMissionButtonClicked(groupPosition);
+                if (mEventListener != null)
+                    mEventListener.onUnderSwipeEditMissionButtonClicked(RecyclerViewAdapterUtils.getParentViewHolderItemView(v));
                 break;
 
             default:
